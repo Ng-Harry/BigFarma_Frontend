@@ -1,8 +1,27 @@
 import React from 'react'
+import AboutUsSection from './landing-page-sections/AboutUsSection'
+import HowItWorksSection from './landing-page-sections/HowItWorksSection'
+import WhyChooseSection from './landing-page-sections/WhyChooseSection'
 
 const Home = () => {
   return (
-    <div>Home</div>
+    <div>
+      <div 
+        className='h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat'
+      >
+        <div className="max-w-4xl text-center px-4">
+          <h1 className="text-5xl md:text-6xl font-bold text-black mb-6">
+            Hero Section
+          </h1>
+        </div>
+      </div>
+      
+      <div className="bg-white">
+        <AboutUsSection />
+        <HowItWorksSection />
+        <WhyChooseSection />
+      </div>
+    </div>
   )
 }
 

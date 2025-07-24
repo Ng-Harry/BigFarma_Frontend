@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/NavBar";
 import Home from "./components/Home";
@@ -9,7 +9,7 @@ import ContactUs from "./components/ContactUs";
 
 const App = () => {
   return (
-    <div className="w-[1400px] h-screen">
+    <div className="w-full">
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />}/>
