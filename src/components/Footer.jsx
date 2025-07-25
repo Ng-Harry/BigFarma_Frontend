@@ -35,12 +35,22 @@ const Footer = () => {
 
           <div>
             <h3 className="text-lg font-semibold mb-8">Company</h3>
-            <nav className="flex flex-col gap-4">
-              <NavLink to="/home">Home</NavLink>
-              <NavLink to="/about-us">About Us</NavLink>
-              <NavLink to="/faqs">FAQs</NavLink>
-              <NavLink to="/testimonials">Testimonials</NavLink>
-              <NavLink to="/contact-us">Contact Us</NavLink>
+            <nav className="flex flex-col gap-4 cursor-pointer">
+              <Link to="home" smooth={true} duration={500} className='cursor-pointer'>
+                Home
+              </Link>
+              <Link to="about-us" smooth={true} duration={500}>
+                About Us
+              </Link>
+              <Link to="faqs" smooth={true} duration={500} className='cursor-pointer'>
+                FAQs
+              </Link>
+              <Link to="testimonials" smooth={true} duration={500} className='cursor-pointer'>
+                Testimonials
+              </Link>
+              <Link to="contact-us" smooth={true} duration={500}>
+                Contact Us
+              </Link>
             </nav>
           </div>
 
