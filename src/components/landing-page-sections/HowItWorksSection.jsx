@@ -7,12 +7,12 @@ function WorkCard({ title, description, image, bgColor, iconBgColor, textColor =
       'bg-primary-dark': '#382100'
     };
     
-    return colorMap[colorName] || '';
+    return colorMap[colorName] || ' ';
   };
   
   return (
     <div 
-      className={`${textColor} border-0 h-[180px] md:h-[306px] shadow-sm`}
+      className={`${textColor} h-[180px] md:h-[306px] shadow-sm`}
       style={{ backgroundColor: getBgColorStyle(bgColor) }}
     >
       <div className="p-5 md:p-8 h-full flex flex-col justify-center">
