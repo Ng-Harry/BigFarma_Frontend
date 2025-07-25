@@ -9,7 +9,7 @@ import ContactUs from "./components/ContactUs";
 
 const App = () => {
   return (
-    <div className="w-[1400px] h-screen">
+    <div className="w-full min-h-screen bg-[var(--color-neutral-light)] md:bg-[url('./assets/images/Background-Image.png')] bg-cover bg-center">
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />}/>

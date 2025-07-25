@@ -24,7 +24,7 @@ const NavBar = () => {
   };
 
   return (
-    <header className=" w-full h-25 flex items-center justify-around relative">
+    <header className="w-full h-25 flex items-center justify-around relative">
       {/* Brand Logo */}
       <img
         src={brandLogo}
