@@ -5,7 +5,7 @@ import Home from "./components/Home";
 
 
 const App = () => {
-  return
+  return (
     <div className="w-full h-screen bg-[var(--color-neutral-light)] md:bg-[url('./assets/images/Background-Image.png')] bg-contain bg-center">
       
       <NavBar />
