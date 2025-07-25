@@ -64,7 +64,7 @@ const workItems = [
 
 export default function HowItWorksSection() {
   return (
-    <section className="py-16 px-4 md:px-8 lg:px-16">
+    <section className="py-16 px-4 md:px-8 lg:px-16 bg-gray-100">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-3xl md:text-5xl font-semibold text-center mb-6 lg:mb-12">How BigFarma Works</h2>
         <div className="grid md:grid-cols-2 gap-6">

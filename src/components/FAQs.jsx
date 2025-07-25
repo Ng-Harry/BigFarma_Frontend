@@ -1,8 +1,12 @@
 import React from 'react'
+import Accordion from './landing-page-sections/FAQsSection'
+
 
 const FAQs = () => {
   return (
-    <div>FAQs</div>
+    <div>
+      <Accordion />
+    </div>
   )
 }
 
