@@ -1,16 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 :root {
   /* Font-Family */
-  --font-inter: "Inter", sans-serif;
+  --font-inter: 'Inter', sans-serif;
 
   /* Primary colors */
   --color-primary-dark: #003f1f;
   --color-primary: #016130;
   --color-primary-light: #01ae56;
+  --color-primary-transparent: #01AE5633;
 
   /* Secondary colors */
   --color-secondary-dark: #382100;
   --color-secondary: #ffa725;
   --color-secondary-light: #fff5e7;
+  --color-secondary-transparent: #FFA72580;
 
   /* Neutral colors */
   --color-neutral-dark: #000000;
@@ -21,15 +24,9 @@
 html,
 body,
 #root {
-  font-family: "Inter", sans-serif;
-  background-image: url("./assets/images/Background-Image.png");
-  background-size: cover;
-  background-position: center;
+  font-family: var(--font-inter);
   min-height: 100vh;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  background-repeat: no-repeat;
 }
 .navlink a {
   color: var(--color-neutral-dark);
@@ -37,4 +34,7 @@ body,
 }
 .navlink a:hover {
   color: var(--color-primary);
+}
+.border-custom-opacity {
+  opacity: 0.4;
 }

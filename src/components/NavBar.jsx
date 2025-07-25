@@ -1,4 +1,5 @@
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { Link } from "react-scroll";
 import { useState } from "react";
 import brandLogo from "../assets/images/brand-logo.png";
 import "../assets/styles/NavBar.css";
@@ -24,7 +25,7 @@ const NavBar = () => {
   };
 
   return (
-    <header className=" w-full h-25 flex items-center justify-around relative">
+    <header className="w-full h-25 flex items-center justify-around relative">
       {/* Brand Logo */}
       <img
         src={brandLogo}
@@ -34,27 +35,37 @@ const NavBar = () => {
 
       {/* DesktopMenu */}
       <nav className=" hidden w-[31.3rem] h-9 md:flex gap-6 items-center justify-between navlink text-base font-medium leading-none">
-        <NavLink to="/home">Home</NavLink>
-        <NavLink to="/about-us">About Us</NavLink>
-        <NavLink to="/faqs">FAQs</NavLink>
-        <NavLink to="/testimonials">Testimonials</NavLink>
-        <NavLink to="/contact-us">Contact Us</NavLink>
+        <Link to="home" smooth={true} duration={500}>
+          Home
+        </Link>
+        <Link to="about-us" smooth={true} duration={500}>
+          About Us
+        </Link>
+        <Link to="faqs" smooth={true} duration={500}>
+          FAQs
+        </Link>
+        <Link to="testimonials" smooth={true} duration={500}>
+          Testimonials
+        </Link>
+        <Link to="contact-us" smooth={true} duration={500}>
+          Contact Us
+        </Link>
       </nav>
 
       {/*Desktop Sign In/Sign Up */}
       <div className=" hidden w-[220px] h-9 items-center justify-between md:flex text-4xl">
-        <Link
+        <NavLink
           to="/sign-in"
           className="border-1 border-[var(--color-primary)] text-[var(--color-primary)] w-[105px] h-[50px] px-6 py-4 rounded-lg text-base leading-none"
         >
           Sign In
-        </Link>
-        <Link
+        </NavLink>
+        <NavLink
           to="sign-up"
           className="bg-[var(--color-primary)] text-[var(--color-neutral-light)] w-[105px] h-[50px] px-5 py-4 rounded-lg text-base leading-none"
         >
           Sign Up
-        </Link>
+        </NavLink>
       </div>
 
       {/* Mobile View */}
@@ -105,11 +116,21 @@ const NavBar = () => {
             Exit ? "menu-animate-up" : "menu-animate-down"
           }`}
         >
-          <NavLink to="/home">Home</NavLink>
-          <NavLink to="/about-us">About Us</NavLink>
-          <NavLink to="/faqs">FAQs</NavLink>
-          <NavLink to="/testimonials">Testimonials</NavLink>
-          <NavLink to="/contact-us">Contact Us</NavLink>
+          <Link to="home" smooth={true} duration={500}>
+            Home
+          </Link>
+          <Link to="about-us" smooth={true} duration={500}>
+            About Us
+          </Link>
+          <Link to="faqs" smooth={true} duration={500}>
+            FAQs
+          </Link>
+          <Link to="testimonials" smooth={true} duration={500}>
+            Testimonials
+          </Link>
+          <Link to="contact-us" smooth={true} duration={500}>
+            Contact Us
+          </Link>
           <Link
             to="/sign-up"
             className="border-1 bg-[var(--color-primary)]  w-[105px] h-[50px] px-5 py-4 rounded-lg text-base leading-none "
