@@ -8,6 +8,21 @@ importers:
 
   .:
     dependencies:
+      '@pnp/common':
+        specifier: ^2.15.0
+        version: 2.15.0
+      '@pnp/graph':
+        specifier: ^4.15.0
+        version: 4.15.0
+      '@pnp/logging':
+        specifier: ^4.15.0
+        version: 4.15.0
+      '@pnp/odata':
+        specifier: ^2.15.0
+        version: 2.15.0
+      '@pnp/sp':
+        specifier: ^4.15.0
+        version: 4.15.0
       '@tailwindcss/vite':
         specifier: ^4.1.11
         version: 4.1.11(vite@7.0.5(jiti@2.4.2)(lightningcss@1.30.1))
@@ -26,6 +41,9 @@ importers:
       react-scroll:
         specifier: ^1.9.3
         version: 1.9.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      swiper:
+        specifier: ^11.2.10
+        version: 11.2.10
     devDependencies:
       '@eslint/js':
         specifier: ^9.30.1
@@ -383,6 +401,38 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.29':
     resolution: {integrity: sha512-uw6guiW/gcAGPDhLmd77/6lW8QLeiV5RUTsAX46Db6oLhGaVj4lhnPwb184s1bkc8kdVg/+h988dro8GRDpmYQ==}
+
+  '@microsoft/microsoft-graph-types@2.40.0':
+    resolution: {integrity: sha512-1fcPVrB/NkbNcGNfCy+Cgnvwxt6/sbIEEFgZHFBJ670zYLegENYJF8qMo7x3LqBjWX2/Eneq5BVVRCLTmlJN+g==}
+
+  '@pnp/common@2.15.0':
+    resolution: {integrity: sha512-lyK5LIet6xh0wXPvnMpOKU7cK1aRuLAJK+TxWUsg44fmoda4w316pWycTyWelaJYXnqZT2OOoz996Zpkc6t76w==}
+
+  '@pnp/core@4.15.0':
+    resolution: {integrity: sha512-xFqQl8yXZhn2u7YlPUMWasnBaiyMCD3M7SvAL+9VKzWKPStnkmNf7ZLcV5X1Jw2UyyWCYh8cZgx7fV348KNnEw==}
+    engines: {node: '>=18.12.0'}
+
+  '@pnp/graph@4.15.0':
+    resolution: {integrity: sha512-O8AIn+lENy0uYgjaZo3Mz7z6qnXLJHKzTJoDTUODlmpqTekn4FyZAQUR9eGBYt6OXVbvq2se4N/eKFEVti3Iog==}
+    engines: {node: '>=18.12.0'}
+
+  '@pnp/logging@2.15.0':
+    resolution: {integrity: sha512-rgpQl38AR3d/HJE6OxoTnAYx3DiaWmWmbMPlDvP26uxvtjdFKAkBriuAdVFWrVTTVupNZdqsMfEbr+YVG+tTBA==}
+
+  '@pnp/logging@4.15.0':
+    resolution: {integrity: sha512-9UrHsueF5ZaLtJ0DwGMVQs29iQmgOnSdmv0UfasWN8ynGB6NkwBvCqtHBHhwwrz4HK67iqthwLoTAIJAB7bdig==}
+    engines: {node: '>=18.12.0'}
+
+  '@pnp/odata@2.15.0':
+    resolution: {integrity: sha512-FFwdGi138etmgHVYY4BmsT7ytd3X2Q6AFRqU2UEoyIJW0YLXpj3s46pS4Ia1uTafJpF9/xEy5BAVYHq9dZNn8Q==}
+
+  '@pnp/queryable@4.15.0':
+    resolution: {integrity: sha512-fBylSLK9QFY2+f42HEqrzpUW22TfE61WO4CSf+jeQBC7RcITUA2VRA+91iOjMPDThQUKiIPCxF5U0EtvgBVJPQ==}
+    engines: {node: '>=18.12.0'}
+
+  '@pnp/sp@4.15.0':
+    resolution: {integrity: sha512-4xhG9hZlsokMzwrzt6/BH4erPyMHQ5UXNs2StDdkpvu8EPOIJ7fHiT8FXgJJintsDkbUmWnjntfxW7fBKZwVkg==}
+    engines: {node: '>=18.12.0'}
 
   '@rolldown/pluginutils@1.0.0-beta.27':
     resolution: {integrity: sha512-+d0F4MKMCbeVUJwG96uQ4SgAznZNSq93I3V+9NHA4OpvqG8mRCpGdKmK8l/dl02h2CCDHwW2FqilnTyDcAnqjA==}
@@ -1152,6 +1202,10 @@ packages:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
     engines: {node: '>=8'}
 
+  swiper@11.2.10:
+    resolution: {integrity: sha512-RMeVUUjTQH+6N3ckimK93oxz6Sn5la4aDlgPzB+rBrG/smPdCTicXyhxa+woIpopz+jewEloiEE3lKo1h9w2YQ==}
+    engines: {node: '>= 4.7.0'}
+
   tailwindcss@4.1.11:
     resolution: {integrity: sha512-2E9TBm6MDD/xKYe+dvJZAmg3yxIEDNRc0jwlNyDg/4Fil2QcSLjFKGVff0lAf1jjeaArlG/M75Ey/EYr/OJtBA==}
 
@@ -1166,6 +1220,12 @@ packages:
   tinyglobby@0.2.14:
     resolution: {integrity: sha512-tX5e7OM1HnYr2+a2C/4V0htOcSQcoSTH9KgJnVvNm5zm/cyEWKJ7j7YutsH9CxMdtOkkLFy2AHrMci9IM8IPZQ==}
     engines: {node: '>=12.0.0'}
+
+  tslib@2.3.0:
+    resolution: {integrity: sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==}
+
+  tslib@2.7.0:
+    resolution: {integrity: sha512-gLXCKdN1/j47AiHiOkJN69hJmcbGTHI0ImLmbYLHykhgeN0jVGola9yVjFgzCUklsZQMW55o+dW7IXv3RCXDzA==}
 
   type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
@@ -1511,6 +1571,48 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.4
+
+  '@microsoft/microsoft-graph-types@2.40.0': {}
+
+  '@pnp/common@2.15.0':
+    dependencies:
+      tslib: 2.3.0
+
+  '@pnp/core@4.15.0':
+    dependencies:
+      tslib: 2.7.0
+
+  '@pnp/graph@4.15.0':
+    dependencies:
+      '@microsoft/microsoft-graph-types': 2.40.0
+      '@pnp/core': 4.15.0
+      '@pnp/queryable': 4.15.0
+      tslib: 2.7.0
+
+  '@pnp/logging@2.15.0':
+    dependencies:
+      tslib: 2.3.0
+
+  '@pnp/logging@4.15.0':
+    dependencies:
+      tslib: 2.7.0
+
+  '@pnp/odata@2.15.0':
+    dependencies:
+      '@pnp/common': 2.15.0
+      '@pnp/logging': 2.15.0
+      tslib: 2.3.0
+
+  '@pnp/queryable@4.15.0':
+    dependencies:
+      '@pnp/core': 4.15.0
+      tslib: 2.7.0
+
+  '@pnp/sp@4.15.0':
+    dependencies:
+      '@pnp/core': 4.15.0
+      '@pnp/queryable': 4.15.0
+      tslib: 2.7.0
 
   '@rolldown/pluginutils@1.0.0-beta.27': {}
 
@@ -2198,6 +2300,8 @@ snapshots:
     dependencies:
       has-flag: 4.0.0
 
+  swiper@11.2.10: {}
+
   tailwindcss@4.1.11: {}
 
   tapable@2.2.2: {}
@@ -2215,6 +2319,10 @@ snapshots:
     dependencies:
       fdir: 6.4.6(picomatch@4.0.3)
       picomatch: 4.0.3
+
+  tslib@2.3.0: {}
+
+  tslib@2.7.0: {}
 
   type-check@0.4.0:
     dependencies:
