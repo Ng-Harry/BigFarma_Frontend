@@ -36,8 +36,8 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-8">Company</h3>
             <nav className="flex flex-col gap-4">
-              <NavLink to="/home">Home</NavLink>
-              <NavLink to="/about-us">About Us</NavLink>
+              <a href="#home">Home</a>
+              <a href="#about-us">About Us</a>
               <NavLink to="/faqs">FAQs</NavLink>
               <NavLink to="/testimonials">Testimonials</NavLink>
               <NavLink to="/contact-us">Contact Us</NavLink>
