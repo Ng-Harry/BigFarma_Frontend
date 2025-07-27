@@ -7,15 +7,15 @@ function WorkCard({ title, description, image, bgColor, iconBgColor, textColor =
       'bg-primary-dark': '#382100'
     };
     
-    return colorMap[colorName] || '';
+    return colorMap[colorName] || ' ';
   };
   
   return (
     <div 
-      className={`${textColor} border-0 h-[306px] shadow-sm`}
+      className={`${textColor} h-[180px] md:h-[306px] shadow-sm`}
       style={{ backgroundColor: getBgColorStyle(bgColor) }}
     >
-      <div className="p-8 h-full flex flex-col justify-center">
+      <div className="p-5 md:p-8 h-full flex flex-col justify-center">
         <div className={`items-center justify-center mb-4 pl-1`}>
           <img src={image} alt={title} className="w-12 h-12" />
         </div>
@@ -64,9 +64,9 @@ const workItems = [
 
 export default function HowItWorksSection() {
   return (
-    <section className="py-16 px-4 md:px-8 lg:px-16 bg-gray-100">
+    <section className="pt-16 px-4 md:px-8 lg:px-16">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl md:text-5xl font-semibold text-center mb-6 lg:mb-12">How BigFarma Works</h2>
+        <h2 className="text-[28px] md:text-5xl font-semibold text-center mb-5 lg:mb-8">How BigFarma Works</h2>
         <div className="grid md:grid-cols-2 gap-6">
           {workItems.map((item, index) => (
             <WorkCard

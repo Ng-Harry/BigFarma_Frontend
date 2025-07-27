@@ -17,10 +17,10 @@ function FeatureCard({
     
     return (
       <div 
-        className={`${textColor} border-0 h-[400px] shadow-sm`}
+        className={`${textColor} border-0 h-[240px] md:h-[400px] shadow-sm`}
         style={{ backgroundColor: getBgColorStyle(bgColor) }}
       >
-        <div className="p-8 h-full flex flex-col mt-12">
+        <div className="p-5 md:p-8 h-full flex flex-col mt-4 md:mt-12">
           <div className="items-center justify-center mb-6">
             <img src={image} alt={title} className="w-12 h-12" />
           </div>
@@ -58,11 +58,11 @@ function FeatureCard({
   
   export default function WhyChooseSection() {
     return (
-      <section className="py-16 px-4 md:px-8 lg:px-16 bg-white">
+      <section className="py-4 mt-8 md:py-16 px-4 md:px-8 lg:px-16 bg-white">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-5xl font-semibold text-center mb-6 lg:mb-12">Why Choose BigFarma</h2>
+          <h2 className="text-[28px] md:text-5xl font-semibold text-center mb-5 lg:mb-8">Why Choose BigFarma</h2>
   
-          <div className="grid md:grid-cols-3 gap-6 mb-12">
+          <div className="grid lg:grid-cols-3 gap-6 mb-4 md:mb-8">
             {featureItems.map((item, index) => (
               <FeatureCard
                 key={index}
