@@ -12,6 +12,8 @@ import HowItWorksSection from "./landing-page-sections/HowItWorksSection";
 import WhyChooseSection from "./landing-page-sections/WhyChooseSection";
 import ThinkInvestment from "./landing-page-sections/ThinkInvestmentSection";
 import FAQs from "./FAQs";
+import Testimonials from "./Testimonials";
+import ContactUs from "./ContactUs";
 import Footer from "./Footer";
 
 const Home = () => {
@@ -91,6 +93,13 @@ const Home = () => {
 
         <section id="faqs">
           <FAQs /> {/* FAQs */}
+        </section>
+
+        <section id="testimonials">
+          <Testimonials />
+        </section>
+        <section>
+          {/* <ContactUs /> */}
         </section>
 
         <section>
