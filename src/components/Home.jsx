@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-scroll";
 import { NavLink } from "react-router-dom";
@@ -21,56 +20,59 @@ const Home = () => {
     <>
       <section
         id="home"
-        className="w-full flex flex-col items-center justify-evenly sm:flex-row px-0  relative "
+        className="w-full lg:h-screen flex flex-col items-center justify-center  lg:flex-row px-4 sm:px-8 md:px-16 gap-8 relative overflow-hidden"
       >
-        <div className="w-full max-w-[40rem] h-[20rem] sm:h-[35rem]">
+        <div className=" w-full  flex flex-col justify-center  gap-6 sm:mb-10 ">
           {/* Brand TagLine */}
           <div className="flex flex-col gap-3 m-4 ">
-            <span className=" bg-[var(--color-primary-transparent)] w-[4.5rem] h-[2rem] text-[var(--color-primary)] text-base py-3.5 px-1.5 font-bold leading-[0.34]">
+            <span className="w-22 h-8 bg-[var(--color-primary-transparent)] text-[var(--color-primary)] text-base p-3.5 font-bold leading-[0.34]">
               We Are
             </span>
-            <div
-              className="font-extrabold text-[2rem] sm:text-[55px] text-[var(--color-primary)] leading-snug break-word
-"
-            >
+            <div className="font-extrabold text-2xl sm:text-3xl md:text-5xl text-[var(--color-primary)] leading-snug break-word">
               Empowering Farmers <br />
               Connecting Markets <br />
               Growing Agriculture
             </div>
-            <span className="italic text-base sm:text-[18px] text-[var(--color-primary)] ">
+            <span className="italic text-base sm:text-lg text-[var(--color-primary)] ">
               Transforming Africa’s agro business
             </span>
             <NavLink
               to="sign-up"
-              className="bg-[var(--color-primary)] text-[var(--color-neutral-light)] w-[9rem] h-[2.5rem] sm:w-[18rem] sm:h-[4rem] flex justify-center items-center rounded-lg text-sm sm:text-2xl leading-none font-bold"
+              className="bg-[var(--color-primary)] text-white w-40 h-12 sm:w-60 sm:h-14 flex justify-center items-center rounded-lg text-sm sm:text-xl font-bold shadow hover:bg-[var(--color-primary-dark)] transition-colors"
             >
               Create an account
             </NavLink>
+            {/* Arrow Down: only show under tagline on desktop */}
+            <Link
+              to="about-us"
+              className="w-10 h-10 border-1 border-[var(--color-secondary)] bg-[var(--color-secondary-transparent)] lg:flex items-center justify-center hidden rounded-full sm:w-16 sm:h-16 mt-15 shadow-md"
+            >
+              <ArrowDown className="text-[var(--color-secondary-dark)]" />
+            </Link>
           </div>
-
-          {/* Arrow Down */}
-          <Link
-            to="about-us"
-            className="w-[2.5rem] h-[2.5rem] border-1 border-[var(--color-secondary)] bg-[var(--color-secondary-transparent)] flex items-center justify-center rounded-full sm:w-[4rem] sm:h-[4rem] absolute sm:bottom-1/14 sm:left-1/15 bottom-2 left-2"
-          >
-            <ArrowDown className="text-[var(--color-secondary-dark)]" />
-          </Link>
         </div>
 
         {/* Brand  Image */}
-        <div className="w-full max-w-[40rem] h-[33rem] sm:h-[40.5rem] flex justify-center">
-          <div className="w-full h-[23rem] sm:w-[35rem] sm:h-[37.5rem] pr-3 relative">
+        <div className="w-full max-w-xl flex items-center justify-center relative mt-4 lg:mb-20 flex-col">
+          <div className="relative flex items-center justify-center w-[19rem] h-[22rem] sm:w-[25rem] sm:h-[31.5rem] md:w-[31rem] md:h-[38rem] lg:w-[35rem] lg:h-[44rem] pb-18">
             <img
               src={bgBack}
               alt="backImage"
-              className="w-[500px] h-[500px] object-contain mx-5 my-3"
+              className="w-[15rem] h-[20rem] sm:w-[20rem] sm:h-[25rem] md:w-[25rem] md:h-[38rem] lg:w-[31rem] lg:h-[35rem] object-contain mx-auto drop-shadow-lg z-10"
             />
             <img
               src={bgFront}
               alt="frontImage"
-              className="absolute left-1/2 transform -translate-x-1/2 top-1/18  sm:w-full sm:h-full object-cover"
+              className="absolute -translate-x-1/2 -translate-y-[45%] left-[51%] top-[42%] sm:top-[47%] w-[19rem] h-[20rem] sm:w-[22rem] sm:h-[28.5rem] md:w-[38rem] md:h-[44rem] lg:w-[38rem] lg:h-[40rem] object-contain drop-shadow-xl z-50"
             />
           </div>
+          {/* Arrow Down: only show below images on mobile/tablet */}
+          <Link
+            to="about-us"
+            className="w-10 h-10 border-1 border-[var(--color-secondary)] bg-[var(--color-secondary-transparent)] flex items-center justify-center rounded-full sm:w-12 sm:h-12 mt-2 shadow-md lg:hidden ml-0 mr-auto "
+          >
+            <ArrowDown className="text-[var(--color-secondary-dark)]" />
+          </Link>
         </div>
       </section>
 
@@ -98,17 +100,13 @@ const Home = () => {
         <section id="testimonials">
           <Testimonials />
         </section>
-        <section>
-          {/* <ContactUs /> */}
-        </section>
+        <section>{/* <ContactUs /> */}</section>
 
         <section>
           <Footer /> {/* Footer */}
         </section>
       </div>
     </>
-
-
   );
 };
 

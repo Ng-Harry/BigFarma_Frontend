@@ -25,38 +25,53 @@ const NavBar = () => {
   };
 
   return (
-    <header className="w-full h-25 flex items-center justify-around relative">
+    <header className="w-full h-25 flex items-center justify-around">
       {/* Brand Logo */}
       <img
         src={brandLogo}
         alt="brand logo"
-        className="h-9 w-[150px] object-contain"
+        className="h-8 w-auto object-contain"
       />
 
       {/* DesktopMenu */}
-      <nav className=" hidden w-[31.3rem] h-9 md:flex gap-6 items-center justify-between navlink text-base font-medium leading-none">
-        <Link to="home" smooth={true} duration={500}>
+      <nav className=" hidden md:flex gap-8 items-center navlink text-base leading-none font-medium">
+        <Link to="home" smooth={true} duration={500} className="cursor-pointer">
           Home
         </Link>
-        <Link to="about-us" smooth={true} duration={500}>
+        <Link
+          to="about-us"
+          smooth={true}
+          duration={500}
+          className="cursor-pointer"
+        >
           About Us
         </Link>
-        <Link to="faqs" smooth={true} duration={500}>
+        <Link to="faqs" smooth={true} duration={500} className="cursor-pointer">
           FAQs
         </Link>
-        <Link to="testimonials" smooth={true} duration={500}>
+        <Link
+          to="testimonials"
+          smooth={true}
+          duration={500}
+          className="cursor-pointer"
+        >
           Testimonials
         </Link>
-        <Link to="contact-us" smooth={true} duration={500}>
+        <Link
+          to="contact-us"
+          smooth={true}
+          duration={500}
+          className="cursor-pointer"
+        >
           Contact Us
         </Link>
       </nav>
 
       {/*Desktop Sign In/Sign Up */}
-      <div className=" hidden w-[220px] h-9 items-center justify-between md:flex text-4xl">
+      <div className="hidden md:flex items-center gap-3">
         <NavLink
           to="/sign-in"
-          className="border-1 border-[var(--color-primary)] text-[var(--color-primary)] w-[105px] h-[50px] px-6 py-4 rounded-lg text-base leading-none"
+          className="border-1 border-[var(--color-primary)] text-[var(--color-primary)] px-6 py-4 rounded-lg text-base leading-none hover:bg-[var(--color-primary)] hover:text-white transition-colors "
         >
           Sign In
         </NavLink>
@@ -71,12 +86,12 @@ const NavBar = () => {
       {/* Mobile View */}
 
       <div className="md:hidden flex items-center gap-4">
-        <Link
-          to="#"
-          className="border-1 border-[var(--color-primary)] text-[var(--color-primary)] w-[105px] h-[50px] px-6 py-4 rounded-lg text-base leading-none md:hidden"
+        <NavLink
+          to="/sign-in"
+          className="border-1 border-[var(--color-primary)] text-[var(--color-primary)] px-6 py-4 rounded-lg text-base leading-none hover:bg-[var(--color-primary)] hover:text-white transition-colors "
         >
           Sign In
-        </Link>
+        </NavLink>
         {/* Hamburger & Exit Icon for Mobile */}
         {isOpen ? (
           <button onClick={toggleHamburgerMenu}>
@@ -112,32 +127,57 @@ const NavBar = () => {
       {/* Mobile Menu */}
       {isAnimation && (
         <nav
-          className={` md:hidden w-[550px] flex flex-col h-[300px] gap-5 py-4 items-center navlink absolute top-[5rem] bg-[var(--color-neutral-light)] z-50 shadow-md ${
+          className={` md:hidden w-[90vw] h-auto flex flex-col items-center gap-4 py-6 navlink absolute top-20 bg-[var(--color-neutral-light)] z-50 shadow-md ${
             Exit ? "menu-animate-up" : "menu-animate-down"
           }`}
         >
-          <Link to="home" smooth={true} duration={500}>
+          <Link
+            to="home"
+            smooth={true}
+            duration={500}
+            className="cursor-pointer"
+          >
             Home
           </Link>
-          <Link to="about-us" smooth={true} duration={500}>
+          <Link
+            to="about-us"
+            smooth={true}
+            duration={500}
+            className="cursor-pointer"
+          >
             About Us
           </Link>
-          <Link to="faqs" smooth={true} duration={500}>
+          <Link
+            to="faqs"
+            smooth={true}
+            duration={500}
+            className="cursor-pointer"
+          >
             FAQs
           </Link>
-          <Link to="testimonials" smooth={true} duration={500}>
+          <Link
+            to="testimonials"
+            smooth={true}
+            duration={500}
+            className="cursor-pointer"
+          >
             Testimonials
           </Link>
-          <Link to="contact-us" smooth={true} duration={500}>
+          <Link
+            to="contact-us"
+            smooth={true}
+            duration={500}
+            className="cursor-pointer"
+          >
             Contact Us
           </Link>
-          <Link
+          <NavLink
             to="/sign-up"
-            className="border-1 bg-[var(--color-primary)]  w-[105px] h-[50px] px-5 py-4 rounded-lg text-base leading-none "
+            className="border-1 bg-[var(--color-primary)] px-5 py-4 rounded-lg text-base leading-none "
             style={{ color: "var(--color-neutral-light)" }}
           >
             Sign Up
-          </Link>
+          </NavLink>
         </nav>
       )}
     </header>
