@@ -3,14 +3,12 @@ import "./App.css";
 import NavBar from "./components/NavBar";
 import Home from "./components/Home";
 
-
 const App = () => {
   return (
-    <div className="w-full h-screen bg-[var(--color-neutral-light)] md:bg-[url('./assets/images/Background-Image.png')] bg-contain bg-center">
-      
+    <div className=" w-full h-screen bg-[var(--color-neutral-light)] lg:bg-[url('./assets/images/Background-Image.png')] bg-cover  bg-center md:bg-no-repeat">
       <NavBar />
       <Routes>
-        <Route path="/" element={<Home />}/>
+        <Route path="/" element={<Home />} />
       </Routes>
     </div>
   );
