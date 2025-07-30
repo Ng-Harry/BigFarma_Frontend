@@ -6,7 +6,7 @@ import { Navigation, Autoplay } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/autoplay'
-import '../app.css'
+import '../App.css'
 
 const Testimonials = () => {
   return (

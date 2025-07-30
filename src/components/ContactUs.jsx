@@ -1,6 +1,7 @@
 import React from 'react'
 import phoneIcon from "../assets/icons/phone.svg";
-import '../app.css'
+
+import '../App.css'
 import facebookIcon from "../assets/icons/facebook.svg";
 import LinkedInIcon from "../assets/icons/linkedin.svg";
 import instagramIcon from "../assets/icons/instagram.svg";
@@ -9,6 +10,7 @@ import faceBook from '../assets/images/Facebook.svg';
 import instagran from '../assets/images/Instagram.svg';
 import x from '../assets/images/X.svg';
 import { Link } from 'react-router-dom';
+
 
 const ContactUs = () => {
   return <section className=' relative lg:container lg:max-w-[1100px] lg:min-h-[750px] rounded-lg shadow-lg lg:mx-auto lg:my-40'>
