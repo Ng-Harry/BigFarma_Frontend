@@ -1,6 +1,6 @@
 import React from 'react'
 import phoneIcon from "../assets/icons/phone.svg";
-import '../app.css'
+import '../App.css'
 // import facebookIcon from "../assets/icons/facebook.svg";
 // import LinkedInIcon from "../assets/icons/linkedin.svg";
 // import instagramIcon from "../assets/icons/instagram.svg";
