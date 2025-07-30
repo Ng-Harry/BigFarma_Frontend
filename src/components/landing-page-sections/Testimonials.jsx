@@ -1,12 +1,11 @@
 import React from 'react'
-import { reviewers } from '../reviewers'
+import { reviewers } from '../../lib/reviewers'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Autoplay } from 'swiper/modules'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/autoplay'
-import '../App.css'
 
 const Testimonials = () => {
   return (

@@ -1,14 +1,12 @@
 import React from 'react'
-import phoneIcon from "../assets/icons/phone.svg";
-
-import '../App.css'
-import facebookIcon from "../assets/icons/facebook.svg";
-import LinkedInIcon from "../assets/icons/linkedin.svg";
-import instagramIcon from "../assets/icons/instagram.svg";
-import mailIcon from "../assets/icons/mail.svg";
-import faceBook from '../assets/images/Facebook.svg';
-import instagran from '../assets/images/Instagram.svg';
-import x from '../assets/images/X.svg';
+import phoneIcon from "../../assets/icons/phone.svg";
+import facebookIcon from "../../assets/icons/facebook.svg";
+import LinkedInIcon from "../../assets/icons/linkedin.svg";
+import instagramIcon from "../../assets/icons/instagram.svg";
+import mailIcon from "../../assets/icons/mail.svg";
+import faceBook from '../../assets/images/Facebook.svg';
+import instagran from '../../assets/images/Instagram.svg';
+import x from '../../assets/images/X.svg';
 import { Link } from 'react-router-dom';
 
 
