@@ -1,16 +1,15 @@
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import NavBar from "./components/NavBar";
-import Home from "./components/Home";
+import Home from "./components/landing-page-sections/Home";
+// Page Auth
+import SignIn from "./pages/Auth/SignIn";
 
 const App = () => {
-  return (
-    <div className=" w-full h-screen bg-[var(--color-neutral-light)] lg:bg-[url('./assets/images/Background-Image.png')] bg-cover  bg-center md:bg-no-repeat">
-      <NavBar />
-      <Routes>
+  return (  
+     <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/sign-in" element={<SignIn />} />
       </Routes>
-    </div>
   );
 };
 

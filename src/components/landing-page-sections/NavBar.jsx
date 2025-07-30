@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom";
 import { Link } from "react-scroll";
 import { useState } from "react";
-import brandLogo from "../assets/images/brand-logo.png";
-import "../assets/styles/NavBar.css";
+import brandLogo from "../../assets/images/brand-logo.png";
+import "../../assets/styles/NavBar.css";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -76,7 +76,7 @@ const NavBar = () => {
           Sign In
         </NavLink>
         <NavLink
-          to="sign-up"
+          to="/sign-up"
           className="bg-[var(--color-primary)] text-[var(--color-neutral-light)] w-[105px] h-[50px] px-5 py-4 rounded-lg text-base leading-none"
         >
           Sign Up

@@ -1,26 +1,15 @@
-import React from "react";
-import { Link } from "react-scroll";
+import {Link} from "react-scroll";
 import { NavLink } from "react-router-dom";
-import { ArrowDown } from "lucide-react"; //react icon
-// Image Import
-import bgBack from "../assets/images/bg-image-back.png";
-import bgFront from "../assets/images/bigfarma-brandimage.png";
-// component import
-import AboutUsSection from "./landing-page-sections/AboutUsSection";
-import HowItWorksSection from "./landing-page-sections/HowItWorksSection";
-import WhyChooseSection from "./landing-page-sections/WhyChooseSection";
-import ThinkInvestment from "./landing-page-sections/ThinkInvestmentSection";
-import FAQs from "./FAQs";
-import Testimonials from "./Testimonials";
-import ContactUs from "./ContactUs";
-import Footer from "./Footer";
+import { ArrowDown } from "lucide-react";
 
-const Home = () => {
+import bgFront from "../../assets/images/bigfarma-brandimage.png"
+import bgBack from "../../assets/images/bg-image-back.png"
+
+const Hero = () => {
   return (
-    <>
       <section
         id="home"
-        className="w-full lg:h-screen flex flex-col items-center justify-center  lg:flex-row px-4 sm:px-8 md:px-16 gap-8 relative overflow-hidden"
+        className="w-full flex flex-col items-center justify-center  lg:flex-row px-4 sm:px-8 md:px-16 gap-8 relative overflow-hidden"
       >
         <div className=" w-full  flex flex-col justify-center  gap-6 sm:mb-10 ">
           {/* Brand TagLine */}
@@ -76,40 +65,7 @@ const Home = () => {
         </div>
       </section>
 
-      <div className="bg-white">
-        <section id="about-us">
-          <AboutUsSection /> {/* AboutUsSection */}
-        </section>
+  )
+}
 
-        <section>
-          <HowItWorksSection /> {/* howItWorksSection */}
-        </section>
-
-        <section>
-          <WhyChooseSection /> {/* WhyChooseSection */}
-        </section>
-
-        <section>
-          <ThinkInvestment /> {/* ThinkInvestment */}
-        </section>
-
-        <section id="faqs">
-          <FAQs /> {/* FAQs */}
-        </section>
-
-        <section id="testimonials">
-          <Testimonials />
-        </section>
-        <section>
-          <ContactUs />
-        </section>
-
-        <section>
-          <Footer /> {/* Footer */}
-        </section>
-      </div>
-    </>
-  );
-};
-
-export default Home;
+export default Hero

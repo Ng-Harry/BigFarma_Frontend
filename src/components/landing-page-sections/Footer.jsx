@@ -1,9 +1,9 @@
 import React from "react";
-import brandLogo from "../assets/images/brand-logo.png";
-import faceBook from "../assets/images/Facebook.svg";
-import instagran from "../assets/images/Instagram.svg";
-import x from "../assets/images/X.svg";
-import linkedIn from "../assets/images/LinkedIn.svg";
+import brandLogo from "../../assets/images/brand-logo.png";
+import faceBook from "../../assets/images/Facebook.svg";
+import instagran from "../../assets/images/Instagram.svg";
+import x from "../../assets/images/X.svg";
+import linkedIn from "../../assets/images/LinkedIn.svg";
 import { NavLink } from "react-router-dom";
 import {Link } from "react-scroll"
 
