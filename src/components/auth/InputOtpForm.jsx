@@ -63,7 +63,7 @@ function InputOtpForm () {
   return (
     <div className="min-h-screen mx-auto flex items-center justify-center p-4">
       <div className="w-full max-w-[650px]">
-        <div className="space-y-8 p-8">
+        <div className="space-y-8 p-5 md:p-8">
           <Button
             variant="ghost"
             onClick={handleBack}
@@ -74,7 +74,7 @@ function InputOtpForm () {
           </Button>
           <div className="space-y-8">
             <div className="space-y-2">
-              <h1 className="text-[32px] font-bold">Enter the verification code</h1>
+              <h1 className="text-xl md:text-[32px] font-bold">Enter the verification code</h1>
               <p className="text-lg">
                 We sent a reset link to <span className="font-medium">hello@bigfarma.com</span> enter 6 digits code that mentioned in the email
               </p>
