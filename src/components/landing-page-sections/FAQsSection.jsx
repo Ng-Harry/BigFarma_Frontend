@@ -51,21 +51,16 @@ function AccordionItem({ question, answer }) {
 	}, [isOpen]);
 
 	return (
-		<div className="w-[90] cursor-pointer md:w-full border border-[#016130]  overflow-hidden">
+		<div className="w-[90] cursor-pointer md:w-full border border-[var(--color-primary)]  overflow-hidden">
 			<div
 				onClick={toggleAccordion}
 				className={`w-full text-left px-4 py-3 font-semibold flex justify-between items-center ${
-					isOpen ? "bg-[#016130] text-white" : ""
+					isOpen
+						? "bg-[var(--color-primary)] text-[var(--color-neutral-light)]"
+						: ""
 				}`}>
 				<p className="text-[14px] md:text-[16px]">{question}</p>
-				<img
-					src={
-						isOpen
-							? closeIcon
-							: openIcon
-					}
-					alt="icon"
-				/>
+				<img src={isOpen ? closeIcon : openIcon} alt="icon" />
 			</div>
 
 			<div
@@ -73,8 +68,8 @@ function AccordionItem({ question, answer }) {
 				className="transition-all duration-500 ease-in-out overflow-hidden"
 				style={{ maxHeight }}>
 				<div
-					className={`p-4 text-[12px] text-white md:text-[14px] ${
-						isOpen ? "bg-[#016130]" : ""
+					className={`p-4 text-[12px] text-[var(--color-neutral-light)] md:text-[14px] ${
+						isOpen ? "bg-[var(--color-primary)]" : ""
 					}`}>
 					{answer}
 				</div>
