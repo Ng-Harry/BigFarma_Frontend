@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import { reviewers } from '../../lib/reviewers'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Autoplay } from 'swiper/modules'
@@ -8,29 +8,48 @@ import 'swiper/css/navigation'
 import 'swiper/css/autoplay'
 
 const Testimonials = () => {
+  const swiperRef = useRef(null)
+  const [isBeginning, setIsBeginning] = useState(true)
+  const [isEnd, setIsEnd] = useState(false)
+
+  const handleSwiper = (swiper) => {
+    swiperRef.current = swiper
+    setIsBeginning(swiper.isBeginning)
+    setIsEnd(swiper.isEnd)
+    swiper.on('slideChange', () => {
+      setIsBeginning(swiper.isBeginning)
+      setIsEnd(swiper.isEnd)
+    })
+  }
+
   return (
-    <section className="relative">
+    <section className="relative px-4 sm:px-8">
       <h2 className="text-center text-2xl sm:text-3xl md:text-[3rem] font-semibold mt-10 sm:mt-24 mx-auto">
         Testimonials
       </h2>
 
-      <div className="relative overflow-hidden py-5">
+      <div className="relative overflow-hidden py-5 max-w-screen-xl mx-auto">
         {/* Faded edges for desktop only */}
         <div className="hidden lg:block absolute top-0 left-0 h-full w-12 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
         <div className="hidden lg:block absolute top-0 right-0 h-full w-12 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
 
         {/* Navigation Arrows (desktop only) */}
         <div className="hidden lg:flex justify-between items-center absolute top-1/2 left-0 right-0 z-20 px-4 pointer-events-none">
-          <button className="swiper-button-prev pointer-events-auto text-2xl text-gray-500 hover:text-black transition">
-            ‹
-          </button>
-          <button className="swiper-button-next pointer-events-auto text-2xl text-gray-500 hover:text-black transition">
-            ›
-          </button>
+          {!isBeginning && (
+            <button className="swiper-button-prev pointer-events-auto text-3xl text-gray-500 hover:text-black transition">
+              ‹
+            </button>
+          )}
+          {!isEnd && (
+            <button className="swiper-button-next pointer-events-auto text-3xl text-gray-500 hover:text-black transition">
+              ›
+            </button>
+          )}
         </div>
 
         <Swiper
           modules={[Navigation, Autoplay]}
+          onSwiper={handleSwiper}
           navigation={{
             prevEl: '.swiper-button-prev',
             nextEl: '.swiper-button-next',
@@ -39,27 +58,23 @@ const Testimonials = () => {
             delay: 3500,
             disableOnInteraction: false,
           }}
-          spaceBetween={20}
-          slidesPerView={1.2}
+          spaceBetween={12}
+          slidesPerView={1}
           grabCursor={true}
           breakpoints={{
             768: {
-              slidesPerView: 2.2,
+              slidesPerView: 2,
+              spaceBetween: 16,
             },
             1024: {
               slidesPerView: 3,
+              spaceBetween: 24,
             },
           }}
         >
-          {reviewers.map((reviewer, index) => (
-            <SwiperSlide
-              key={reviewer.id}
-              className={`
-                ${index === 0 ? 'pl-4 lg:pl-20' : ''}
-                ${index === reviewers.length - 1 ? 'pr-4 lg:pr-20' : ''}
-              `}
-            >
-              <div className="flex flex-col gap-5 justify-start items-center pt-4 pb-7 bg-white rounded-xl px-4">
+          {reviewers.map((reviewer) => (
+            <SwiperSlide key={reviewer.id}>
+              <div className="w-full h-full mx-auto flex flex-col gap-5 justify-start items-center pt-4 pb-7 bg-white rounded-xl px-4">
                 <img
                   src={reviewer.profileImage}
                   alt={`review - ${reviewer.name}`}
@@ -84,6 +99,7 @@ const Testimonials = () => {
 }
 
 export default Testimonials
+
 
 
 
