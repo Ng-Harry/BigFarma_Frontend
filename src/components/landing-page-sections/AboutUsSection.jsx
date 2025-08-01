@@ -1,10 +1,12 @@
+import aboutUsImage from "../../assets/svgs/about.svg";
+
 export default function AboutUsSection() {
     return (
       <section className="py-4 md:py-16 px-4 md:px-8 lg:px-16">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <img 
-              src="/src/assets/svgs/about.svg"
+              src={aboutUsImage}
               alt="Farmers with fresh produce"
               className="w-full h-auto order-2 lg:order-1"
             />

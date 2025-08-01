@@ -1,4 +1,6 @@
 import { useState, useRef, useEffect } from "react";
+import openIcon from "../../assets/icons/open.svg";
+import closeIcon from "../../assets/icons/close.svg";
 
 const faqs = [
 	{
@@ -59,8 +61,8 @@ function AccordionItem({ question, answer }) {
 				<img
 					src={
 						isOpen
-							? "/src/assets/icons/close.svg"
-							: "/src/assets/icons/open.svg"
+							? closeIcon
+							: openIcon
 					}
 					alt="icon"
 				/>
