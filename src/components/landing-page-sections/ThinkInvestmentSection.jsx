@@ -1,10 +1,12 @@
+import bgImage from "../../assets/svgs/InvestmentBg.svg";
+
 export default function ThinkInvestment() {
 	return (
 		<>
 			<section className="py-8 px-4 md:px-8 lg:px-16">
 				<div className="relative max-w-7xl mx-auto">
 					<img
-						src="/src/assets/svgs/InvestmentBg.svg"
+						src={bgImage}
 						alt=""
 						className="max-w-7xl mx-auto w-full h-auto object-cover"
 					/>
