@@ -3,7 +3,7 @@ import "./App.css";
 import Home from "./components/landing-page-sections/Home";
 // Page Auth
 import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
+import SignUp from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
 import InputOtp from "./pages/InputOtp";
 import ResetPassword from "./pages/ResetPassword";
