@@ -15,7 +15,7 @@ import {
 const Home = () => {
   return (
     <>
-      <div className="w-full h-screen bg-[var(--color-neutral-light)] lg:bg-[url('./assets/images/Background-Image.png')] bg-cover bg-center md:bg-no-repeat">
+      <div className="w-full h-full mb-10 bg-[var(--color-neutral-light)] lg:bg-[url('./assets/images/Background-Image.png')] bg-cover bg-center md:bg-no-repeat">
         <NavBar />
         <Hero />
       </div>
