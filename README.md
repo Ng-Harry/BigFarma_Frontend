@@ -48,7 +48,7 @@ BigFarma is a digital platform that connects farmers and consumers in one simple
 2. Install dependencies:
 
    ```bash
-   npm install
+   pnpm install
    # or
    yarn install
    ```
@@ -56,7 +56,7 @@ BigFarma is a digital platform that connects farmers and consumers in one simple
 3. Start the development server:
 
    ```bash
-   npm run dev
+   pnpm run dev
    # or
    yarn dev
    ```
@@ -65,9 +65,9 @@ BigFarma is a digital platform that connects farmers and consumers in one simple
 
 ## Available Scripts
 
-- `npm run dev` — Runs the app in development mode.
-- `npm run build` — Builds the app for production.
-- `npm run preview` — Previews the production build locally.
+- `pnpm run dev` — Runs the app in development mode.
+- `pnpm run build` — Builds the app for production.
+- `pnpm run preview` — Previews the production build locally.
 
 ## Folder Structure
 
