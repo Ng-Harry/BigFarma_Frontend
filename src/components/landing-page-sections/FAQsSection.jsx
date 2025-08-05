@@ -51,7 +51,7 @@ function AccordionItem({ question, answer }) {
 	}, [isOpen]);
 
 	return (
-		<div className="w-[90] cursor-pointer md:w-full border border-[var(--color-primary)]  overflow-hidden">
+		<div className="w-full cursor-pointer md:w-full border border-[var(--color-primary)]  overflow-hidden">
 			<div
 				onClick={toggleAccordion}
 				className={`w-full text-left px-4 py-3 font-semibold flex justify-between items-center ${
@@ -86,7 +86,7 @@ export default function Accordion() {
 					Frequently asked questions
 				</h2>
 			</header>
-			<div className="w-[90%] md:w-[70%] mx-auto space-y-4 pt-8">
+			<div className="w-full md:w-[70%] px-4 mx-auto space-y-4 pt-8">
 				{faqs.map((data, i) => (
 					<AccordionItem
 						key={i}
