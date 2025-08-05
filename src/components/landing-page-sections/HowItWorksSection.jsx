@@ -1,3 +1,8 @@
+import marketplaceIcon from "../../assets/icons/marketplace.svg";
+import investmentIcon from "../../assets/icons/investment.svg";
+import logisticsIcon from "../../assets/icons/logistics.svg";
+import insightsIcon from "../../assets/icons/insights.svg";
+
 function WorkCard({ title, description, image, bgColor, iconBgColor, textColor = "text-white", descriptionColor }) {
   const getBgColorStyle = (colorName) => {
     const colorMap = {
@@ -27,40 +32,40 @@ function WorkCard({ title, description, image, bgColor, iconBgColor, textColor =
 }
 
 const workItems = [
-  {
-    title: "Marketplace",
-    image: "/src/assets/icons/marketplace.svg",
-    description: "Farmer list products, buyers order directly on the platform",
-    bgColor: "bg-primary",
-    iconBgColor: "bg-white",
-    descriptionColor: "text-white",
-  },
-  {
-    title: "Investment Hub",
-    image: "/src/assets/icons/investment.svg",
-    description: "Individuals invest in farms with transparency",
-    bgColor: "bg-secondary-dark",
-    iconBgColor: "bg-yellow-800",
-    textColor: "text-secondary-dark",
-    descriptionColor: "text-gray-800",
-  },
-  {
-    title: "Logistics Integration",
-    image: "/src/assets/icons/logistics.svg",
-    description: "Enjoy reliable farm-to-door delivery",
-    bgColor: "bg-primary-light",
-    iconBgColor: "bg-white",
-    descriptionColor: "text-white",
-  },
-  {
-    title: "Insights & Alerts",
-    image: "/src/assets/icons/insights.svg",
-    description: "Stay ahead with weather, pest, and disease alerts",
-    bgColor: "bg-primary-dark",
-    iconBgColor: "bg-yellow-100",
-    descriptionColor: "text-secondary-light",
-  },
-]
+	{
+		title: "Marketplace",
+		image: marketplaceIcon ,
+		description: "Farmer list products, buyers order directly on the platform",
+		bgColor: "bg-primary",
+		iconBgColor: "bg-white",
+		descriptionColor: "text-white",
+	},
+	{
+		title: "Investment Hub",
+		image: investmentIcon,
+		description: "Individuals invest in farms with transparency",
+		bgColor: "bg-secondary-dark",
+		iconBgColor: "bg-yellow-800",
+		textColor: "text-secondary-dark",
+		descriptionColor: "text-gray-800",
+	},
+	{
+		title: "Logistics Integration",
+		image: logisticsIcon,
+		description: "Enjoy reliable farm-to-door delivery",
+		bgColor: "bg-primary-light",
+		iconBgColor: "bg-white",
+		descriptionColor: "text-white",
+	},
+	{
+		title: "Insights & Alerts",
+		image: insightsIcon,
+		description: "Stay ahead with weather, pest, and disease alerts",
+		bgColor: "bg-primary-dark",
+		iconBgColor: "bg-yellow-100",
+		descriptionColor: "text-secondary-light",
+	},
+];
 
 export default function HowItWorksSection() {
   return (
