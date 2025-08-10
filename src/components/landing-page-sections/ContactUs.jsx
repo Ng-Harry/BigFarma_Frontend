@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 
 const ContactUs = () => {
   return (
-    <section className='w-full bg-transparent py-5 flex items-center justify-center'>
+    <section className='w-full bg-transparent py-5 flex items-center justify-center overflow-x-hidden'>
       <div className=' relative lg:container lg:max-w-[1000px] lg:min-h-[750px] rounded-lg lg:shadow-lg lg:ml-14 lg:my-40 '>
         <div className='lg:absolute lg:-left-36'>
           <div className=''>
@@ -20,13 +20,13 @@ const ContactUs = () => {
               <h2 className="text-center text-2xl md:text-[3rem] font-semibold mt-10 lg:mt-24 lg:text-3xl mx-auto">
                 Contact Us
               </h2>
-              <p className='text-center text-sm'>We are here to you! How can we help you.</p>
+              <p className='text-center text-sm md:text-lg'>We are here to you! How can we help you.</p>
             </div>
 
             <form action="" className='px-6 w-full space-y-5 pt-10 justify-center items-center lg:hidden'>
-              <div className='flex flex-col gap-8 max-w-lg mx-auto shadow-2xl overflow-hidden '>
+              <div className='flex flex-col gap-8 mx-auto shadow-2xl  '>
                 <div className='px-4 flex flex-col gap-8  '>
-                  <div className='flex flex-col gap-6 pt-7 w-[350px] md:w-md'>
+                  <div className='flex flex-col gap-6 pt-7 w-full w-sm md:w-xl md:px-5 md:mt-5 '>
                     <div className='flex flex-col gap-2'>
                       <label htmlFor="fullName" className='font-bold text-md'>Full Name</label>
                       <input type="text" placeholder='Your name' className='py-3.5 px-4 h-[47px] rounded-lg bg-transparent border border-gray-300 placeholder:text-gray-400 focus:ring focus:ring-green-300 outline-none' />
@@ -38,7 +38,7 @@ const ContactUs = () => {
                     </div>
 
                     <div className='flex flex-col gap-2'>
-                      <textarea name="message" id="" placeholder='Type your message here...' className='py-3.5 px-4 h-[100px] rounded-lg bg-transparent border border-gray-300 placeholder:text-gray-400 focus:ring focus:ring-green-300 outline-none'></textarea>
+                      <textarea name="message" id="" placeholder='Type your message here...' className='py-3.5 px-4 h-[150px] rounded-lg bg-transparent border border-gray-300 placeholder:text-gray-400 focus:ring focus:ring-green-300 outline-none'></textarea>
                     </div>
                   </div>
 
