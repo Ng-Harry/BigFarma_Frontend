@@ -2,7 +2,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { Link } from 'react-router-dom';
-import '../../app.css'
+import '../../App.css'
 
 const Support = ({ show, onClose }) => {
   return (
