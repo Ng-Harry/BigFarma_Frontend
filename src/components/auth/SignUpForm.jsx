@@ -5,6 +5,7 @@ import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import DesktopBgSignUp from '../../assets/images/DesktopSignUp.jpg';
 
 const SignUpForm = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -54,7 +55,7 @@ const SignUpForm = () => {
       <div className="bg-white shadow-lg rounded-2xl overflow-hidden max-w-5xl w-full grid md:grid-cols-2">
         {/* Left Image */}
         <div className="hidden md:block">
-          <img src="/src/assets/images/imageSignUp.jpg" alt="Sign Up" className="h-full w-full object-cover" />
+          <img src={DesktopBgSignUp} alt="Sign Up" className="h-full w-full object-cover" />
         </div>
 
         {/* Right Form */}
@@ -66,7 +67,7 @@ const SignUpForm = () => {
             {/* Phone or Email */}
             <div>
               <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone number or Email</label>
-              <PhoneInput
+              <PhoneInput 
                 country={'ng'}
                 value={phoneNumber}
                 onChange={handleChange}
