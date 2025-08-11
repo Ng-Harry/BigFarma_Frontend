@@ -1,15 +1,26 @@
-import bgSignIn from "../../assets/images/imageSignUp.jpg";
-import { countries } from "../../lib/countries";
-import Dropdown from "@/components/shared/Dropdown";
-import { EyeOff, Eye } from "lucide-react";
-import { Navigate, NavLink, useNavigate } from "react-router-dom";
-import { FaApple } from "react-icons/fa";
-import googleIcon from "../../assets/icons/google.png";
+// ==================== Images & Icons ====================
+import MobileBgSignIn from "../../assets/images/MobileSignup.png";
+import DesktopBgSignIn from "../../assets/images/DesktopSignUp.jpg";
 import supportIcon from "../../assets/icons/Support_Icon .png";
-import { motion, AnimatePresence } from "framer-motion";
+import { EyeOff, Eye } from "lucide-react";
+import { FaApple } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
+
+// ==================== Data & Config ====================
+import { countries } from "../../lib/countries";
+
+// ==================== React & Hooks ====================
 import { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import useForm from "../../hooks/useForm";
+import useIsMobile from "../../hooks/useIsMobile";
+
+// ==================== Components ====================
+import Dropdown from "@/components/shared/Dropdown";
 import Support from "./Support";
+
+// ==================== Animations ====================
+import { motion, AnimatePresence } from "framer-motion";
 
 const SignInForm = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -17,21 +28,22 @@ const SignInForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showSupport, setShowSupport] = useState(false);
   const Navigate = useNavigate();
+  const isMobile = useIsMobile(); // Tailwind's breakpoint can be passed as a value
 
   const { loginData, errors, updateField, updateCountry, handleSubmit } =
     useForm();
 
-  // country
+  // Country
   const handleSelect = (country) => {
     // console.log("selected", country);
     setDropdownOpen(false);
     updateCountry(country);
   };
-  // dropdown ontoggle
+  // Dropdown ontoggle
   const handleDropdownToggle = () => {
     setDropdownOpen(!dropdownOpen);
   };
-  // focus on input
+  // Focus on input
   const handleInputClick = () => {
     setFocused(!focused);
   };
@@ -53,14 +65,24 @@ const SignInForm = () => {
   };
 
   return (
-    <div className="w-full h-screen flex items-center">
-      <div className="max-w-[35%] h-full">
-        <img src={bgSignIn} alt="" className="h-full w-full object-cover" />
+    <section className=" w-full h-screen  flex flex-col lg:flex-row items-center ">
+      <div className="w-full lg:max-w-[35%] h-full flex items-center justify-center overflow-hidden">
+        {/* Background Image */}
+        <img
+          src={isMobile ? MobileBgSignIn : DesktopBgSignIn}
+          alt="Sign In"
+          className="w-full h-screen lg:h-full md:h-[51.2rem] object-cover scale-150 md:scale-200 lg:scale-100 transition-transform duration-500"
+          style={{ transformOrigin: "center" }}
+        />
       </div>
 
-      {/* form */}
-      <div className="w-[65%] h-full border-2 border-white rounded-bl-lg rounded-tl-lg -ml-3 bg-white flex items-center justify-center">
-        <div className="w-[40rem] h-[40rem] flex flex-col justify-between">
+      {/* Form Container */}
+      <div
+        className="w-full absolute top-[50%] rounded-t-xl bg-white p-6  md:flex md:items-center md:justify-center 
+            lg:relative lg:w-[65%] lg:h-full lg:rounded-tl-lg lg:rounded-bl-lg  
+            lg:-ml-1 lg:z-10 lg:top-0"
+      >
+        <div className=" w-full max-w-2xl flex flex-col  justify-between bg-white py-3 space-y-4">
           <div>
             <span className="text-[32px] font-bold leading-tight">
               Welcome Back!
@@ -112,8 +134,8 @@ const SignInForm = () => {
                   placeholder="Your Phone number or Email"
                   initial={false}
                   animate={{
-                    width: focused ? 680 : 600,
-                    marginLeft: focused ? -50 : 0,
+                    width: focused ? 680 : 625,
+                    marginLeft: focused ? -57 : 0,
                   }}
                   transition={{ duration: 0.3 }}
                   className={`border p-2.5 rounded-lg placeholder:text-base placeholder:text-[#98A2B3] relative z-10 cursor-pointer ${
@@ -150,7 +172,7 @@ const SignInForm = () => {
                 value={loginData.password}
                 onChange={(e) => handleUpdateField("password", e.target.value)}
                 placeholder="Must be 8 characters"
-                className={`w-[630px] p-2.5 rounded-lg placeholder:text-base placeholder:tracking-tight placeholder:text-[#98A2B3] ${
+                className={`w-full max-w-md- p-2.5 rounded-lg placeholder:text-base placeholder:tracking-tight placeholder:text-[#98A2B3] ${
                   errors.password ? "border-red-500" : "border-[#DDD5DD]"
                 } border`}
               />
@@ -178,7 +200,7 @@ const SignInForm = () => {
               </AnimatePresence>
             </div>
 
-            {/* remember me */}
+            {/* Remember me and forgot password */}
             <div className="flex items-center justify-between gap-2 mt-4 text-[#FFA725] text-sm font-medium">
               <div className="inline-flex items-center gap-2">
                 <input
@@ -201,33 +223,50 @@ const SignInForm = () => {
             {/* sign in button */}
             <button
               type="submit"
-              className="w-[630px] h-12 rounded-lg mt-4 font-normal text-[22px] bg-[#DDD5DD] text-[#3C3C3C]"
+              className="w-full px-6 py-3  rounded-lg mt-4 font-normal text-[22px] bg-[#DDD5DD] text-[#3C3C3C]"
             >
               Sign In
             </button>
           </form>
 
           {/* divider */}
-          <div className="mt-8 flex items-center justify-center gap-5">
-            <p className="w-[18rem] border-[0.5px] opacity-50 text-[#00000066]"></p>
-            <span>or</span>
-            <p className="w-[18rem] border-[0.5px] opacity-50 text-[#00000066]"></p>
+          <div className="mt-8 flex items-center gap-5">
+            <div className="flex-1 border-t border-[#00000066] opacity-50"></div>
+            {isMobile ? (
+              <span className="text-sm font-normal">or sign up with</span>
+            ) : (
+              <span className="text-lg font-medium">or</span>
+            )}
+            <div className="flex-1 border-t border-[#00000066] opacity-50"></div>
           </div>
 
           {/* social media buttons */}
-          <div className="flex items-center justify-center gap-7.5 mt-5 font-normal text-base">
-            <div className="w-[300px] h-12 flex items-center justify-center gap-2 border border-[#3C3C3C] rounded-lg">
-              <img src={googleIcon} alt="" className="w-[24px] h-[24px]" />
-              <button>
-                Sign in with <strong>Google</strong>
-              </button>
-            </div>
-            <div className="w-[300px] h-12 flex items-center justify-center gap-2 border border-[#3C3C3C] rounded-lg">
-              <FaApple className="text-2xl text-black" />
-              <button>
-                Sign in with <strong>Apple</strong>
-              </button>
-            </div>
+          <div className=" flex items-center justify-center gap-7.5 mt-5 font-normal text-base">
+            {isMobile ? (
+              <div className="flex items-center gap-12.5">
+                <div className="w-[48px] h-12 flex items-center justify-center gap-2 bg-white border border-[#3C3C3C] rounded-full shadow-lg">
+                  <FcGoogle className="text-2xl" />
+                </div>
+                <div className="w-[48px] h-12 flex items-center justify-center bg gap-2 bg-white border border-[#3C3C3C] rounded-full shadow-lg">
+                  <FaApple className="text-2xl text-black" />
+                </div>
+              </div>
+            ) : (
+              <>
+                <div className="w-[300px] h-12 flex items-center justify-center gap-2 border border-[#3C3C3C] rounded-lg">
+                  <FcGoogle className="text-2xl" />
+                  <button>
+                    Sign in with <strong>Google</strong>
+                  </button>
+                </div>
+                <div className="w-[300px] h-12 flex items-center justify-center gap-2 border border-[#3C3C3C] rounded-lg">
+                  <FaApple className="text-2xl text-black" />
+                  <button>
+                    Sign in with <strong>Apple</strong>
+                  </button>
+                </div>
+              </>
+            )}
           </div>
 
           {/* sign up and support */}
@@ -253,7 +292,7 @@ const SignInForm = () => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
