@@ -23,7 +23,7 @@ const Hero = () => {
             Growing Agriculture
           </div>
           <span className="italic text-base sm:text-lg text-[var(--color-primary)] ">
-            Transforming Africa’s agro business
+            Transforming Africa&apos;s agro business
           </span>
           <NavLink
             to="sign-up"

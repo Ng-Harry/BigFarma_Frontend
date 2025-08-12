@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import PhoneInput from 'react-phone-input-2';
-import 'react-phone-input-2/lib/style.css';
+import DesktopBgSignUp from "../../assets/images/DesktopSignUp.jpg";
+import { RegisterMutation } from '@/components/queries/auth/register';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import DesktopBgSignUp from '../../assets/images/DesktopSignUp.jpg';
+import { Link, useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignUpForm = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -22,6 +24,7 @@ const SignUpForm = () => {
 
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (value) => setPhoneNumber(value);
 
@@ -43,10 +46,36 @@ const SignUpForm = () => {
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
+      toast.error("Please fix the errors in the form.");
     } else {
       setErrors({});
-      console.log('Form submitted:', { phoneNumber, password });
-      // TODO: Add submit logic
+      let payload = {};
+      if (phoneNumber.includes('@')) {
+        payload = {
+          email: phoneNumber,
+          password,
+        };
+      } else {
+        payload = {
+          phone: phoneNumber,
+          password,
+        };
+      }
+
+      RegisterMutation(payload).then((result) => {
+        if (result.isSuccess) {
+          if (result.token?.access_token) {
+            Cookies.set('BIGFARMA_ACCESS_TOKEN', result.token.access_token);
+          }
+          toast.success(result.message || "Registration successful!");
+          navigate("/otp");
+        } else {
+          setErrors({ form: result.message });
+          toast.error(result.message || `Registration failed (code: ${result.statusCode})`);
+        }
+      }).catch((err) => {
+        toast.error(err?.message || "Registration failed. Please try again.");
+      });
     }
   };
 
@@ -66,16 +95,17 @@ const SignUpForm = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Phone or Email */}
             <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone number or Email</label>
-              <PhoneInput 
-                country={'ng'}
+              <label htmlFor="phoneOrEmail" className="block text-sm font-medium text-gray-700 mb-1">Phone number or Email</label>
+              <input
+                type="text"
+                id="phoneOrEmail"
                 value={phoneNumber}
-                onChange={handleChange}
+                onChange={e => setPhoneNumber(e.target.value)}
                 onBlur={() => setTouched({ ...touched, phone: true })}
                 placeholder="Your email or phone number"
-                inputProps={{ name: 'phone', required: true }}
-                inputStyle={{ width: '100%', height: '40px', borderRadius: '0.375rem', border: '1px solid #D1D5DB', padding: '0.5rem' }}
-                containerClass="w-full"
+                name="phoneOrEmail"
+                required
+                className="w-full h-10 rounded-md border border-gray-300 px-2 py-2 focus:outline-none"
               />
               {touched.phone && errors.phone && (
                 <p className="text-red-600 text-xs mt-1">{errors.phone}</p>
@@ -135,15 +165,15 @@ const SignUpForm = () => {
                 checked={agree}
                 onChange={(e) => setAgree(e.target.checked)}
                 onBlur={() => setTouched({ ...touched, agree: true })}
-                className="mt-1 accent-purple-600"
+                className="mt-1 accent-color-secondary"
               />
               <label htmlFor="agree" className="text-xs leading-snug">
                 By signing up, you agree to our{' '}
-                <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-purple-600 underline">
+                <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-color-secondary underline">
                   Terms & Conditions
                 </a>{' '}
                 and{' '}
-                <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-purple-600 underline">
+                <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-color-secondary underline">
                   Privacy Policy
                 </a>.
               </label>
@@ -177,7 +207,7 @@ const SignUpForm = () => {
             {/* Sign In Link */}
             <p className="text-xs text-center mt-4">
               Already have an account?{' '}
-              <Link to="/SignInForm" className="text-purple-600 font-semibold">Sign in</Link>
+              <Link to="/sign-in" className="text-color-secondary font-semibold">Sign in</Link>
             </p>
           </form>
         </div>
@@ -187,4 +217,4 @@ const SignUpForm = () => {
 };
 
 export default SignUpForm;
- 
+

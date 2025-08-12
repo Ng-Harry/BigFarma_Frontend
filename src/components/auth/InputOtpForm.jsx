@@ -5,21 +5,32 @@ import { ChevronLeft, Check } from "lucide-react"
 import Button from "@/components/shared/Button"
 import OtpInput from "@/components/shared/OtpInput"
 import { useNavigate } from "react-router-dom"
+import { verifyOtp } from "@/components/queries/auth/verifyOtp";
+import { toast } from "react-toastify";
 
-function InputOtpForm () {
+function InputOtpForm ({ email = "hello@bigfarma.com" }) {
   const [value, setValue] = useState("")
   const [isSuccess, setIsSuccess] = useState(false)
   const [isResending, setIsResending] = useState(false)
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate()
 
-  const handleVerify = () => {
-    if (value.length === 6) setIsSuccess(true)
+  const handleVerify = async () => {
+    if (value.length !== 6) return;
+    setLoading(true);
+    const result = await verifyOtp({ email, otp_code: value, otp_type: "email" });
+    setLoading(false);
+    if (result.isSuccess) {
+      toast.success(result.message || "OTP verified successfully!");
+      setIsSuccess(true);
+    } else {
+      toast.error(result.message || "OTP verification failed.");
+    }
   }
 
   const handleResendCode = async () => {
     setIsResending(true)
     setValue("")
-    // Simulate async resend
     await new Promise(resolve => setTimeout(resolve, 1200))
     setIsResending(false)
     console.log("Resending code...")
@@ -76,19 +87,19 @@ function InputOtpForm () {
             <div className="space-y-2">
               <h1 className="text-xl md:text-[32px] font-bold">Enter the verification code</h1>
               <p className="text-lg">
-                We sent a reset link to <span className="font-medium">hello@bigfarma.com</span> enter 6 digits code that mentioned in the email
+                We sent a 6 digit code to <span className="font-medium">{email}</span>. Please enter it to continue
               </p>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-center">
               <OtpInput length={6} value={value} onChange={setValue} />
             </div>
             <Button
               onClick={handleVerify}
               className="w-full"
               variant="default"
-              disabled={value.length !== 6}
+              disabled={value.length !== 6 || loading}
             >
-              Verify Code
+              {loading ? "Verifying..." : "Verify Code"}
             </Button>
             <div className="text-center">
               <span className="">{"Haven't gotten code yet? "}</span>
