@@ -68,7 +68,8 @@ const SignUpForm = () => {
             Cookies.set('BIGFARMA_ACCESS_TOKEN', result.token.access_token);
           }
           toast.success(result.message || "Registration successful!");
-          navigate("/otp");
+          const userEmail = result.data?.user?.email || phoneNumber;
+          navigate("/otp", { state: { email: userEmail } });
         } else {
           setErrors({ form: result.message });
           toast.error(result.message || `Registration failed (code: ${result.statusCode})`);
