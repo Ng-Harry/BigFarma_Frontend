@@ -7,7 +7,7 @@ export default function ThinkInvestment() {
 				<div className="relative max-w-7xl mx-auto">
 					<img
 						src={bgImage}
-						alt=""
+						alt="background image"
 						className="max-w-7xl mx-auto w-full h-[150px] md:h-auto object-cover"
 					/>
 					<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center w-full text-[var(--color-neutral-light)]">
