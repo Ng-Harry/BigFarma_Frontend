@@ -1,4 +1,3 @@
-// component import
 import {
   AboutUsSection,
   HowItWorksSection,
@@ -15,12 +14,14 @@ import {
 const Home = () => {
   return (
     <>
-      <div className="w-full h-full mb-10 bg-[var(--color-neutral-light)] lg:bg-[url('./assets/images/Background-Image.png')] bg-cover bg-center md:bg-no-repeat">
-        <NavBar />
-        <Hero />
-      </div>
+      <section className="w-full h-full bg-white  px-4 sm:px-8 lg:bg-[url('./assets/images/Background-Image.png')] lg:mx-auto lg:bg-cover lg:bg-center">
+        <div className="lg:max-w-[1440px]">
+          <NavBar />
+          <Hero />
+        </div>
+      </section>
 
-      <section id="about-us">
+      <section id="About-us">
         <AboutUsSection /> {/* AboutUsSection */}
       </section>
 
@@ -36,14 +37,14 @@ const Home = () => {
         <ThinkInvestment /> {/* ThinkInvestment */}
       </section>
 
-      <section id="faqs">
+      <section id="FAQs">
         <FAQsSection /> {/* FAQs */}
       </section>
 
-      <section id="testimonials">
+      <section id="Testimonials">
         <Testimonials />
       </section>
-      <section id="contact-us">
+      <section id="Contact-us">
         <ContactUs />
       </section>
 
