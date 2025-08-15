@@ -2,30 +2,16 @@ import { NavLink } from "react-router-dom";
 import { Link } from "react-scroll";
 import { useState } from "react";
 import brandLogo from "../../assets/images/brand-logo.png";
-import "../../assets/styles/NavBar.css";
+import { HiMenu, HiX } from "react-icons/hi";
+import { motion, AnimatePresence } from "framer-motion";
+// import "../../assets/styles/NavBar.css";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isAnimation, setIsAnimation] = useState(false);
-  const [Exit, setExit] = useState(false);
-
-  const toggleHamburgerMenu = () => {
-    if (isOpen) {
-      setExit(true);
-      setTimeout(() => {
-        setIsAnimation(false);
-        setIsOpen(false);
-        setExit(false);
-      }, 300);
-    } else {
-      setIsOpen(true);
-      setIsAnimation(true);
-    }
-    // setIsOpen(!isOpen);
-  };
+  const toggleHamburgerMenu = () => setIsOpen((prev) => !prev);
 
   return (
-    <header className="w-full h-23 flex items-center justify-between px-4 sm:px-20">
+    <header className="w-full h-23 flex items-center justify-between px-4 md:px-12">
       {/* Brand Logo */}
       <img
         src={brandLogo}
@@ -35,36 +21,18 @@ const NavBar = () => {
 
       {/* DesktopMenu */}
       <nav className=" hidden md:flex gap-8 items-center navlink text-base leading-none font-medium">
-        <Link to="home" smooth={true} duration={500} className="cursor-pointer">
-          Home
-        </Link>
-        <Link
-          to="about-us"
-          smooth={true}
-          duration={500}
-          className="cursor-pointer"
-        >
-          About Us
-        </Link>
-        <Link to="faqs" smooth={true} duration={500} className="cursor-pointer">
-          FAQs
-        </Link>
-        <Link
-          to="testimonials"
-          smooth={true}
-          duration={500}
-          className="cursor-pointer"
-        >
-          Testimonials
-        </Link>
-        <Link
-          to="contact-us"
-          smooth={true}
-          duration={500}
-          className="cursor-pointer"
-        >
-          Contact Us
-        </Link>
+        {["Home", "About-us", "FAQs", "Testimonials", "Contact-us"].map(
+          (menu) => (
+            <Link
+              to={menu}
+              smooth={true}
+              duration={500}
+              className="cursor-pointer capitalize"
+              onClick={() => setIsOpen(false)}>
+              {menu.replace("-", " ")}
+            </Link>
+          )
+        )}
       </nav>
 
       {/*Desktop Sign In/Sign Up */}
@@ -85,6 +53,7 @@ const NavBar = () => {
 
       {/* Mobile View */}
 
+      {/* Hamburger & Exit Icon for Mobile */}
       <div className="md:hidden flex items-center gap-4">
         <NavLink
           to="/sign-in"
@@ -92,94 +61,67 @@ const NavBar = () => {
         >
           Sign In
         </NavLink>
+
         {/* Hamburger & Exit Icon for Mobile */}
-        {isOpen ? (
-          <button onClick={toggleHamburgerMenu}>
-            <svg
-              className="w-8 h-8"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              viewBox="0 0 24 24"
+        <AnimatePresence mode="wait" initial={false}>
+          {isOpen ? (
+            <motion.button
+              key="close"
+              onClick={toggleHamburgerMenu}
+              initial={{ rotate: -90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: 90, opacity: 0 }}
+              transition={{ duration: 0.3 }}
             >
-              <path d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        ) : (
-          <button onClick={toggleHamburgerMenu}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              className="w-8 h-8"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              <HiX className="w-8 h-8" />
+            </motion.button>
+          ) : (
+            <motion.button
+              key="open"
+              onClick={toggleHamburgerMenu}
+              initial={{ rotate: 90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: -90, opacity: 0 }}
+              transition={{ duration: 0.3 }}
             >
-              <path d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
-        )}
+              <HiMenu className="w-8 h-8" />
+            </motion.button>
+          )}
+        </AnimatePresence>
       </div>
-      {/* Mobile Menu */}
-      {isAnimation && (
-        <nav
-          className={` md:hidden w-[90vw] h-auto flex flex-col items-center gap-4 py-6 navlink absolute top-20 bg-[var(--color-neutral-light)] z-50 shadow-md ${
-            Exit ? "menu-animate-up" : "menu-animate-down"
-          }`}
-        >
-          <Link
-            to="home"
-            smooth={true}
-            duration={500}
-            className="cursor-pointer"
+      {/* Mobile Menu Dropdown */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.nav
+            initial={{ y: -30, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -30, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="md:hidden w-[90vw] h-auto flex flex-col items-center gap-4 py-6 navlink absolute top-20 bg-[var(--color-neutral-light)] z-50 shadow-md"
           >
-            Home
-          </Link>
-          <Link
-            to="about-us"
-            smooth={true}
-            duration={500}
-            className="cursor-pointer"
-          >
-            About Us
-          </Link>
-          <Link
-            to="faqs"
-            smooth={true}
-            duration={500}
-            className="cursor-pointer"
-          >
-            FAQs
-          </Link>
-          <Link
-            to="testimonials"
-            smooth={true}
-            duration={500}
-            className="cursor-pointer"
-          >
-            Testimonials
-          </Link>
-          <Link
-            to="contact-us"
-            smooth={true}
-            duration={500}
-            className="cursor-pointer"
-          >
-            Contact Us
-          </Link>
-          <NavLink
-            to="/sign-up"
-            className="border-1 bg-[var(--color-primary)] px-5 py-4 rounded-lg text-base leading-none "
-            style={{ color: "var(--color-neutral-light)" }}
-          >
-            Sign Up
-          </NavLink>
-        </nav>
-      )}
+            {["Home", "About-us", "FAQs", "Testimonials", "Contact-us"].map(
+              (menu) => (
+                <Link
+                  to={menu}
+                  smooth={true}
+                  duration={500}
+                  className="cursor-pointer capitalize"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {menu.replace("-", " ")}
+                </Link>
+              )
+            )}
+            <NavLink
+              to="/sign-up"
+              className="border-1 bg-[var(--color-primary)] px-5 py-4 rounded-lg text-base leading-none "
+              style={{ color: "var(--color-neutral-light)" }}
+            >
+              Sign Up
+            </NavLink>
+          </motion.nav>
+        )}
+      </AnimatePresence>
     </header>
   );
 };

@@ -223,7 +223,7 @@ const SignInForm = () => {
             {/* sign in button */}
             <button
               type="submit"
-              className="w-full px-6 py-3  rounded-lg mt-4 font-normal text-[22px] bg-[#DDD5DD] text-[#3C3C3C]"
+              className="w-full px-6 py-3  rounded-lg mt-4 font-normal text-[22px] bg-[#016130] hover:bg-[#003f1f]  text-white"
             >
               Sign In
             </button>
