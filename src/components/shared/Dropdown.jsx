@@ -1,26 +1,42 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import flags from "emoji-flags";
 
 const Dropdown = ({ countries = [], onSelect, isOpen, onToggle }) => {
   const [selected, setSelected] = useState(null);
+  const dropdownRef = useRef(null);
 
   const handleSelect = (country) => {
     setSelected(country);
     onSelect(country);
   };
+  //Close countries dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        if (isOpen) onToggle(); //closes toggle when open
+      }
+    };
+    window.addEventListener("click", handleClickOutside);
+    return () => window.removeEventListener("click", handleClickOutside);
+  }, [isOpen, onToggle]);
 
   return (
-    <div className="relative w-10">
+    <div ref={dropdownRef} className="relative w-10">
       {/* Toggle Button */}
       <div
         className="py-1 rounded cursor-pointer bg-white flex items-center justify-between text-xl"
-        onClick={onToggle}
+        onClick={(e) => {
+          e.stopPropagation();
+          onToggle();
+        }}
       >
         {selected ? selected.flag : flags.countryCode("NG").emoji}
         <ChevronDownIcon
-          className={`w-4 h-4 transition-transform duration-300 ${isOpen ? "rotate-180" : "rotate-0"}`}
+          className={`w-4 h-4 transition-transform duration-300 ${
+            isOpen ? "rotate-180" : "rotate-0"
+          }`}
         />
       </div>
 
@@ -43,7 +59,9 @@ const Dropdown = ({ countries = [], onSelect, isOpen, onToggle }) => {
                 <div className="w-[350px] h-8 inline-flex items-center gap-1 text-left px-2 text-[#3C3C3C] hover:bg-[#E9E9E9] font-normal">
                   <span>{country.flag}</span>
                   <span>{country.name}</span>
-                  <span className="font-extralight text-sm">{country.code}</span>
+                  <span className="font-extralight text-sm">
+                    {country.code}
+                  </span>
                 </div>
               </div>
             ))}
