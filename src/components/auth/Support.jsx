@@ -2,7 +2,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { Link } from 'react-router-dom';
-import '../../app.css'
+import '../../App.css'
 
 const Support = ({ show, onClose }) => {
   return (
@@ -38,25 +38,25 @@ const Support = ({ show, onClose }) => {
                 <div className="capitalize font-medium text-xl flex flex-col gap-4">
                   <Link
                     to={""}
-                    className="py-5 px-16 text-center border-2 border-slate-100 rounded-xl hover:bg-[var(--color-primary-dark)] hover:font-bold hover:text-white transition duration-300 ease-in-out"
+                    className="py-3 px-16 text-center text-[var(--color-primary-light)] border-1 border-[var(--color-primary-light)] rounded-xl hover:bg-gray-100 transition duration-300 ease-in-out"
                   >
                     FAQ / help center
                   </Link>
                   <Link
                     to={""}
-                    className="py-5 px-16 text-center border-2 border-slate-100 rounded-xl hover:bg-[var(--color-primary-dark)] hover:font-bold hover:text-white transition duration-300 ease-in-out"
+                    className="py-3 px-16 text-center text-[var(--color-primary-light)] border-1 border-[var(--color-primary-light)] rounded-xl hover:bg-gray-100 transition duration-300 ease-in-out"
                   >
                     In-App chat
                   </Link>
                   <Link
                     to={""}
-                    className="py-5 px-16 text-center border-2 border-slate-100 rounded-xl hover:bg-[var(--color-primary-dark)] hover:font-bold hover:text-white transition duration-300 ease-in-out"
+                    className="py-3 px-16 text-center text-[var(--color-primary-light)] border-1 border-[var(--color-primary-light)] rounded-xl hover:bg-gray-100 transition duration-300 ease-in-out"
                   >
                     Email support
                   </Link>
                   <Link
                     to={""}
-                    className="py-5 px-16 text-center border-2 border-slate-100 rounded-xl hover:bg-[var(--color-primary-dark)] hover:font-bold hover:text-white transition duration-300 ease-in-out"
+                    className="py-3 px-16 text-center text-[var(--color-primary-light)] border-1 border-[var(--color-primary-light)] rounded-xl hover:bg-gray-100 transition duration-300 ease-in-out"
                   >
                     Phone hotline
                   </Link>

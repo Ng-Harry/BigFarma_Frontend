@@ -1,5 +1,5 @@
 /* Hamburger Menu animation */
-  @keyframes slideDown {
+  /* @keyframes slideDown {
     0%{
       opacity: 0;
       transform: translateY(-1rem);
@@ -25,4 +25,4 @@
   }
   .menu-animate-up{
     animation: slideUp 0.3s ease-in forwards;
-  }
+  } */
