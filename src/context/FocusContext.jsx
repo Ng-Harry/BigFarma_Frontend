@@ -1,5 +1,5 @@
 // src/context/FocusContext.jsx
-import { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
 
 // Create a context
 const FocusContext = createContext();
@@ -15,4 +15,4 @@ export const FocusProvider = ({ children }) => {
 };
 
 // Hook to consume the context
-export const useFocus = () => useContext(FocusContext);
+// export const useFocus = () => useContext(FocusContext);

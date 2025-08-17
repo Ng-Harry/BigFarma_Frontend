@@ -9,21 +9,24 @@ import ForgotPassword from "./pages/ForgotPassword";
 import InputOtp from "./pages/InputOtp";
 import ResetPassword from "./pages/ResetPassword";
 import RoleSelection from "./pages/RoleSelection";
-import Dashboard from "./pages/Dashboard";
+
+import { DashboardPage } from "./pages";
 
 const App = () => {
-  return (  
+  return (
     <>
       <ToastContainer position="top-right" autoClose={3000} />
       <Routes>
         <Route path="/" element={<Home />} />
+        {/* auth */}
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/otp" element={<InputOtp />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/role-selection" element={<RoleSelection />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        {/* Dashboard */}
+        <Route path="/dashboard" element={<DashboardPage />} />
       </Routes>
     </>
   );

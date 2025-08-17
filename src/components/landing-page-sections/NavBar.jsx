@@ -24,11 +24,13 @@ const NavBar = () => {
         {["Home", "About-us", "FAQs", "Testimonials", "Contact-us"].map(
           (menu) => (
             <Link
+              key={menu}
               to={menu}
               smooth={true}
               duration={500}
               className="cursor-pointer capitalize"
-              onClick={() => setIsOpen(false)}>
+              onClick={() => setIsOpen(false)}
+            >
               {menu.replace("-", " ")}
             </Link>
           )
