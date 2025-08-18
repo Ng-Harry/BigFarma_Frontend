@@ -1,29 +1,61 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { ChevronLeft, Check } from "lucide-react"
 import Button from "@/components/shared/Button"
 import OtpInput from "@/components/shared/OtpInput"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
+import { verifyOtp } from "@/components/queries/auth/verifyOtp";
+import { requestOtp } from "@/components/queries/auth/register";
+import { toast } from "react-toastify";
 
-function InputOtpForm () {
+function InputOtpForm (props) {
+  const location = useLocation();
+  const email = location.state?.email || props.email || "";
   const [value, setValue] = useState("")
   const [isSuccess, setIsSuccess] = useState(false)
   const [isResending, setIsResending] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const [timer, setTimer] = useState(60);
+  const timerRef = useRef();
   const navigate = useNavigate()
 
-  const handleVerify = () => {
-    if (value.length === 6) setIsSuccess(true)
+  useEffect(() => {
+    if (timer > 0) {
+      timerRef.current = setTimeout(() => setTimer(timer - 1), 1000);
+    }
+    return () => clearTimeout(timerRef.current);
+  }, [timer]);
+
+  const handleVerify = async () => {
+    if (value.length !== 6) return;
+    setLoading(true);
+    const result = await verifyOtp({ email, otp_code: value, otp_type: "email" });
+    setLoading(false);
+    if (result.isSuccess) {
+      toast.success(result.message || "OTP verified successfully!");
+      setIsSuccess(true);
+    } else {
+      toast.error(result.message || "OTP verification failed.");
+    }
   }
 
   const handleResendCode = async () => {
-    setIsResending(true)
-    setValue("")
-    // Simulate async resend
-    await new Promise(resolve => setTimeout(resolve, 1200))
-    setIsResending(false)
-    console.log("Resending code...")
-  }
+    setIsResending(true);
+    setValue("");
+    try {
+      const result = await requestOtp({ email, otp_type: "email" });
+      if (result.isSuccess) {
+        toast.success(result.message || "OTP resent successfully!");
+        setTimer(60);
+      } else {
+        toast.error(result.message || "Failed to resend OTP.");
+      }
+    } catch (err) {
+      toast.error("Failed to resend OTP. Please try again.");
+    }
+    setIsResending(false);
+  };
 
   const handleBack = () => {
     navigate("/")
@@ -76,19 +108,19 @@ function InputOtpForm () {
             <div className="space-y-2">
               <h1 className="text-xl md:text-[32px] font-bold">Enter the verification code</h1>
               <p className="text-lg">
-                We sent a reset link to <span className="font-medium">hello@bigfarma.com</span> enter 6 digits code that mentioned in the email
+                We sent a 6 digit code to <span className="font-medium">{email}</span>. Please enter it to continue
               </p>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-center">
               <OtpInput length={6} value={value} onChange={setValue} />
             </div>
             <Button
               onClick={handleVerify}
               className="w-full"
               variant="default"
-              disabled={value.length !== 6}
+              disabled={value.length !== 6 || loading}
             >
-              Verify Code
+              {loading ? "Verifying..." : "Verify Code"}
             </Button>
             <div className="text-center">
               <span className="">{"Haven't gotten code yet? "}</span>
@@ -96,9 +128,13 @@ function InputOtpForm () {
                 variant="link"
                 onClick={handleResendCode}
                 className="text-[#ffa725] hover:text-[#ffa725] font-medium p-0 h-auto cursor-pointer"
-                disabled={isResending}
+                disabled={isResending || timer > 0}
               >
-                {isResending ? "Resending..." : "Resend code"}
+                {isResending
+                  ? "Resending..."
+                  : timer > 0
+                  ? `Resend code in ${timer}s`
+                  : "Resend code"}
               </button>
             </div>
           </div>

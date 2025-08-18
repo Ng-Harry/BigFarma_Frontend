@@ -19,6 +19,7 @@
   --color-neutral-dark: #000000;
   --color-neutral: #3c3c3c;
   --color-neutral-light: #ffffff;
+  --color-text-neutral: #2F2E38;
 }
 
 html,
@@ -31,7 +32,6 @@ body,
   margin: 0;
   padding: 0;
 }
-
 .navlink a {
   color: var(--color-neutral-dark);
   transition: color 0.3s ease;
@@ -44,4 +44,12 @@ body,
 }
 .font-rubik {
   font-family: 'Rubik', sans-serif;
+}
+
+.text-color-secondary {
+  color: var(--color-secondary);
+}
+
+.text-custom-color {
+  color: #2F2E38;
 }
