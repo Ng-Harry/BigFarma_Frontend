@@ -66,7 +66,7 @@ const SignInForm = () => {
   };
 
   return (
-    <section className=" w-full h-screen  flex flex-col lg:flex-row items-center border relative ">
+    <section className=" w-full h-screen  flex flex-col lg:flex-row items-center relative ">
       <div className="w-full lg:max-w-[35%] h-full flex items-center justify-center overflow-hidden">
         {/* Background Image */}
         <img
@@ -293,6 +293,8 @@ const SignInForm = () => {
           </div>
         </div>
       </div>
+
+      
     </section>
   );
 };
