@@ -3,7 +3,7 @@ import investmentIcon from "../../assets/icons/investment.svg";
 import logisticsIcon from "../../assets/icons/logistics.svg";
 import insightsIcon from "../../assets/icons/insights.svg";
 
-function WorkCard({ title, description, image, bgColor, iconBgColor, textColor = "text-white", descriptionColor }) {
+function WorkCard({ title, description, image, bgColor, textColor = "text-white", descriptionColor }) {
   const getBgColorStyle = (colorName) => {
     const colorMap = {
       'bg-primary': '#016130',

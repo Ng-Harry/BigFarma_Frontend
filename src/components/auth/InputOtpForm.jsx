@@ -1,24 +1,24 @@
-"use client"
+"use client";
 
-import { useState, useEffect, useRef } from "react"
-import { ChevronLeft, Check } from "lucide-react"
-import Button from "@/components/shared/Button"
-import OtpInput from "@/components/shared/OtpInput"
-import { useNavigate, useLocation } from "react-router-dom"
+import { useState, useEffect, useRef } from "react";
+import { ChevronLeft, Check } from "lucide-react";
+import Button from "@/components/shared/Button";
+import OtpInput from "@/components/shared/OtpInput";
+import { useNavigate, useLocation } from "react-router-dom";
 import { verifyOtp } from "@/components/queries/auth/verifyOtp";
 import { requestOtp } from "@/components/queries/auth/register";
 import { toast } from "react-toastify";
 
-function InputOtpForm (props) {
+function InputOtpForm(props) {
   const location = useLocation();
   const email = location.state?.email || props.email || "";
-  const [value, setValue] = useState("")
-  const [isSuccess, setIsSuccess] = useState(false)
-  const [isResending, setIsResending] = useState(false)
+  const [value, setValue] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isResending, setIsResending] = useState(false);
   const [loading, setLoading] = useState(false);
   const [timer, setTimer] = useState(60);
   const timerRef = useRef();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (timer > 0) {
@@ -30,7 +30,11 @@ function InputOtpForm (props) {
   const handleVerify = async () => {
     if (value.length !== 6) return;
     setLoading(true);
-    const result = await verifyOtp({ email, otp_code: value, otp_type: "email" });
+    const result = await verifyOtp({
+      email,
+      otp_code: value,
+      otp_type: "email",
+    });
     setLoading(false);
     if (result.isSuccess) {
       toast.success(result.message || "OTP verified successfully!");
@@ -38,7 +42,7 @@ function InputOtpForm (props) {
     } else {
       toast.error(result.message || "OTP verification failed.");
     }
-  }
+  };
 
   const handleResendCode = async () => {
     setIsResending(true);
@@ -51,19 +55,19 @@ function InputOtpForm (props) {
       } else {
         toast.error(result.message || "Failed to resend OTP.");
       }
-    } catch (err) {
+    } catch {
       toast.error("Failed to resend OTP. Please try again.");
     }
     setIsResending(false);
   };
 
   const handleBack = () => {
-    navigate("/")
-  }
+    navigate("/");
+  };
 
   const handleContinue = () => {
-    navigate("/")
-  }
+    navigate("/");
+  };
 
   if (isSuccess) {
     return (
@@ -77,7 +81,9 @@ function InputOtpForm (props) {
             </div>
             <div className="space-y-2">
               <h1 className="text-[32px] font-bold">Successful</h1>
-              <p className="">Congratulations your account has been successfully created</p>
+              <p className="">
+                Congratulations your account has been successfully created
+              </p>
             </div>
             <Button
               onClick={handleContinue}
@@ -89,7 +95,7 @@ function InputOtpForm (props) {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -106,9 +112,13 @@ function InputOtpForm (props) {
           </Button>
           <div className="space-y-8">
             <div className="space-y-2">
-              <h1 className="text-xl md:text-[32px] font-bold">Enter the verification code</h1>
+              <h1 className="text-xl md:text-[32px] font-bold">
+                Enter the verification code
+              </h1>
               <p className="text-lg">
-                We sent a 6 digit code to <span className="font-medium">{email}</span>. Please enter it to continue
+                We sent a 6 digit code to{" "}
+                <span className="font-medium">{email}</span>. Please enter it to
+                continue
               </p>
             </div>
             <div className="flex justify-center">
@@ -141,7 +151,7 @@ function InputOtpForm (props) {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default InputOtpForm;

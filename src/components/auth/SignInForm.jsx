@@ -20,7 +20,7 @@ import Dropdown from "@/components/shared/Dropdown";
 import Support from "./Support";
 
 // ==================== Animations ====================
-// eslint-disable-next-line no-unused-vars
+
 import { motion, AnimatePresence } from "framer-motion";
 
 const SignInForm = () => {
@@ -139,8 +139,9 @@ const SignInForm = () => {
                     marginLeft: focused ? -57 : 0,
                   }}
                   transition={{ duration: 0.3 }}
-                  className={`border p-2.5 rounded-lg placeholder:text-base placeholder:text-[#98A2B3] relative z-10 cursor-pointer ${errors.username ? "border-red-500" : "border-[#DDD5DD]"
-                    }`}
+                  className={`border p-2.5 rounded-lg placeholder:text-base placeholder:text-[#98A2B3] relative z-10 cursor-pointer ${
+                    errors.username ? "border-red-500" : "border-[#DDD5DD]"
+                  }`}
                 />
               </motion.div>
               {/* Animation for username error */}
@@ -172,8 +173,9 @@ const SignInForm = () => {
                 value={loginData.password}
                 onChange={(e) => handleUpdateField("password", e.target.value)}
                 placeholder="Must be 8 characters"
-                className={`w-full max-w-md- p-2.5 rounded-lg placeholder:text-base placeholder:tracking-tight placeholder:text-[#98A2B3] ${errors.password ? "border-red-500" : "border-[#DDD5DD]"
-                  } border`}
+                className={`w-full max-w-md- p-2.5 rounded-lg placeholder:text-base placeholder:tracking-tight placeholder:text-[#98A2B3] ${
+                  errors.password ? "border-red-500" : "border-[#DDD5DD]"
+                } border`}
               />
               {/* Password toggle to show/hide */}
               <div
