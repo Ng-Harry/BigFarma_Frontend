@@ -1,10 +1,11 @@
 import DoughnutChart from "./chart/Index";
 import { QuickLinks, RecentOrders } from "./components";
+import DashboardLayout from "./dashboard-layout";
 import Statistics from "./statistics/Index";
 
 const Dashboard = () => {
   return (
-    <div>
+    <DashboardLayout>
       <Statistics />
       <div className="grid grid-cols-3 gap-6 mt-6">
         <div className="col-span-2">
@@ -17,7 +18,7 @@ const Dashboard = () => {
 
         <QuickLinks />
       </div>
-    </div>
+    </DashboardLayout>
   );
 };
 
