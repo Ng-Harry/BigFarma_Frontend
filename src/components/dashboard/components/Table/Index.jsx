@@ -10,7 +10,10 @@ const orders = [
     date: "04-02-2025",
     status: "delivered",
   },
-  { id: "10002", farmName: "Olu Farm", date: "05-02-2025", status: "pending" },
+  { id: "10002", 
+    farmName: "Olu Farm", 
+    date: "05-02-2025", 
+    status: "pending" },
   {
     id: "10003",
     farmName: "Tola Farm",
@@ -30,7 +33,6 @@ const orders = [
     status: "shipping",
   },
 ];
-
 
 const RecentOrders = () => {
   const [isLoading, setIsLoading] = useState(true);
