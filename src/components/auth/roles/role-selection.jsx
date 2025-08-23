@@ -5,7 +5,7 @@ import Button from "@/components/shared/Button";
 import FarmerIcon from "../../../assets/svgs/farmer.svg"
 import LightCart from "../../../assets/svgs/light-cart.svg"
 import Cart from "../../../assets/svgs/cart.svg"
-
+import LightFarmer from "../../../assets/svgs/light-farmer.svg"
 export function RoleSelectionForm() {
   const [selectedRole, setSelectedRole] = useState(null);
   const navigate = useNavigate();
@@ -52,7 +52,7 @@ export function RoleSelectionForm() {
                 className={`w-16 h-16 rounded-full flex items-center justify-center drop-shadow-xl `}
               >
                 <img
-                  src={FarmerIcon}
+                  src={selectedRole === "farmer" ? LightFarmer : FarmerIcon}
                   alt="Farmer Icon"
                   className={`w-12 h-12 ${
                     selectedRole === "farmer" ? "text-white" : "text-white"

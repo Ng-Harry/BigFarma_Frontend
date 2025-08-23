@@ -115,7 +115,7 @@ const NavBar = () => {
               )
             )}
             <NavLink
-              to="/role-selection"
+              to="/role"
               className="border-1 bg-[var(--color-primary)] px-5 py-4 rounded-lg text-base leading-none "
               style={{ color: "var(--color-neutral-light)" }}
             >
