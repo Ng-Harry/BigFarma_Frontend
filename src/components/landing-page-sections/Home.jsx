@@ -15,7 +15,7 @@ const Home = () => {
   return (
     <>
       <section className="w-full h-full bg-white  px-4 sm:px-8 lg:bg-[url('./assets/images/Background-Image.png')] lg:mx-auto lg:bg-cover lg:bg-center">
-        <div className="lg:max-w-[1440px]">
+        <div className="lg:max-w-[1440px] mx-auto">
           <NavBar />
           <Hero />
         </div>

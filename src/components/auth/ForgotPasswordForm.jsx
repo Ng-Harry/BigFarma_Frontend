@@ -77,6 +77,7 @@ const ForgotPasswordForm = () => {
                 Phone No or Email
               </label>
 
+
               <div className="flex">
                 <Dropdown
                   countries={countries}
@@ -112,6 +113,81 @@ const ForgotPasswordForm = () => {
               {touched.phone && errors.phone && (
                 <p className="text-red-600 text-xs mt-1">{errors.phone}</p>
               )}
+              <motion.div
+                className="flex items-center gap-2 relative"
+                initial={false}
+                animate={{ marginLeft: focused ? '10px' : '0px' }}
+                transition={{ duration: 0.4 }}
+              >
+                {isPhone ? (
+                  <PhoneInput 
+                    country={'ng'}
+                    value={value}
+                    onChange={(phone) => setValue(phone)}
+                    onFocus={() => setFocused(true)}
+                    onBlur={() => {
+                      setFocused(false);
+                      setTouched({ ...touched, username: true });
+                    }}
+                    inputStyle={{
+                      width: '100%',
+                      height: '50px',
+                      borderRadius: '0.375rem',
+                      border: '1px solid #D1D5DB',
+                      padding: '0.5rem',
+                    }}
+                    containerClass="w-full"
+                    placeholder="Enter phone number"
+                    inputProps={{ name: 'phone', required: true }}
+                    // containerClass="flex-1"
+                    inputClass={`w-full py-[25px] rounded-lg placeholder:text-base placeholder:text-[#98A2B3]
+                    ${
+                      errors.username
+                        ? 'border border-red-500'
+                        : value
+                        ? 'border border-green-500'
+                        : 'border border-[#DDD5DD]'
+                    }`}
+                  />
+                ) : (
+                  <input
+                    type="text"
+                    value={value}
+                    onChange={(e) => handleInputChange(e.target.value)}
+                    onFocus={() => setFocused(true)}
+                    onBlur={() => {
+                      setFocused(false);
+                      setTouched({ ...touched, username: true });
+                    }}
+                    placeholder="Enter email or phone number"
+                    className={`border rounded-lg p-2.5 w-full  placeholder:text-base placeholder:text-[#98A2B3]
+                    ${
+                      errors.username
+                        ? 'border-red-500'
+                        : value
+                        ? 'border-green-500'
+                        : 'border-[#DDD5DD]'
+                    }`}
+                  />
+                )}
+              </motion.div>
+
+              {/* Error message */}
+              <AnimatePresence mode="wait">
+                {errors.username && (
+                  <motion.p
+                    key="username-error"
+                    initial={{ opacity: 0, y: -5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -5 }}
+                    transition={{ duration: 0.25 }}
+                    className="text-red-500 text-sm mt-1"
+                  >
+                    {errors.username}
+                  </motion.p>
+                )}
+              </AnimatePresence>
+
             </div>
 
             {/* Submit button */}

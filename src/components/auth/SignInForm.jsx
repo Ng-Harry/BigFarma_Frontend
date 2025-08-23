@@ -20,7 +20,7 @@ import Dropdown from "@/components/shared/Dropdown";
 import Support from "./Support";
 
 // ==================== Animations ====================
-// eslint-disable-next-line no-unused-vars
+
 import { motion, AnimatePresence } from "framer-motion";
 
 const SignInForm = () => {
@@ -66,7 +66,7 @@ const SignInForm = () => {
   };
 
   return (
-    <section className=" w-full h-screen  flex flex-col lg:flex-row items-center relative ">
+    <section className=" w-full h-screen  flex flex-col lg:flex-row items-center relative lg:overflow-hidden">
       <div className="w-full lg:max-w-[35%] h-full flex items-center justify-center overflow-hidden">
         {/* Background Image */}
         <img
@@ -283,7 +283,7 @@ const SignInForm = () => {
                 className="w-[40px] h-[40px] self-end"
                 onClick={() => setShowSupport(true)}
               />
-              <div className="absolute -bottom-32 -right-40">
+              <div className="absolute -bottom-20 -right-40">
                 <Support
                   show={showSupport}
                   onClose={() => setShowSupport(false)}
@@ -294,7 +294,7 @@ const SignInForm = () => {
         </div>
       </div>
 
-      
+
     </section>
   );
 };
