@@ -24,7 +24,7 @@ const App = () => {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/otp" element={<InputOtp />} />
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/role-selection" element={<RoleSelection />} />
+        <Route path="/role" element={<RoleSelection />} />
         {/* Dashboard */}
         <Route path="/dashboard" element={<DashboardPage />} />
       </Routes>

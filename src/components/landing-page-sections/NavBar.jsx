@@ -46,7 +46,7 @@ const NavBar = () => {
           Sign In
         </NavLink>
         <NavLink
-          to="/role-selection"
+          to="/role"
           className="bg-[var(--color-primary)] text-[var(--color-neutral-light)] w-[105px] h-[50px] px-5 py-4 rounded-lg text-base leading-none"
         >
           Sign Up

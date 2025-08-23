@@ -272,7 +272,7 @@ const SignInForm = () => {
           <div className="flex flex-col">
             <p className="font-rubik text-center text-base font-normal mt-5">
               Don't have an account?{" "}
-              <NavLink to="/sign-up" className="text-[#FFA725] font-medium">
+              <NavLink to="/role" className="text-[#FFA725] font-medium">
                 Sign Up
               </NavLink>
             </p>

@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "@/components/shared/Button";
+import LightCart from "../../../assets/svgs/light-cart.svg"
+import Cart from "../../../assets/svgs/cart.svg"
 
 export function RoleSelectionForm() {
   const [selectedRole, setSelectedRole] = useState(null);
@@ -101,8 +103,8 @@ export function RoleSelectionForm() {
                 <img
                   src={
                     selectedRole === "consumer"
-                      ? "/src/assets/svgs/light-cart.svg"
-                      : "/src/assets/svgs/cart.svg"
+                      ? LightCart
+                      : Cart
                   }
                   alt="Consumer Icon"
                   className="w-12 h-12"
