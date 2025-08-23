@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "@/components/shared/Button";
+import FarmerIcon from "../../../assets/svgs/farmer.svg"
 import LightCart from "../../../assets/svgs/light-cart.svg"
 import Cart from "../../../assets/svgs/cart.svg"
 
@@ -51,7 +52,7 @@ export function RoleSelectionForm() {
                 className={`w-16 h-16 rounded-full flex items-center justify-center drop-shadow-xl `}
               >
                 <img
-                  src="/src/assets/svgs/farmer.svg"
+                  src={FarmerIcon}
                   alt="Farmer Icon"
                   className={`w-12 h-12 ${
                     selectedRole === "farmer" ? "text-white" : "text-white"
