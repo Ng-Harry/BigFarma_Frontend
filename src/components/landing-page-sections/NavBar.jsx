@@ -46,7 +46,7 @@ const NavBar = () => {
           Sign In
         </NavLink>
         <NavLink
-          to="/sign-up"
+          to="/role-selection"
           className="bg-[var(--color-primary)] text-[var(--color-neutral-light)] w-[105px] h-[50px] px-5 py-4 rounded-lg text-base leading-none"
         >
           Sign Up
@@ -115,7 +115,7 @@ const NavBar = () => {
               )
             )}
             <NavLink
-              to="/sign-up"
+              to="/role-selection"
               className="border-1 bg-[var(--color-primary)] px-5 py-4 rounded-lg text-base leading-none "
               style={{ color: "var(--color-neutral-light)" }}
             >

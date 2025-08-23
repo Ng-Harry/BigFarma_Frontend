@@ -1,4 +1,4 @@
-import { RoleSelectionForm } from "../components/dashboard/role-selection";
+import { RoleSelectionForm } from "../components/auth/roles/role-selection";
 
 const RoleSelection = () => {
 
