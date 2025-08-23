@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect, useRef } from "react";
 import { ChevronLeft, Check } from "lucide-react";
 import Button from "@/components/shared/Button";
@@ -16,9 +15,9 @@ function InputOtpForm(props) {
   const [isSuccess, setIsSuccess] = useState(false);
   const [isResending, setIsResending] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [timer, setTimer] = useState(60);
-  const timerRef = useRef();
-  const navigate = useNavigate();
+  const [timer, setTimer] = useState(60); 
+  const timerRef = useRef(); 
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     if (timer > 0) {
@@ -28,7 +27,7 @@ function InputOtpForm(props) {
   }, [timer]);
 
   const handleVerify = async () => {
-    if (value.length !== 6) return;
+    if (value.length !== 6) return; 
     setLoading(true);
     const result = await verifyOtp({
       email,
@@ -37,8 +36,9 @@ function InputOtpForm(props) {
     });
     setLoading(false);
     if (result.isSuccess) {
-      toast.success(result.message || "OTP verified successfully!");
+      toast.success(result.message || "OTP verified successfully!"); 
       setIsSuccess(true);
+      navigate("/role-selection")
     } else {
       toast.error(result.message || "OTP verification failed.");
     }

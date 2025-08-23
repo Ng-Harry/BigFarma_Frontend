@@ -89,7 +89,7 @@ const ForgotPasswordForm = () => {
                 transition={{ duration: 0.4 }}
               >
                 {isPhone ? (
-                  <PhoneInput
+                  <PhoneInput 
                     country={'ng'}
                     value={value}
                     onChange={(phone) => setValue(phone)}
