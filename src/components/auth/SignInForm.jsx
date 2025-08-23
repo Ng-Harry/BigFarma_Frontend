@@ -66,7 +66,7 @@ const SignInForm = () => {
   };
 
   return (
-    <section className=" w-full h-screen  flex flex-col lg:flex-row items-center relative ">
+    <section className=" w-full h-screen  flex flex-col lg:flex-row items-center relative lg:overflow-hidden">
       <div className="w-full lg:max-w-[35%] h-full flex items-center justify-center overflow-hidden">
         {/* Background Image */}
         <img
@@ -139,9 +139,8 @@ const SignInForm = () => {
                     marginLeft: focused ? -57 : 0,
                   }}
                   transition={{ duration: 0.3 }}
-                  className={`border p-2.5 rounded-lg placeholder:text-base placeholder:text-[#98A2B3] relative z-10 cursor-pointer ${
-                    errors.username ? "border-red-500" : "border-[#DDD5DD]"
-                  }`}
+                  className={`border p-2.5 rounded-lg placeholder:text-base placeholder:text-[#98A2B3] relative z-10 cursor-pointer ${errors.username ? "border-red-500" : "border-[#DDD5DD]"
+                    }`}
                 />
               </motion.div>
               {/* Animation for username error */}
@@ -173,9 +172,8 @@ const SignInForm = () => {
                 value={loginData.password}
                 onChange={(e) => handleUpdateField("password", e.target.value)}
                 placeholder="Must be 8 characters"
-                className={`w-full max-w-md- p-2.5 rounded-lg placeholder:text-base placeholder:tracking-tight placeholder:text-[#98A2B3] ${
-                  errors.password ? "border-red-500" : "border-[#DDD5DD]"
-                } border`}
+                className={`w-full max-w-md- p-2.5 rounded-lg placeholder:text-base placeholder:tracking-tight placeholder:text-[#98A2B3] ${errors.password ? "border-red-500" : "border-[#DDD5DD]"
+                  } border`}
               />
               {/* Password toggle to show/hide */}
               <div
@@ -285,7 +283,7 @@ const SignInForm = () => {
                 className="w-[40px] h-[40px] self-end"
                 onClick={() => setShowSupport(true)}
               />
-              <div className="absolute -bottom-32 -right-40">
+              <div className="absolute -bottom-20 -right-40">
                 <Support
                   show={showSupport}
                   onClose={() => setShowSupport(false)}
@@ -296,7 +294,7 @@ const SignInForm = () => {
         </div>
       </div>
 
-      
+
     </section>
   );
 };
