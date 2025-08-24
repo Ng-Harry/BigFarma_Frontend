@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { AnimatePresence } from "framer-motion";
+import {motion, AnimatePresence } from "framer-motion";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import flags from "emoji-flags";
 

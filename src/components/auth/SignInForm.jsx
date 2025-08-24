@@ -70,7 +70,7 @@ const SignInForm = () => {
       <div className="w-full lg:max-w-[35%] h-full flex items-center justify-center overflow-hidden">
         {/* Background Image */}
         <img
-          src={isMobile ? MobileBgSignIn : DesktopBgSignIn}
+          src={isMobile ? MobileBgSignIn : DesktopBgSignIn} 
           alt="Sign In"
           className="w-full h-screen lg:h-full md:h-[51.2rem] object-cover scale-150 md:scale-200 lg:scale-100 transition-transform duration-500"
           style={{ transformOrigin: "center" }}
