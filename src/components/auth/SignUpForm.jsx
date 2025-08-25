@@ -10,6 +10,7 @@ import MobileBg from "../../assets/images/MobileSignup.png";
 import DesktopBgSignUp from "../../assets/images/DesktopSignUp.jpg";
 import { RegisterMutation } from "@/components/queries/auth/register";
 import Cookies from "js-cookie";
+import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -31,6 +32,7 @@ const SignUpForm = () => {
   });
 
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [focused, setFocused] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
   // Country selection
@@ -42,8 +44,16 @@ const SignUpForm = () => {
     }));
   };
 
-  const handleDropdownToggle = () => {
-    setDropdownOpen(!dropdownOpen);
+  const handleDropdownToggle = (e) => {
+  if (e) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+  setDropdownOpen(!dropdownOpen);
+};
+
+  const handleInputClick = () => {
+    setFocused(!focused);
   };
 
   const validateForm = () => {
@@ -107,7 +117,6 @@ const SignUpForm = () => {
         });
     }
   };
-
   return (
     <div className="w-full h-screen  flex flex-col lg:flex-row items-center bg-white">
       {/* Left Image */}
@@ -135,19 +144,34 @@ const SignUpForm = () => {
           <form onSubmit={handleSubmit} className="w-full h-auto mt-6">
             {/* Phone/Email */}
             <div>
-              <label className="block font-semibold text-base">
+              <label htmlFor="phoneOrEmail" className="block font-semibold text-base">
                 Phone number or Email
               </label>
-              <div className="flex">
-                <Dropdown
-                  countries={countries}
-                  onSelect={updateCountry}
-                  isOpen={dropdownOpen}
-                  onToggle={handleDropdownToggle}
-                />
-                <input
+              <motion.div 
+                className="flex items-center gap-2" initial={false}
+                animate={{ marginLeft: focused ? "10px" : "0px" }}
+                transition={{ duration: 0.4 }}>
+                  <motion.div 
+                  className="relative"
+                  initial={false}
+                  animate={{
+                    opacity: focused ? 0 : 1,
+                    x: focused ? -50 : 0,
+                  }}
+                  transition={{ duration: 0.3 }}
+                  >
+                    <Dropdown
+                      countries={countries}
+                      onSelect={updateCountry}
+                      isOpen={dropdownOpen}
+                      onToggle={handleDropdownToggle}
+                    />
+                  </motion.div>
+              
+                <motion.input
                   type="text"
                   value={phoneNumber}
+                  onClick={handleInputClick}
                   name="PhoneOrEmail"
                   id="PhoneOrEmail"
                   onChange={(e) => {
@@ -160,25 +184,43 @@ const SignUpForm = () => {
                     const newErrors = validateForm();
                     setErrors((prev) => ({ ...prev, phone: newErrors.phone }));
                   }}
+                  initial={false}
+                  animate={{
+                    width: focused ? 670 : 625,
+                    marginLeft: focused ? -57 : 0,
+                  }}
+                  transition={{ duration: 0.3 }}
                   placeholder="Your Phone number or Email"
-                  className={`border mb-3 p-2.5 rounded-lg placeholder:text-base placeholder:text-[#98A2B3] relative z-10 w-full cursor-pointer ${
+                  className={`border p-3 rounded-lg placeholder:text-base placeholder:text-[#98A2B3] relative z-10 w-full cursor-pointer ${
                     touched.phone && errors.phone
                       ? "border-red-500"
                       : "border-[#DDD5DD]"
                   }`}
                 />
-              </div>
-              {touched.phone && errors.phone && (
-                <p className="text-red-600 text-xs mt-1">{errors.phone}</p>
-              )}
+              </motion.div>
+              <AnimatePresence mode="wait">
+                {touched.phone && errors.phone && (
+                  <motion.p 
+                    key="phone-error"
+                    initial={{ opacity: 0, y: -5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -5 }}
+                    transition={{ duration: 0.25 }}
+                    className="text-red-600 text-xs mt-1">
+                      {errors.phone}
+                    </motion.p>
+                )}
+              </AnimatePresence>
             </div>
 
             {/* Password */}
-            <div>
+            <div className="mt-5">
               <label htmlFor="password" className="font-semibold text-base">
                 Password
               </label>
-              <div className="flex items-center border border-gray-300 rounded-md px-3">
+              <div className={`flex items-center rounded-lg px-3 border ${
+                touched.password && errors.password ? "border-red-500" : "border-[#DDD5DD]"
+              }`}>
                 <input
                   type={passwordVisible ? "text" : "password"}
                   value={password}
@@ -200,9 +242,7 @@ const SignUpForm = () => {
                       password: newErrors.password,
                     }));
                   }}
-                  className={`w-full mb-3 bg-white focus:outline-none py-2 ${
-                    touched.password && errors.password ? "border-red-500" : ""
-                  }`}
+                  className="w-full p-3 bg-white focus focus:outline-none py-2 placeholder:text-base placeholder:text-[#98A2B3]"
                 />
                 <div
                   className="cursor-pointer text-gray-500"
@@ -211,20 +251,32 @@ const SignUpForm = () => {
                   {passwordVisible ? <Eye /> : <EyeOff />}
                 </div>
               </div>
-              {touched.password && errors.password && (
-                <p className="text-red-600 text-xs mt-1">{errors.password}</p>
-              )}
+              <AnimatePresence mode="wait">
+                {touched.password && errors.password && (
+                  <motion.p 
+                    key="password-error"
+                    initial={{ opacity: 0, y: -5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -5 }}
+                    transition={{ duration: 0.25 }}
+                    className="text-red-600 text-xs mt-1">
+                      {errors.password}
+                    </motion.p>
+                )}
+              </AnimatePresence>
             </div>
 
             {/* Confirm Password */}
-            <div>
+            <div className="mt-5">
               <label
                 htmlFor="confirmPassword"
                 className="font-semibold text-base"
               >
                 Confirm Password
               </label>
-              <div className="flex items-center border border-gray-300 rounded-md px-3">
+              <div className={`flex items-center rounded-lg px-3 border ${
+                touched.confirmPassword && errors.confirmPassword ? "border-red-500" : "border-[#DDD5DD]"
+              }`}>
                 <input
                   type={confirmPasswordVisible ? "text" : "password"}
                   value={confirmPassword}
@@ -246,11 +298,7 @@ const SignUpForm = () => {
                       confirmPassword: newErrors.confirmPassword,
                     }));
                   }}
-                  className={`w-full mb-3 bg-white focus:outline-none py-2 ${
-                    touched.confirmPassword && errors.confirmPassword
-                      ? "border-red-500"
-                      : ""
-                  }`}
+                  className="w-full p-3 bg-white focus:outline-none py-2 placeholder:text-base placeholder:text-[#98A2B3]"
                 />
                 <div
                   className="text-gray-500 cursor-pointer"
@@ -261,15 +309,23 @@ const SignUpForm = () => {
                   {confirmPasswordVisible ? <Eye /> : <EyeOff />}
                 </div>
               </div>
-              {touched.confirmPassword && errors.confirmPassword && (
-                <p className="text-red-600 text-xs mt-1">
-                  {errors.confirmPassword}
-                </p>
-              )}
+              <AnimatePresence mode="wait">
+                {touched.confirmPassword && errors.confirmPassword && (
+                  <motion.p 
+                    key="confirmPassword-error"
+                    initial={{ opacity: 0, y: -5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -5 }}
+                    transition={{ duration: 0.25 }}
+                    className="text-red-600 text-xs mt-1">
+                      {errors.confirmPassword}
+                    </motion.p>
+                )}
+              </AnimatePresence>
             </div>
 
             {/* Terms & Conditions */}
-            <div className="flex items-start justify-between gap-2 mt-4 font-medim text-sm">
+            <div className="flex items-start justify-between gap-2 mt-5 font-medim text-sm">
               <input
                 id="agree"
                 name="agree"
@@ -304,7 +360,7 @@ const SignUpForm = () => {
                 and{" "}
                 <a
                   href="/privacy"
-                  target="_blank"
+                  target={{ transformOrigin: "center" }}
                   rel="noopener noreferrer"
                   className="text-[#FFA725]"
                 >
@@ -313,9 +369,19 @@ const SignUpForm = () => {
                 .
               </label>
             </div>
-            {touched.agree && errors.agree && (
-              <p className="text-red-600 text-xs mt-1">{errors.agree}</p>
-            )}
+            <AnimatePresence mode="wait">
+                {touched.agree && errors.agree && (
+                  <motion.p 
+                    key="agree-error"
+                    initial={{ opacity: 0, y: -5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -5 }}
+                    transition={{ duration: 0.25 }}
+                    className="text-red-600 text-xs mt-1">
+                      {errors.agree}
+                    </motion.p>
+                )}
+              </AnimatePresence>
 
             {/* Sign Up button */}
             <button
@@ -331,7 +397,7 @@ const SignUpForm = () => {
             {isMobile ? (
               <div className="w-full flex items-center justify-center">
                 <hr className="flex-grow border-gray-300" />
-                <span className=" text-xs"> Or Sign up with </span>
+                <span className=" text-xs mx-6"> Or Sign up with </span>
                 <hr className="flex-grow border-gray-300" />
               </div>
             ) : (
