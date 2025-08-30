@@ -15,7 +15,6 @@ const Dashboard = () => {
             <RecentOrders />
           </div>
         </div>
-
         <QuickLinks />
       </div>
     </DashboardLayout>

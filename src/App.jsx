@@ -11,6 +11,7 @@ import ResetPassword from "./pages/ResetPassword";
 import RoleSelection from "./pages/RoleSelection";
 
 import { DashboardPage } from "./pages";
+import VerifyOtp from "./pages/VerifyOtp";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/otp" element={<InputOtp />} />
+        <Route path="/verify-otp" element={<VerifyOtp />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/role" element={<RoleSelection />} />
         {/* Dashboard */}

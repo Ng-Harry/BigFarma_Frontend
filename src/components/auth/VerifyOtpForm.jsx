@@ -8,7 +8,7 @@ import { verifyOtp } from "@/components/queries/auth/verifyOtp";
 import { requestOtp } from "@/components/queries/auth/register";
 import { toast } from "react-toastify";
 
-function InputOtpForm(props) {
+function VerifyOtpForm(props) {
   const location = useLocation();
   const email = location.state?.email || props.email || "";
   const [value, setValue] = useState("");
@@ -39,7 +39,7 @@ function InputOtpForm(props) {
     if (result.isSuccess) {
       toast.success(result.message || "OTP verified successfully!"); 
       setIsSuccess(true);
-      navigate("/dashboard")
+      navigate("/reset-password", { state: { email, code: value } });
     } else {
       toast.error(result.message || "OTP verification failed.");
     }
@@ -160,4 +160,4 @@ function InputOtpForm(props) {
   );
 }
 
-export default InputOtpForm;
+export default VerifyOtpForm;

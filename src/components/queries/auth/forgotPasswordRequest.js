@@ -2,11 +2,11 @@ import { endpoints } from '@/components/config/endpoints';
 import { axios } from '@/lib/axios';
 import axiosDefault from 'axios';
 
-const verifyOtp = async ({ email, phone = "", medium = "email", code, otp_type = "verification" }) => {
+const forgotPasswordRequest = async (payload) => {
   try {
     const response = await axios.post(
-      endpoints().auth.verify_otp,
-      { email, phone, medium, code, otp_type }
+      endpoints().auth.reset_password_request,
+      payload
     );
     return {
       isSuccess: response.status === 201 || response.status === 200,
@@ -20,7 +20,7 @@ const verifyOtp = async ({ email, phone = "", medium = "email", code, otp_type =
       return {
         isSuccess: false,
         statusCode: error.response.status.toString(),
-        message: (error.response.data && (error.response.data.detail || error.response.data.message)) || "OTP verification failed",
+        message: (error.response.data && (error.response.data.detail || error.response.data.message)) || "Password reset request failed",
         metaData: null,
         data: null,
       };
@@ -35,4 +35,4 @@ const verifyOtp = async ({ email, phone = "", medium = "email", code, otp_type =
   }
 };
 
-export { verifyOtp };
+export { forgotPasswordRequest };

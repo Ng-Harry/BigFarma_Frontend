@@ -8,7 +8,7 @@ import { EyeOff, Eye } from "lucide-react";
 import useIsMobile from "../../hooks/useIsMobile";
 import MobileBg from "../../assets/images/MobileSignup.png";
 import DesktopBgSignUp from "../../assets/images/DesktopSignUp.jpg";
-import { RegisterMutation } from "@/components/queries/auth/register";
+import { RegisterMutation, requestOtp } from "@/components/queries/auth/register";
 import Cookies from "js-cookie";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "react-toastify";
@@ -80,30 +80,53 @@ const SignUpForm = () => {
       toast.error("Please fix the errors in the form.");
     } else {
       setErrors({});
-      let payload = {};
-      const role = localStorage.getItem("selectedRole");
 
-      if (!role) {
-        toast.error("Please select a role before signing up."); //if no role is set
+      let payload = {};
+      const selectedRole = localStorage.getItem("selectedRole");
+
+      if (!selectedRole) {
+        toast.error("Please select a role before signing up.");
         return;
       }
+
       if (phoneNumber.includes("@")) {
-        payload = { email: phoneNumber, password, role };
-        console.log(payload);
+        payload = {
+          email: phoneNumber,
+          password,
+          category: selectedRole,
+        };
       } else {
-        payload = { phone: phoneNumber, password, role };
-        console.log(payload);
+        payload = {
+          phone_number: phoneNumber,
+          password,
+          category: selectedRole,
+        };
       }
 
       RegisterMutation(payload)
-        .then((result) => {
+        .then(async (result) => {
           if (result.isSuccess) {
             if (result.token?.access_token) {
               Cookies.set("BIGFARMA_ACCESS_TOKEN", result.token.access_token);
             }
             toast.success(result.message || "Registration successful!");
-            const userEmail = result.data?.user?.email || phoneNumber;
-            navigate("/otp", { state: { email: userEmail } });
+            const userEmail = result.data?.user?.email || (phoneNumber.includes("@") ? phoneNumber : undefined);
+            const userPhone = result.data?.user?.phone_number || (!phoneNumber.includes("@") ? phoneNumber : undefined);
+            const otpPayload = {
+              email: userEmail || "",
+              phone: userPhone || "",
+              medium: userEmail ? "email" : "phone",
+              otp_type: "verification",
+            };
+            try {
+              const otpResult = await requestOtp(otpPayload);
+              if (!otpResult.isSuccess) {
+                toast.error(otpResult.message || "Failed to send OTP.");
+              }
+            } catch (otpErr) {
+              toast.error(otpErr?.message || "Failed to send OTP.");
+            }
+            navigate("/otp", { state: { email: userEmail || userPhone } });
           } else {
             setErrors({ form: result.message });
             toast.error(

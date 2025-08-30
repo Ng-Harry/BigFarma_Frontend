@@ -1,6 +1,9 @@
 import arrowLeft from '../../assets/icons/arrow_left.svg';
 import supportIcon from '../../assets/icons/Support_Icon .png';
 import { useState } from 'react';
+import { forgotPasswordRequest } from '@/components/queries/auth/forgotPasswordRequest';
+import { toast } from 'react-toastify';
+import { motion, AnimatePresence } from 'framer-motion';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Dropdown from '@/components/shared/Dropdown';
 import { countries } from '../../lib/countries';
@@ -12,6 +15,7 @@ const ForgotPasswordForm = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({ phone: false, country: null });
+  const [focused, setFocused] = useState(false);
   const navigate = useNavigate();
 
   // Country selection
@@ -33,15 +37,36 @@ const ForgotPasswordForm = () => {
     return newErrors;
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     const newErrors = validate();
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
     } else {
-      console.log('Form submitted successfully:', phoneNumber);
-      navigate('/otp');
+      let payload = {};
+      if (phoneNumber.includes('@')) {
+        payload = {
+          email: phoneNumber,
+          medium: 'email',
+        };
+      } else {
+        payload = {
+          phone: phoneNumber,
+          medium: 'phone',
+        };
+      }
+      try {
+        const result = await forgotPasswordRequest(payload);
+        if (result.isSuccess) {
+          toast.success(result.message || 'Password reset code sent!');
+          navigate('/verify-otp', { state: { email: phoneNumber } });
+        } else {
+          toast.error(result.message || 'Failed to send reset code.');
+        }
+      } catch (err) {
+        toast.error(err?.message || 'Failed to send reset code.');
+      }
     }
   };
 
@@ -113,7 +138,7 @@ const ForgotPasswordForm = () => {
               {touched.phone && errors.phone && (
                 <p className="text-red-600 text-xs mt-1">{errors.phone}</p>
               )}
-              <motion.div
+              {/* <motion.div
                 className="flex items-center gap-2 relative"
                 initial={false}
                 animate={{ marginLeft: focused ? '10px' : '0px' }}
@@ -170,7 +195,7 @@ const ForgotPasswordForm = () => {
                     }`}
                   />
                 )}
-              </motion.div>
+              </motion.div> */}
 
               {/* Error message */}
               <AnimatePresence mode="wait">
