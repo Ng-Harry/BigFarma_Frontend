@@ -1,3 +1,5 @@
+import { login } from '@/components/queries/auth/login';
+import { toast } from 'react-toastify';
 // ==================== Images & Icons ====================
 import MobileBgSignIn from "../../assets/images/MobileSignup.png";
 import DesktopBgSignIn from "../../assets/images/DesktopSignUp.jpg";
@@ -28,6 +30,7 @@ const SignInForm = () => {
   const [focused, setFocused] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showSupport, setShowSupport] = useState(false);
+  const [loading, setLoading] = useState(false);
   const Navigate = useNavigate();
   const isMobile = useIsMobile(); // Tailwind's breakpoint can be passed as a value
 
@@ -52,18 +55,25 @@ const SignInForm = () => {
     updateField(field, value);
   };
 
-  const handleFormSubmit = async (e) => {
-    const data = await handleSubmit(e);
-    if (data) {
-      Navigate("/dashboard");
-      console.log("Form submitted successfully:", data);
-      // alert("Login successful! Check console for data.");
-    } else {
-      if (errors.submit) {
-        console.log(`Login failed: ${errors.submit}`);
+    const handleFormSubmit = async (e) => {
+      e.preventDefault();
+      setLoading(true);
+      const loginValue = loginData.username;
+      const password = loginData.password;
+      try {
+        const result = await login({ login: loginValue, password });
+        if (result.isSuccess) {
+          toast.success(result.message || 'Login successful!');
+          Navigate('/dashboard');
+        } else {
+          toast.error(result.message || 'Login failed.');
+        }
+      } catch (err) {
+        toast.error(err?.message || 'Login failed.');
+      } finally {
+        setLoading(false);
       }
-    }
-  };
+    };
 
   return (
     <section className=" w-full h-screen  flex flex-col lg:flex-row items-center relative lg:overflow-hidden">
@@ -223,8 +233,9 @@ const SignInForm = () => {
             <button
               type="submit"
               className="w-full px-6 py-3  rounded-lg mt-4 font-normal text-[22px] bg-[#016130] hover:bg-[#003f1f]  text-white"
+              disabled={loading}
             >
-              Sign In
+              {loading ? 'Signing in...' : 'Sign In'}
             </button>
           </form>
 

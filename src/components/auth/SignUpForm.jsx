@@ -34,6 +34,7 @@ const SignUpForm = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [focused, setFocused] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // Country selection
   const updateCountry = (country) => {
@@ -73,11 +74,13 @@ const SignUpForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
     const newErrors = validateForm();
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       toast.error("Please fix the errors in the form.");
+      setLoading(false);
     } else {
       setErrors({});
 
@@ -86,6 +89,7 @@ const SignUpForm = () => {
 
       if (!selectedRole) {
         toast.error("Please select a role before signing up.");
+        setLoading(false);
         return;
       }
 
@@ -134,9 +138,11 @@ const SignUpForm = () => {
                 `Registration failed (code: ${result.statusCode})`
             );
           }
+          setLoading(false);
         })
         .catch((err) => {
           toast.error(err?.message || "Registration failed. Please try again.");
+          setLoading(false);
         });
     }
   };
@@ -410,8 +416,9 @@ const SignUpForm = () => {
             <button
               type="submit"
               className="w-full h-12 cursor-pointer rounded-lg mt-4 font-normal text-[22px] bg-[#DDD5DD] text-[#3C3C3C]"
+              disabled={loading}
             >
-              Sign Up
+              {loading ? 'Signing up...' : 'Sign Up'}
             </button>
           </form>
 
