@@ -39,7 +39,6 @@ function InputOtpForm(props) {
     if (result.isSuccess) {
       toast.success(result.message || "OTP verified successfully!"); 
       setIsSuccess(true);
-      navigate("/dashboard")
     } else {
       toast.error(result.message || "OTP verification failed.");
     }
@@ -72,7 +71,7 @@ function InputOtpForm(props) {
   };
 
   const handleContinue = () => {
-    navigate("/");
+    navigate("/dashboard");
   };
 
   if (isSuccess) {

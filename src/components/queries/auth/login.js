@@ -2,11 +2,11 @@ import { endpoints } from '@/components/config/endpoints';
 import { axios } from '@/lib/axios';
 import axiosDefault from 'axios';
 
-const login = async ({ email, password }) => {
+const login = async ({ login, password }) => {
   try {
     const response = await axios.post(
       endpoints().auth.login,
-      { email, password }
+      { login, password }
     );
     return {
       isSuccess: response.status === 200 || response.status === 201,

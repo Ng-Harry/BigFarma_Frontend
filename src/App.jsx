@@ -12,6 +12,7 @@ import RoleSelection from "./pages/RoleSelection";
 
 import { DashboardPage } from "./pages";
 import VerifyOtp from "./pages/VerifyOtp";
+import Success from "./pages/Success";
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
         <Route path="/verify-otp" element={<VerifyOtp />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/role" element={<RoleSelection />} />
+        <Route path="/success" element={<Success />} />
         {/* Dashboard */}
         <Route path="/dashboard" element={<DashboardPage />} />
       </Routes>
