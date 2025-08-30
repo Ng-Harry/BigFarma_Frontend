@@ -14,6 +14,7 @@ import {
   LogOut,
   ChevronLeft,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const navigationItems = [
   { name: "Dashboard", icon: LayoutDashboard, active: true },
@@ -27,6 +28,14 @@ const navigationItems = [
 ];
 
 export default function DashboardSidebar({ isOpen, onClose }) {
+  const navigate = useNavigate();
+
+  const handleNavClick = (item) => {
+    if (item.name === "Logout") {
+      navigate("/sign-in");
+    }
+  };
+
   return (
     <>
       <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
@@ -51,6 +60,7 @@ export default function DashboardSidebar({ isOpen, onClose }) {
                       ? "bg-green-100 text-green-700 border border-green-200"
                       : "text-neutral-600 hover:bg-gray-50 hover:text-gray-900"
                   )}
+                  onClick={() => handleNavClick(item)}
                 >
                   <Icon className="mr-3 h-5 w-5" />
                   {item.name}
@@ -93,7 +103,10 @@ export default function DashboardSidebar({ isOpen, onClose }) {
                       ? "bg-[#C9F4DE] text-[#016130] border border-green-200"
                       : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                   )}
-                  onClick={onClose}
+                  onClick={() => {
+                    onClose();
+                    handleNavClick(item);
+                  }}
                 >
                   <Icon className="mr-3 h-5 w-5" />
                   {item.name}

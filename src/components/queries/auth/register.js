@@ -37,11 +37,11 @@ const RegisterMutation = async (payload) => {
   }
 };
 
-const requestOtp = async ({ email, otp_type = "email" }) => {
+const requestOtp = async (payload) => {
   try {
     const response = await axios.post(
       endpoints().auth.requestCode,
-      { email, otp_type }
+      payload
     );
     return {
       isSuccess: response.status === 201 || response.status === 200,

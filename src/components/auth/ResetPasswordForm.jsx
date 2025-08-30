@@ -4,8 +4,14 @@ import supportIcon from '../../assets/icons/Support_Icon .png';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { EyeOff, Eye } from 'lucide-react';
 import Support from './Support';
+import { passwordReset } from '@/components/queries/auth/passwordReset';
+import { useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const ResetPasswordForm = () => {
+  const location = useLocation();
+  const email = location.state?.email;
+  const code = location.state?.code;
   const [showSupport, setShowSupport] = useState(false);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -36,10 +42,9 @@ const ResetPasswordForm = () => {
     return newErrors;
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    // Mark all fields as touched on submit
     setTouched({
       password: true,
       confirmPassword: true,
@@ -48,10 +53,28 @@ const ResetPasswordForm = () => {
     const newErrors = validateForm();
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
+    } else if (!email || !code) {
+      toast.error("Missing email or OTP code. Please restart the password reset process.");
     } else {
       setErrors({});
-      console.log('Form submitted:', { password });
-      navigate('/success');
+      const payload = {
+        email,
+        phone: "",
+        medium: "email",
+        code,
+        new_password: password,
+      };
+      try {
+        const result = await passwordReset(payload);
+        if (result.isSuccess) {
+          toast.success(result.message || "Password updated successfully!");
+          navigate("/sign-in");
+        } else {
+          toast.error(result.message || "Failed to update password.");
+        }
+      } catch (err) {
+        toast.error(err?.message || "Failed to update password.");
+      }
     }
   };
 
@@ -62,7 +85,7 @@ const ResetPasswordForm = () => {
           {/* Back button */}
           <div>
             <NavLink
-              to="/forgot-password"
+              to="/sign-in"
               className="flex items-center gap-2 cursor-pointer mb-8"
             >
               <img src={arrowLeft} alt="Back" />
