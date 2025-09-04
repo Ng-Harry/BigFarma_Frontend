@@ -14,6 +14,7 @@ import { DashboardPage } from "./pages";
 import VerifyOtp from "./pages/VerifyOtp";
 import Success from "./pages/Success";
 import PaymentSetup from "./pages/PaymentSetupModal";
+import MarketplacePage from "./components/dashboard/marketplace";
 
 const App = () => {
   return (
@@ -32,8 +33,9 @@ const App = () => {
         <Route path="/success" element={<Success />} />
         {/* Dashboard */}
         <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/marketplace" element={<MarketplacePage />} />
         <Route path="/payment" element={<PaymentSetup />} />
-        
+
       </Routes>
     </>
   );

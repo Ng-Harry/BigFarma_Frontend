@@ -14,30 +14,39 @@ import {
   LogOut,
   ChevronLeft,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const navigationItems = [
-  { name: "Dashboard", icon: LayoutDashboard, active: true },
-  { name: "Marketplace", icon: Store, active: false },
-  { name: "Group Buy", icon: Users, active: false },
-  { name: "My Orders", icon: ShoppingBag, active: false },
-  { name: "Investment", icon: TrendingUp, active: false },
-  { name: "Transaction", icon: ArrowLeftRight, active: false },
-  { name: "Settings", icon: Settings, active: false },
-  { name: "Logout", icon: LogOut, active: false },
+  { name: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
+  { name: "Marketplace", icon: Store, path: "/marketplace" },
+  { name: "Group Buy", icon: Users, path: "/group-buy" },
+  { name: "My Orders", icon: ShoppingBag, path: "/orders" },
+  { name: "Investment", icon: TrendingUp, path: "/investment" },
+  { name: "Transaction", icon: ArrowLeftRight, path: "/transactions" },
+  { name: "Settings", icon: Settings, path: "/settings" },
+  { name: "Logout", icon: LogOut, path: "/sign-in" },
 ];
 
 export default function DashboardSidebar({ isOpen, onClose }) {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleNavClick = (item) => {
     if (item.name === "Logout") {
       navigate("/sign-in");
+    } else {
+      navigate(item.path);
     }
   };
 
+  const isPathActive = (itemPath) =>
+    itemPath &&
+    itemPath !== "/sign-in" &&
+    location.pathname.startsWith(itemPath);
+
   return (
     <>
+      {/* Desktop sidebar */}
       <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
         <div className="flex flex-col flex-grow bg-white border-r border-gray-200">
           <div className="mt-6 px-4">
@@ -51,12 +60,13 @@ export default function DashboardSidebar({ isOpen, onClose }) {
           <nav className="flex-1 px-4 py-6 space-y-2 mt-6">
             {navigationItems.map((item) => {
               const Icon = item.icon;
+              const isActive = isPathActive(item.path);
               return (
                 <button
                   key={item.name}
                   className={cn(
                     "w-full flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors",
-                    item.active
+                    isActive
                       ? "bg-green-100 text-green-700 border border-green-200"
                       : "text-neutral-600 hover:bg-gray-50 hover:text-gray-900"
                   )}
@@ -71,6 +81,7 @@ export default function DashboardSidebar({ isOpen, onClose }) {
         </div>
       </div>
 
+      {/* Mobile sidebar */}
       <div
         className={cn(
           "fixed inset-y-0 left-0 z-50 w-64 bg-white transform transition-transform duration-300 ease-in-out lg:hidden",
@@ -80,12 +91,12 @@ export default function DashboardSidebar({ isOpen, onClose }) {
         <div className="flex flex-col h-full border-r border-gray-200">
           <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
             <div className="mt-6 px-4">
-            <img
-              src={brandLogo}
-              alt="brand logo"
-              className="h-10 w-auto object-contain"
-            />
-          </div>
+              <img
+                src={brandLogo}
+                alt="brand logo"
+                className="h-10 w-auto object-contain"
+              />
+            </div>
             <button onClick={onClose} className="focus:outline-none focus:ring-0">
               <ChevronLeft className="h-5 w-5" />
             </button>
@@ -94,17 +105,18 @@ export default function DashboardSidebar({ isOpen, onClose }) {
           <nav className="flex-1 px-4 py-6 space-y-2">
             {navigationItems.map((item) => {
               const Icon = item.icon;
+              const isActive = isPathActive(item.path);
               return (
                 <button
                   key={item.name}
                   className={cn(
-                    "w-full flex items-center px-3 py-2.5 text-sm font-medium rounded-colors",
-                    item.active
+                    "w-full flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors",
+                    isActive
                       ? "bg-[#C9F4DE] text-[#016130] border border-green-200"
                       : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                   )}
                   onClick={() => {
-                    onClose();
+                    onClose?.();
                     handleNavClick(item);
                   }}
                 >
