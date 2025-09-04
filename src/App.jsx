@@ -13,6 +13,7 @@ import RoleSelection from "./pages/RoleSelection";
 import { DashboardPage } from "./pages";
 import VerifyOtp from "./pages/VerifyOtp";
 import Success from "./pages/Success";
+import PaymentSetup from "./pages/PaymentSetupModal";
 
 const App = () => {
   return (
@@ -31,6 +32,8 @@ const App = () => {
         <Route path="/success" element={<Success />} />
         {/* Dashboard */}
         <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/payment" element={<PaymentSetup />} />
+        
       </Routes>
     </>
   );

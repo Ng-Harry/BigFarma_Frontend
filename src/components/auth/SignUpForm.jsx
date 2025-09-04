@@ -126,6 +126,7 @@ const SignUpForm = () => {
               const otpResult = await requestOtp(otpPayload);
               if (!otpResult.isSuccess) {
                 toast.error(otpResult.message || "Failed to send OTP.");
+                
               }
             } catch (otpErr) {
               toast.error(otpErr?.message || "Failed to send OTP.");

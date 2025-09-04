@@ -9,7 +9,7 @@ const Statistics = () => {
     statisticsArray: [
       { title: "Total Investments", total: 1200000, percentage: 5 },
       { title: "Current Orders", total: 4, percentage: -5 },
-      { title: "ROI", total: 10000, percentage: 8 },
+      { title: "ROI", total: 10000, percentage: 10 },
     ],
     intervals: [],
   };
