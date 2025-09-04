@@ -1,21 +1,34 @@
-import DoughnutChart from "./chart/Index";
-import { QuickLinks, RecentOrders } from "./components";
+import Charts from "./farmer/chart/Index";
+import DoughnutChart from "./consumer/chart";
+import { QuickLinks, RecentOrders } from "./consumer/components";
+import { PendingOrders } from "./farmer/components";
 import DashboardLayout from "./dashboard-layout";
-import Statistics from "./statistics/Index";
+import ConsumerStatistics from "./consumer/statistics/Index";
+import FarmerStatistics from "./farmer/statistics/Index";
+import { useFocus } from "../../hooks";
 
 const Dashboard = () => {
+  const { role } = useFocus();
+  console.log("Current role:", role);
   return (
     <DashboardLayout>
-      <Statistics />
-      <div className="grid grid-cols-3 gap-6 mt-6">
+      {role === "farmer" ? <FarmerStatistics /> : <ConsumerStatistics />}
+
+      <div
+        className={`grid gap-6 mt-6 ${
+          role === "farmer" ? "grid-cols-2" : "grid-cols-3"
+        }`}
+      >
         <div className="col-span-2">
-          <DoughnutChart />
+          {role === "farmer" ? <Charts /> : <DoughnutChart />}
           <div className="border-2 border-grey-100 p-5 mt-6 rounded-lg">
-            <p className="mb-5 font-semibold text-2xl">Recent Orders</p>
-            <RecentOrders />
+            <p className="mb-5 font-semibold text-2xl">
+              {role === "farmer" ? "Pending Orders" : "Recent Orders"}
+            </p>
+            {role === "farmer" ? <PendingOrders /> : <RecentOrders />}
           </div>
         </div>
-        <QuickLinks />
+        {role === "consumer" && <QuickLinks />}
       </div>
     </DashboardLayout>
   );

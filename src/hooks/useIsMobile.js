@@ -13,7 +13,6 @@ const useIsMobile = (breakpoint = 768) => {
 
     window.addEventListener("resize", handleResize);
 
-    // Proper cleanup
     return () => {
       window.removeEventListener("resize", handleResize);
     };

@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+// import { useState } from "react";
+import { useFocus } from "../../../hooks/index";
 import { useNavigate } from "react-router-dom";
 import Button from "@/components/shared/Button";
 import FarmerIcon from "../../../assets/svgs/farmer.svg"
@@ -7,16 +8,18 @@ import LightCart from "../../../assets/svgs/light-cart.svg"
 import Cart from "../../../assets/svgs/cart.svg"
 import LightFarmer from "../../../assets/svgs/light-farmer.svg"
 export function RoleSelectionForm() {
-  const [selectedRole, setSelectedRole] = useState(null);
+    const { role, setRole } = useFocus();
+  // const [selectedRole, setSelectedRole] = useState(null);
   const navigate = useNavigate();
 
-  const handleRoleSelect = (role) => {
-    setSelectedRole(role);
+  const handleRoleSelect = (selected) => {
+    setRole(selected);
   };
 
   const handleContinue = () => {
-    if (selectedRole) {
-      localStorage.setItem("selectedRole", selectedRole);
+    if (role) {
+
+      // localStorage.setItem("selectedRole", selectedRole);
       navigate("/sign-up");
     }
   };
@@ -37,7 +40,7 @@ export function RoleSelectionForm() {
         {/* Farmer Card */}
         <div
           className={`relative cursor-pointer transition-all duration-200 w-full md:w-1/2 h-[350px] pt-8 ${
-            selectedRole === "farmer"
+            role === "farmer"
               ? "bg-[var(--color-primary)] text-white"
               : "bg-white"
           }`}
@@ -52,10 +55,10 @@ export function RoleSelectionForm() {
                 className={`w-16 h-16 rounded-full flex items-center justify-center drop-shadow-xl `}
               >
                 <img
-                  src={selectedRole === "farmer" ? LightFarmer : FarmerIcon}
+                  src={role === "farmer" ? LightFarmer : FarmerIcon}
                   alt="Farmer Icon"
                   className={`w-12 h-12 ${
-                    selectedRole === "farmer" ? "text-white" : "text-white"
+                    role === "farmer" ? "text-white" : "text-white"
                   }`}
                 />
               </div>
@@ -63,7 +66,7 @@ export function RoleSelectionForm() {
 
             <h3
               className={`text-3xl font-semibold mb-3 ${
-                selectedRole === "farmer"
+                role === "farmer"
                   ? "text-white"
                   : "text-[var(--color-primary)]"
               }`}
@@ -72,7 +75,7 @@ export function RoleSelectionForm() {
             </h3>
             <p
               className={`text-base ${
-                selectedRole === "farmer"
+                role === "farmer"
                   ? "text-green-100"
                   : "text-[var(--color-primary)]"
               }`}
@@ -85,7 +88,7 @@ export function RoleSelectionForm() {
         {/* Consumer Card */}
         <div
           className={`relative cursor-pointer transition-all duration-200 w-full md:w-1/2 h-[350px] pt-8 ${
-            selectedRole === "consumer"
+            role === "consumer"
               ? "bg-[var(--color-primary)] text-white"
               : "bg-white"
           }`}
@@ -103,7 +106,7 @@ export function RoleSelectionForm() {
               >
                 <img
                   src={
-                    selectedRole === "consumer"
+                    role === "consumer"
                       ? LightCart
                       : Cart
                   }
@@ -115,7 +118,7 @@ export function RoleSelectionForm() {
 
             <h3
               className={`text-3xl font-semibold mb-3 ${
-                selectedRole === "consumer"
+                role === "consumer"
                   ? "text-white"
                   : "text-[var(--color-primary)]"
               }`}
@@ -124,7 +127,7 @@ export function RoleSelectionForm() {
             </h3>
             <p
               className={`text-base ${
-                selectedRole === "consumer" ? "text-green-100" : "text-gray-600"
+                role === "consumer" ? "text-green-100" : "text-gray-600"
               }`}
             >
               I want to explore and purchase farm produce
@@ -136,9 +139,9 @@ export function RoleSelectionForm() {
       <div className="text-center">
         <Button
           onClick={handleContinue}
-          disabled={!selectedRole}
+          disabled={!role}
           className={`w-[200px] py-3 text-lg font-medium rounded-lg transition-all duration-200 ${
-            selectedRole
+            role
               ? "bg-[var(--color-primary)] text-white"
               : "bg-gray-300 text-gray-500 cursor-not-allowed"
           }`}

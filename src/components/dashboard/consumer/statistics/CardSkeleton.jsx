@@ -1,4 +1,4 @@
-import { Skeleton } from "../../shared";
+import { Skeleton } from "../../../shared";
 
 const CardSkeleton = () => {
   return (
