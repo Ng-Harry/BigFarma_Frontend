@@ -48,12 +48,16 @@ const ForgotPasswordForm = () => {
       if (phoneNumber.includes('@')) {
         payload = {
           email: phoneNumber,
+          phone: '',
           medium: 'email',
+          otp_type: 'password_reset',
         };
       } else {
         payload = {
+          email: '',
           phone: phoneNumber,
           medium: 'phone',
+          otp_type: 'password_reset',
         };
       }
       try {

@@ -1,6 +1,7 @@
 import { endpoints } from '@/components/config/endpoints';
 import { axios } from '@/lib/axios';
 import axiosDefault from 'axios';
+import Cookies from 'js-cookie';
 
 const login = async ({ login, password }) => {
   try {
@@ -8,12 +9,14 @@ const login = async ({ login, password }) => {
       endpoints().auth.login,
       { login, password }
     );
-    console.log("Login response:", response.data);
+    if (response.data.access_token) {
+      Cookies.set('BIGFARMA_ACCESS_TOKEN', response.data.access_token);
+    }
     return {
       isSuccess: response.status === 200 || response.status === 201,
       statusCode: response.status.toString(),
       message: response.data.message,
-      token: response.data.token,
+      token: response.data.access_token,
       user: response.data.user,
       data: response.data.data,
       
