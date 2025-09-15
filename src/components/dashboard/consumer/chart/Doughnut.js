@@ -8,7 +8,7 @@ const COLORS = ["#016130", "#FFA725", "#FF8400"];
 const LABELS = ["Vegetables", "Livestock", "Grain"];
 
 const Chart = () => {
-  const chartData = [50, 30, 20];
+  const chartData = [50, 30, 20]; 
 
   const data = {
     labels: LABELS,

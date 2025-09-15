@@ -166,7 +166,7 @@ const ProfileForm = ({ onNext }) => {
 					<div>
 						<p className="text-gray-700 mb-2">Gender</p>
 						<div className="flex gap-4">
-							<label className="flex items-left text-left space-x-2 border border-gray-400 rounded-lg pl-4 pr-8 py-2 mr-7">
+							<label  className="flex items-left text-left space-x-2 border border-gray-400 rounded-lg pl-4 pr-8 py-2 mr-7">
 								<input
 									type="radio"
 									name="gender"
