@@ -8,6 +8,7 @@ const login = async ({ login, password }) => {
       endpoints().auth.login,
       { login, password }
     );
+   
     return {
       isSuccess: response.status === 200 || response.status === 201,
       statusCode: response.status.toString(),
@@ -15,6 +16,7 @@ const login = async ({ login, password }) => {
       token: response.data.token,
       user: response.data.user,
       data: response.data.data,
+      
     };
   } catch (error) {
     if (axiosDefault.isAxiosError(error) && error.response) {
@@ -30,6 +32,7 @@ const login = async ({ login, password }) => {
       statusCode: "500",
       message: "An error occurred while connecting to the server",
       data: null,
+      
     };
   }
 };
