@@ -64,6 +64,8 @@ const SignInForm = () => {
         const result = await login({ login: loginValue, password });
         if (result.isSuccess) {
           toast.success(result.message || 'Login successful!');
+          localStorage.setItem('token', result.token);
+          console.log(result.json)
           Navigate('/dashboard');
         } else {
           toast.error(result.message || 'Login failed.');

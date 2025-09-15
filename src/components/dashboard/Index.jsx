@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Charts from "./farmer/chart/Index";
-import DoughnutChart from "./consumer/chart";
+import DoughnutChart from "./consumer/chart/Index";
 import { QuickLinks, RecentOrders } from "./consumer/components";
 import { PendingOrders } from "./farmer/components";
 import DashboardLayout from "./dashboard-layout";

@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import customerPhoto from "../../../../assets/images/Customer-photo.png";
+import {login} from '../../../queries/auth/login'
 
 const ProfileForm = ({ onNext }) => {
 	const [image, setImage] = useState(null);
@@ -54,6 +55,9 @@ const ProfileForm = ({ onNext }) => {
 					"https://bigfarma-backend.onrender.com/api/v1/users/farmer-profile",
 					{
 						method: "POST",
+						headers: {
+							Authorization: `Bearer ${localStorage.getItem("token")}`,
+						},
 						body: formDataToSend,
 					}
 				);

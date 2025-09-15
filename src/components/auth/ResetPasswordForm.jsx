@@ -20,6 +20,7 @@ const ResetPasswordForm = () => {
     password: false,
     confirmPassword: false,
   });
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -57,6 +58,7 @@ const ResetPasswordForm = () => {
       toast.error("Missing email or OTP code. Please restart the password reset process.");
     } else {
       setErrors({});
+      setLoading(true);
       const payload = {
         email,
         phone: "",
@@ -74,6 +76,8 @@ const ResetPasswordForm = () => {
         }
       } catch (err) {
         toast.error(err?.message || "Failed to update password.");
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -188,8 +192,9 @@ const ResetPasswordForm = () => {
             <button
               type="submit"
               className="w-full px-6 py-3 rounded-lg mt-8 font-normal text-[22px] bg-[#DDD5DD] text-[#3C3C3C] hover:bg-green-700 hover:text-white hover:font-bold cursor-pointer transition-all duration-300"
+              disabled={loading}
             >
-              Update Password
+              {loading ? 'Updating...' : 'Update Password'}
             </button>
           </form>
         </div>
