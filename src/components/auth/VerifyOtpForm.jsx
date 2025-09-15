@@ -33,7 +33,7 @@ function VerifyOtpForm(props) {
       email,
       code: value,
       medium: "email",
-      otp_type: "verification",
+      otp_type: "password_reset",
     });
     setLoading(false);
     if (result.isSuccess) {

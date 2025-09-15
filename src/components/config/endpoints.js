@@ -9,7 +9,7 @@ export const endpoints = () => {
       login: `/auth/login`,
       change_default_password: `/auth/change-default-password`,
       forgot_password: `/auth/forgot-password`,
-      reset_password_request: `/auth/password-reset-request`,
+      reset_password_request: `/auth/request-otp`,
       validateOtp: `/auth/validate-otp`,
       resend_otp: `/auth/resend-otp`,
     }
