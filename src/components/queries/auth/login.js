@@ -8,7 +8,7 @@ const login = async ({ login, password }) => {
       endpoints().auth.login,
       { login, password }
     );
-   
+    console.log("Login response:", response.data);
     return {
       isSuccess: response.status === 200 || response.status === 201,
       statusCode: response.status.toString(),
