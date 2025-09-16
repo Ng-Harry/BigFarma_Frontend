@@ -1,12 +1,48 @@
 import React from 'react'
-import DashboardSidebar from '../dashboard-sidebar'
+import DashboardLayout from '../dashboard-layout'
+import MarketplaceSlider from '@/components/shared/MarketplaceSlider'
+import Button from '@/components/shared/Button'
+import filterIcon from "@/assets/icons/filter.svg"
+import vegetablesCategory from '@/assets/ProductImages/categories/vegetables.png'
+import fruitsCategory from '@/assets/ProductImages/categories/fruits.png'
+import grainsCategory from '@/assets/ProductImages/categories/grains.png'
+import proteinCategory from '@/assets/ProductImages/categories/protein.png'
+
+
+const categories = [
+    { id: 1, name: "Vegetables", image: vegetablesCategory },
+    { id: 2, name: "Fruits", image: fruitsCategory },
+    { id: 3, name: "Grains", image: grainsCategory },
+    { id: 4, name: "Protein", image: proteinCategory },
+]
 
 const MarketplacePage = () => {
     return (
-        <section>
-            <DashboardSidebar />
-            <h2>Marketplace</h2>
-        </section>
+        <DashboardLayout>
+            {/* sliders  */}
+            <MarketplaceSlider />
+
+            {/* explore categories  */}
+            <div className='flex justify-between items-center my-8'>
+                <h4 className='font-semibold text-black text-xl'>Explore Categories</h4>
+                <Button text="Filter" variant='ghost' className='text-[var(--color-primary)] border-2 border-[var(--color-primary)] px-6' >
+                    <img src={filterIcon} alt="filter" />
+                    <p>Filter</p>
+                </Button>
+            </div>
+
+            {/* categories  */}
+            <section className='w-full flex justify-between items-center gap-10'>
+                {categories.map(category => (
+                    <div key={category.id} className='py-2 h-22 cursor-pointer w-[280px] lg:w-1/4 px-5 rounded-lg bg-white shadow'>
+                        <div className='flex gap-10 justify-start items-center'>
+                            <img src={category.image} className=' rounded-lg overflow-hidden' />
+                            <p className='md:text-lg'>{category.name}</p>
+                        </div>
+                    </div>))}
+            </section>
+
+        </DashboardLayout>
     )
 }
 
