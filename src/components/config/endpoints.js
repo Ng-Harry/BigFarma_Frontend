@@ -1,3 +1,5 @@
+import { User } from "lucide-react";
+
 export const endpoints = () => {
   
   return {
@@ -12,6 +14,17 @@ export const endpoints = () => {
       reset_password_request: `/auth/request-otp`,
       validateOtp: `/auth/validate-otp`,
       resend_otp: `/auth/resend-otp`,
+    },
+    users: {
+      profile: `/users/profile`,
+      get_farmer_profile: `/users/farmer-profile`,
+      get_consumer_profile: `/users/consumer-profile`,
+      create_farmer_profile: `/users/farmer-profile`,
+      create_consumer_profile: `/users/consumer-profile`,
+      update_farmer_profile: `/users/farmer-profile`,
+      update_consumer_profile: `/users/consumer-profile`,
+      delete_farmer_profile: `/users/farmer-profile`,
+      delete_consumer_profile: `/users/consumer-profile`,
     }
   };
 };

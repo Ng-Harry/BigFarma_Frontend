@@ -27,6 +27,7 @@ const createInstance = () => {
     const accessToken = Cookies.get('BIGFARMA_ACCESS_TOKEN');
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
+      
     }
     return config;
   });
