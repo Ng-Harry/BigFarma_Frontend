@@ -44,7 +44,6 @@ const IdentityVerification = ({onNext}) => {
 	const handleUpload = async (e) => {
 		e.preventDefault();
 		if (file) {
-			alert(`Uploading: ${file.name}`);
 			const formDataToSend = new FormData();
 			formDataToSend.append("id_document", file);
 

@@ -58,9 +58,16 @@ export default function AccountSetup({ onSkip, onNext }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (onNext) {
-    onNext();
+    if (form.firstName && form.lastName && form.phone && form.email && form.country) {
+      const dataToSend = new FormData();
+      dataToSend.append("full_name", `${form.firstName} ${form.lastName}`);
+      dataToSend.append("home_address", form.address);
+      dataToSend.append("email", form.email);
+      dataToSend.append("phone", form.phone);
+      dataToSend.append("country", form.country?.name || "");
+      onNext(form);
     }
+
   };
 
   return (
