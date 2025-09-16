@@ -19,8 +19,6 @@ export default function AccountSetup({ onSkip, onNext }) {
     phone: "",
     gender: "",
     address: "",
-    
-    country: null,
   });
 
   // Profile image state
@@ -64,19 +62,18 @@ export default function AccountSetup({ onSkip, onNext }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (form.firstName && form.lastName && form.phone && form.email && form.country) {
+    if (form.firstName && form.lastName && form.phone && form.email) {
       const dataToSend = new FormData();
       dataToSend.append("first_name", form.firstName);
       dataToSend.append("last_name", form.lastName);
-      dataToSend.append("home_address", form.address);
+      dataToSend.append("address", form.address);
       dataToSend.append("email", form.email);
       dataToSend.append("phone", form.phone);
       if (fileInputRef.current?.files[0]) {
-      dataToSend.append("profile_image", fileInputRef.current.files[0]);
-    }
-      
-      
+      dataToSend.append("profile_picture", fileInputRef.current.files[0]);
+      }
 
+    
       try {
               const res = await axios.post(
                 endpoints().users.create_consumer_profile,
@@ -89,14 +86,14 @@ export default function AccountSetup({ onSkip, onNext }) {
                 }
               );
               const data = res.data;
-              console.log(data)
+      
               // if (data.full_name) {
               // 	localStorage.setItem('BIGFARMA_USERNAME', data.full_name);
               // }
       
               if (res.status === 200 || res.status === 201) {
                 toast.success(data.message || 'Saved successfully!');
-                if (onNext) onNext(data);
+                onNext(data);
               } else {
                 toast.error(data.message || 'Network error. Please try again.');
               }
