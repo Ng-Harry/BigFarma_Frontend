@@ -7,6 +7,7 @@ import vegetablesCategory from '@/assets/ProductImages/categories/vegetables.png
 import fruitsCategory from '@/assets/ProductImages/categories/fruits.png'
 import grainsCategory from '@/assets/ProductImages/categories/grains.png'
 import proteinCategory from '@/assets/ProductImages/categories/protein.png'
+import ProductsList from './product-list'
 
 
 const categories = [
@@ -40,6 +41,11 @@ const MarketplacePage = () => {
                             <p className='md:text-lg'>{category.name}</p>
                         </div>
                     </div>))}
+            </section>
+
+            {/* product list  */}
+            <section className='my-10'>
+                <ProductsList />
             </section>
 
         </DashboardLayout>
