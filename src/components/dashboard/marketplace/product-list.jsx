@@ -14,7 +14,7 @@ export default function ProductsList() {
     if (error) return <p>Error loading products</p>;
 
     return (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-8">
             {data.map((product) => (
                 <Link key={product.id} to={`/marketplace/products/${product.id}`}>
                     <div className="p-4 bg-white shadow rounded-md">
