@@ -68,6 +68,7 @@ const ProfileForm = ({ onNext }) => {
 
 				if (res.status === 200 || res.status === 201) {
 					toast.success(data.message || 'Saved successfully!');
+					Cookies.set('BIGFARMA_USERNAME', data.full_name);
 					onNext(data);
 				} else {
 					toast.error(data.message || 'Network error. Please try again.');

@@ -4,6 +4,7 @@ import { Search, ShoppingCart, Bell, Menu } from "lucide-react"
 import Input from "../shared/Input"
 import Avatar from "../../assets/images/JohnDoe-avatar.jpg"
 import { useFocus } from "../../hooks"
+import Cookies from "js-cookie";
 
 export default function DashboardHeader({ onMenuClick }) {
   const {role } = useFocus()
@@ -19,7 +20,7 @@ export default function DashboardHeader({ onMenuClick }) {
 
           <div className="hidden sm:block">
             <h1 className="text-lg font-medium text-gray-900">
-              Hello, John Doe <span className="text-red-500">👋</span>
+              Hello, {Cookies.get('BIGFARMA_USERNAME')} <span className="text-red-500">👋</span>
             </h1>
           </div>
         </div>
