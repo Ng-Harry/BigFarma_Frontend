@@ -1,8 +1,12 @@
 
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { ChangeEvent, DragEvent } from "react";
 import fileIcon from "../../../../assets/icons/fileIcon.png"
+import { toast } from 'react-toastify';
+import Cookies from "js-cookie";
+import { endpoints } from "../../../config/endpoints";
+import { axios } from "../../../../lib/axios";
+import axiosDefault from "axios";
 
 const IdentityVerification = ({onNext}) => {
 	const [file, setFile] = useState(null);
@@ -42,26 +46,42 @@ const IdentityVerification = ({onNext}) => {
 		if (file) {
 			alert(`Uploading: ${file.name}`);
 			const formDataToSend = new FormData();
-			formDataToSend.append("identity_document", file);
+			formDataToSend.append("id_document", file);
 
 			try {
-				const response = await fetch("https://bigfarma-backend.onrender.com/api/v1/identity-verification", {
-					method: "POST",
-					body: formDataToSend,
-				});
-				const result = await response.json();
-				if (response.ok) {
-					alert("Identity document uploaded successfully!");
-					onNext(result);
+				const res = await axios.post(
+					endpoints().users.create_farmer_profile,
+					formDataToSend,
+					{
+						headers: {
+							"Content-Type": "multipart/form-data",
+							Authorization: `Bearer ${Cookies.get("BIGFARMA_ACCESS_TOKEN")}`,
+						},
+					}
+				);
+				const data = res.data;
+				if (res.status === 200 || res.status === 201) {
+					toast.success(data.message || 'ID uploaded successfully!');
+					onNext(data);
 				} else {
-					alert("Error uploading identity document: " + result.message);
+					toast.error(data.message || 'Upload failed. Please try again.');
 				}
 			} catch (error) {
 				console.error("Error:", error);
-				alert("Network error while uploading identity document.");
+				if (axiosDefault.isAxiosError(error) && error.response) {
+					toast.error(
+						(error.response.data &&
+							(error.response.data.detail || error.response.data.message)) ||
+							"Upload failed. Please try again."
+					);
+				}
+				return {
+					isSuccess: false,
+					statusCode: "500",
+					message: "Unable to connect to the server",
+					data: null,
+				};
 			}
-		} else {
-			alert("Please select a file before uploading.");
 		}
 	};
 

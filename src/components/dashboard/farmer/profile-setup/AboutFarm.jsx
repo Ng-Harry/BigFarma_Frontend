@@ -1,6 +1,11 @@
 
 import React, { useState } from "react";
 import fileIcon from "../../../../assets/icons/fileIcon.png"
+import { toast } from "react-toastify";
+import Cookies from "js-cookie";
+import { endpoints } from "../../../config/endpoints";
+import { axios } from "../../../../lib/axios";
+import axiosDefault from "axios";
 
 const AboutFarm = ({onNext}) => {
     const [formData, setFormData] = useState({
@@ -53,20 +58,43 @@ const AboutFarm = ({onNext}) => {
             dataToSend.append("years_experience", formData.experience);
 
             try {
-                const response = await fetch("https://bigfarma-backend.onrender.com/api/v1/farms", {
-                    method: "POST",
-                    body: dataToSend,
-                });
-                const result = await response.json();
-                if (response.ok) {
-                    alert("Farm details submitted successfully!");
-                    onNext(result);
+                const res = await axios.post(
+                    endpoints().users.create_farmer_profile,
+                    dataToSend,
+                    {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                            Authorization: `Bearer ${Cookies.get("BIGFARMA_ACCESS_TOKEN")}`,
+                        },
+                    }
+                );
+                const data = res.data;
+
+                if (res.status === 200 || res.status === 201) {
+                    toast.success(data.message || 'Saved successfully!');
+                    onNext(data);
                 } else {
-                    alert("Error submitting farm details: " + result.message);
+                    toast.error(data.message || 'Network error. Please try again.');
                 }
             } catch (error) {
                 console.error("Error:", error);
-                alert("Network error while submitting farm details.");
+                if (axiosDefault.isAxiosError(error) && error.response) {
+                    return {
+                        isSuccess: false,
+                        statusCode: error.response.status.toString(),
+                        message:
+                            (error.response.data &&
+                                (error.response.data.detail || error.response.data.message)) ||
+                            "Profile setup failed",
+                        data: null,
+                    };
+                }
+                return {
+                    isSuccess: false,
+                    statusCode: "500",
+                    message: "Unable to connect to the server",
+                    data: null,
+                };
             }
         }
     };

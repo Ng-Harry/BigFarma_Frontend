@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import customerPhoto from "../../../../assets/images/Customer-photo.png";
+import { toast } from "react-toastify";
 import Cookies from "js-cookie";
 import { endpoints } from "../../../config/endpoints";
 import { axios } from "../../../../lib/axios";
@@ -66,15 +67,10 @@ const ProfileForm = ({ onNext }) => {
 				const data = res.data;
 
 				if (res.status === 200 || res.status === 201) {
-					alert("Profile saved successfully!");
-					console.log(data);
-					console.log(res.data.access_token);
+					toast.success(data.message || 'Saved successfully!');
 					onNext(data);
 				} else {
-					alert(
-						"Something went wrong: " +
-							(data.message || "Network error while saving profile.")
-					);
+					toast.error(data.message || 'Network error. Please try again.');
 				}
 			} catch (error) {
 				console.error("Error:", error);
