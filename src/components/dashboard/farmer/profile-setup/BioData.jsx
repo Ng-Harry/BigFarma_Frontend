@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import customerPhoto from "../../../../assets/images/Customer-photo.png";
+import Cookies from 'js-cookie';
 import {login} from '../../../queries/auth/login'
 
 const ProfileForm = ({ onNext }) => {
@@ -56,7 +57,7 @@ const ProfileForm = ({ onNext }) => {
 					{
 						method: "POST",
 						headers: {
-							Authorization: `Bearer ${localStorage.getItem("token")}`,
+							Authorization: `Bearer ${Cookies.get("BIGFARMA_ACCESS_TOKEN")}`,
 						},
 						body: formDataToSend,
 					}
