@@ -42,6 +42,9 @@ const MarketplacePage = () => {
                     </div>))}
             </section>
 
+            {/* product list  */}
+
+
         </DashboardLayout>
     )
 }
