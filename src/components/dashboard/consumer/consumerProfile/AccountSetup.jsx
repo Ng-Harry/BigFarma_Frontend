@@ -2,6 +2,11 @@ import React, { useState, useRef } from "react";
 import { countries } from "../../../../lib/countries";
 import Dropdown from "@/components/shared/Dropdown";
 import joy from "/src/assets/images/review-joy.jpg";
+import { toast } from "react-toastify";
+import Cookies from "js-cookie";
+import { endpoints } from "../../../config/endpoints";
+import { axios } from "../../../../lib/axios";
+import axiosDefault from "axios";
 
 export default function AccountSetup({ onSkip, onNext }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -55,17 +60,62 @@ export default function AccountSetup({ onSkip, onNext }) {
     fileInputRef.current?.click();
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (form.firstName && form.lastName && form.phone && form.email && form.country) {
       const dataToSend = new FormData();
-      dataToSend.append("full_name", `${form.firstName} ${form.lastName}`);
+      dataToSend.append("first_name", form.firstName);
+      dataToSend.append("last_name", form.lastName);
       dataToSend.append("home_address", form.address);
       dataToSend.append("email", form.email);
       dataToSend.append("phone", form.phone);
       dataToSend.append("country", form.country?.name || "");
-      onNext(form);
+      
+
+      try {
+              const res = await axios.post(
+                endpoints().users.create_consumer_profile,
+                dataToSend,
+                {
+                  headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${Cookies.get("BIGFARMA_ACCESS_TOKEN")}`,
+                  },
+                }
+              );
+              const data = res.data;
+      
+              // if (data.full_name) {
+              // 	localStorage.setItem('BIGFARMA_USERNAME', data.full_name);
+              // }
+      
+              if (res.status === 200 || res.status === 201) {
+                toast.success(data.message || 'Saved successfully!');
+                onNext(data);
+              } else {
+                toast.error(data.message || 'Network error. Please try again.');
+              }
+            } catch (error) {
+              console.error("Error:", error);
+              if (axiosDefault.isAxiosError(error) && error.response) {
+                return {
+                  isSuccess: false,
+                  statusCode: error.response.status.toString(),
+                  message:
+                    (error.response.data &&
+                      (error.response.data.detail || error.response.data.message)) ||
+                    "Profile setup failed",
+                  data: null,
+                };
+              }
+              return {
+                isSuccess: false,
+                statusCode: "500",
+                message: "unable to connect to the server",
+                data: null,
+              };
+            }
     }
 
   };
