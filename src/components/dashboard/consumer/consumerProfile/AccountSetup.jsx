@@ -19,6 +19,7 @@ export default function AccountSetup({ onSkip, onNext }) {
     phone: "",
     gender: "",
     address: "",
+    
     country: null,
   });
 
@@ -70,7 +71,10 @@ export default function AccountSetup({ onSkip, onNext }) {
       dataToSend.append("home_address", form.address);
       dataToSend.append("email", form.email);
       dataToSend.append("phone", form.phone);
-      dataToSend.append("country", form.country?.name || "");
+      if (fileInputRef.current?.files[0]) {
+      dataToSend.append("profile_image", fileInputRef.current.files[0]);
+    }
+      
       
 
       try {
@@ -85,14 +89,14 @@ export default function AccountSetup({ onSkip, onNext }) {
                 }
               );
               const data = res.data;
-      
+              console.log(data)
               // if (data.full_name) {
               // 	localStorage.setItem('BIGFARMA_USERNAME', data.full_name);
               // }
       
               if (res.status === 200 || res.status === 201) {
                 toast.success(data.message || 'Saved successfully!');
-                onNext(data);
+                if (onNext) onNext(data);
               } else {
                 toast.error(data.message || 'Network error. Please try again.');
               }
