@@ -44,6 +44,8 @@ const ProfileForm = ({ onNext }) => {
 		) {
 			const formDataToSend = new FormData();
 
+			localStorage.setItem('BIGFARMA_USERNAME', `${formData.firstName} ${formData.lastName}`);
+
 			formDataToSend.append(
 				"full_name",
 				`${formData.firstName} ${formData.lastName}`
@@ -66,9 +68,9 @@ const ProfileForm = ({ onNext }) => {
 				);
 				const data = res.data;
 
-				if (data.full_name) {
-					Cookies.set('BIGFARMA_USERNAME', data.full_name);
-				}
+				// if (data.full_name) {
+				// 	localStorage.setItem('BIGFARMA_USERNAME', data.full_name);
+				// }
 
 				if (res.status === 200 || res.status === 201) {
 					toast.success(data.message || 'Saved successfully!');

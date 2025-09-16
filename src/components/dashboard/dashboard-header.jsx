@@ -20,7 +20,7 @@ export default function DashboardHeader({ onMenuClick }) {
 
           <div className="hidden sm:block">
             <h1 className="text-lg font-medium text-gray-900">
-              Hello, {Cookies.get('BIGFARMA_USERNAME')} <span className="text-red-500">👋</span>
+              Hello, {localStorage.getItem('BIGFARMA_USERNAME') || "User"}  <span className="text-red-500">👋</span>
             </h1>
           </div>
         </div>
@@ -51,7 +51,7 @@ export default function DashboardHeader({ onMenuClick }) {
             <div className="h-10 w-10 rounded-full bg-red-500 flex items-center justify-center text-gray-500 font-bold text-sm">
               <img src={Avatar} alt="Avatar" className="h-full w-full rounded-full object-cover" />
             </div>
-            <span className="hidden md:block text-sm font-bold text-gray-900">John Doe</span>
+              <span className="hidden md:block text-sm font-bold text-gray-900">{localStorage.getItem('BIGFARMA_USERNAME') || "User"}</span>
           </div>
           </div>
         </div>
