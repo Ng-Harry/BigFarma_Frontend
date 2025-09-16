@@ -272,7 +272,7 @@ const SignUpForm = () => {
                       password: newErrors.password,
                     }));
                   }}
-                  className="w-full p-3 bg-white focus focus:outline-none py-2 placeholder:text-base placeholder:text-[#98A2B3]"
+                  className="w-full p-3 bg-white focus focus:outline-none focus:ring focus:ring-gray-600 py-2 placeholder:text-base placeholder:text-[#98A2B3]"
                 />
                 <div
                   className="cursor-pointer text-gray-500"

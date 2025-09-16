@@ -8,6 +8,7 @@ import ConsumerStatistics from "./consumer/statistics/Index";
 import FarmerStatistics from "./farmer/statistics/Index";
 import { useFocus } from "../../hooks";
 import FarmerProfileSetup from "./farmer/profile-setup/Index";
+import ConsumerProfileSetup from "./consumer/consumerProfile/Index";
 
 const Dashboard = () => {
 	const [profileComplete, setProfileComplete] = useState(false);
@@ -21,7 +22,7 @@ const Dashboard = () => {
 					{role === "farmer" ? (
 						<FarmerProfileSetup onComplete={() => setProfileComplete(true)} />
 					) : (
-						"ConsumerProfile-SetUp"
+            <ConsumerProfileSetup onComplete={() => setProfileComplete(true)} />
 					)}
 				</>
 			)}
