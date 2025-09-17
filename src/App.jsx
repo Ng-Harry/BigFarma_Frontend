@@ -16,6 +16,7 @@ import Success from "./pages/Success";
 import PaymentSetup from "./pages/PaymentSetupModal";
 import MarketplacePage from "./components/dashboard/marketplace";
 import ProductDetail from "./components/dashboard/marketplace/product-detail";
+import DashboardLayout from "./components/dashboard/dashboard-layout";
 
 const App = () => {
   return (
@@ -33,11 +34,46 @@ const App = () => {
         <Route path="/role" element={<RoleSelection />} />
         <Route path="/success" element={<Success />} />
         {/* Dashboard */}
-        <Route path="/dashboard" element={<DashboardPage />} />
-        <Route path="/order" element={<ConsumerOrderPage />} />
-        <Route path="/marketplace" element={<MarketplacePage />} />
-        <Route path="/payment" element={<PaymentSetup />} />
-        <Route path="/marketplace/products/:id" element={<ProductDetail />} />
+        <Route
+          path="/dashboard"
+          element={
+            <DashboardLayout>
+              <DashboardPage />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path="/orders"
+          element={
+            <DashboardLayout>
+              <ConsumerOrderPage />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path="/marketplace"
+          element={
+            <DashboardLayout>
+              <MarketplacePage />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path="/marketplace/products/:id"
+          element={
+            <DashboardLayout>
+              <ProductDetail />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path="/payment"
+          element={
+            <DashboardLayout>
+              <PaymentSetup />
+            </DashboardLayout>
+          }
+        />
       </Routes>
     </>
   );

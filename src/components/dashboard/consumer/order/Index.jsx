@@ -35,11 +35,11 @@ const ConsumerOrder = () => {
         onFilter={(status) => setStatusFilter(status)}
       />
 
-      <div className="grid grid-cols-2 gap-6 mt-10">
+      <div className="grid xl:grid-cols-2 gap-6 mt-10">
         {filteredOrders.map((order) => (
           <div
             key={order.id}
-            className="p-2.5 border border-primary rounded-lg flex items-center justify-between gap-3"
+            className="p-2.5 min-h-[100px] border border-primary rounded-lg flex items-center justify-between gap-3"
           >
             <div className="bg-[#F6F6F6] h-20 w-20 p-2 rounded-md">
               <img
@@ -59,12 +59,12 @@ const ConsumerOrder = () => {
                 color: order.status.textColor,
                 backgroundColor: order.status.bgColor,
               }}
-              className="border p-2 rounded-xl text-sm flex items-center gap-1"
+              className="border p-2 rounded-xl text-xs flex items-center gap-1.5"
             >
-              <order.status.icon size={16} />
+              <order.status.icon size={20} />
               <p>{order.status.label}</p>
             </div>
-            <div className="text-sm space-y-1.5 pr-3">
+            <div className="text-sm space-y-1.5 pr-3 whitespace-nowrap">
               <p>Updated {order.updatedAt}</p>
               <button
                 onClick={() => setSelectedOrder(order)}
