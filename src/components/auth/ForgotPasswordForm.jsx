@@ -15,7 +15,7 @@ const ForgotPasswordForm = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({ phone: false, country: null });
-  const [focused, setFocused] = useState(false);
+  // const [focused, setFocused] = useState(false);
   const navigate = useNavigate();
 
   // Country selection

@@ -5,13 +5,13 @@ import { IoIosStar } from "react-icons/io";
 import Button from "@/components/shared/Button";
 
 export default function ProductsList() {
-    const { data, isLoading, error } = useQuery({
-        queryKey: ["products"],
-        queryFn: fetchProducts,
-    });
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["products"],
+    queryFn: fetchProducts,
+  });
 
-    if (isLoading) return <p>Loading...</p>;
-    if (error) return <p>Error loading products</p>;
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error loading products</p>;
 
     return (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-8">
@@ -42,21 +42,32 @@ export default function ProductsList() {
                             </div>
                             { /* rating  */}
 
-                            <div className="flex items-center gap-1">
-                                <IoIosStar className="inline text-yellow-500" />
-                                <p className="text-sm">{product.average_rating} ({product.total_ratings})</p>
-                            </div>
-                        </div>
+              <div className="flex items-center gap-1">
+                <IoIosStar className="inline text-yellow-500" />
+                <p className="text-sm">
+                  {product.average_rating} ({product.total_ratings})
+                </p>
+              </div>
+            </div>
 
-                        {/* buttons  */}
-                        <div className="flex flex-col items-center lg:flex-row gap-1 mt-3">
-                            <Link to={''} className="w-full py-2 underline text-[var(--color-primary)] capitalize" >Add to cart</Link>
-                            <Link to={''} className="w-full py-2 text-white text-center rounded-md capitalize bg-[var(--color-primary)]">View details</Link>
-                        </div>
-
-                    </div>
-                </Link>
-            ))}
-        </div>
-    );
+            {/* buttons  */}
+            <div className="flex flex-col items-center lg:flex-row gap-1 mt-3">
+              <Link
+                to={""}
+                className="w-full py-2 underline text-[var(--color-primary)] capitalize"
+              >
+                Add to cart
+              </Link>
+              <Link
+                to={""}
+                className="w-full py-2 text-white text-center rounded-md capitalize bg-[var(--color-primary)]"
+              >
+                View details
+              </Link>
+            </div>
+          </div>
+        </Link>
+      ))}
+    </div>
+  );
 }

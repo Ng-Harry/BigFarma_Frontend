@@ -1,5 +1,5 @@
-import { login } from '@/components/queries/auth/login';
-import { toast } from 'react-toastify';
+import { login } from "@/components/queries/auth/login";
+import { toast } from "react-toastify";
 // ==================== Images & Icons ====================
 import MobileBgSignIn from "../../assets/images/MobileSignup.png";
 import DesktopBgSignIn from "../../assets/images/DesktopSignUp.jpg";
@@ -34,8 +34,7 @@ const SignInForm = () => {
   const Navigate = useNavigate();
   const isMobile = useIsMobile(); // Tailwind's breakpoint can be passed as a value
 
-  const { loginData, errors, updateField, updateCountry, handleSubmit } =
-    useForm();
+  const { loginData, errors, updateField, updateCountry } = useForm();
 
   // Country
   const handleSelect = (country) => {
@@ -55,34 +54,34 @@ const SignInForm = () => {
     updateField(field, value);
   };
 
-    const handleFormSubmit = async (e) => {
-      e.preventDefault();
-      setLoading(true);
-      const loginValue = loginData.username;
-      const password = loginData.password;
-      try {
-        const result = await login({ login: loginValue, password });
-        if (result.isSuccess) {
-          toast.success(result.message || 'Login successful!');
-          localStorage.setItem('token', result.token);
-          console.log(result.token)
-          Navigate('/dashboard');
-        } else {
-          toast.error(result.message || 'Login failed.');
-        }
-      } catch (err) {
-        toast.error(err?.message || 'Login failed.');
-      } finally {
-        setLoading(false);
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const loginValue = loginData.username;
+    const password = loginData.password;
+    try {
+      const result = await login({ login: loginValue, password });
+      if (result.isSuccess) {
+        toast.success(result.message || "Login successful!");
+        localStorage.setItem("token", result.token);
+        console.log(result.token);
+        Navigate("/dashboard");
+      } else {
+        toast.error(result.message || "Login failed.");
       }
-    };
+    } catch (err) {
+      toast.error(err?.message || "Login failed.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <section className=" w-full h-screen  flex flex-col lg:flex-row items-center relative lg:overflow-hidden">
       <div className="w-full lg:max-w-[35%] h-full flex items-center justify-center overflow-hidden">
         {/* Background Image */}
         <img
-          src={isMobile ? MobileBgSignIn : DesktopBgSignIn} 
+          src={isMobile ? MobileBgSignIn : DesktopBgSignIn}
           alt="Sign In"
           className="w-full h-screen lg:h-full md:h-[51.2rem] object-cover scale-150 md:scale-200 lg:scale-100 transition-transform duration-500"
           style={{ transformOrigin: "center" }}
@@ -151,8 +150,9 @@ const SignInForm = () => {
                     marginLeft: focused ? -57 : 0,
                   }}
                   transition={{ duration: 0.3 }}
-                  className={`border p-2.5 rounded-lg placeholder:text-base placeholder:text-[#98A2B3] relative z-10 cursor-pointer ${errors.username ? "border-red-500" : "border-[#DDD5DD]"
-                    }`}
+                  className={`border p-2.5 rounded-lg placeholder:text-base placeholder:text-[#98A2B3] relative z-10 cursor-pointer ${
+                    errors.username ? "border-red-500" : "border-[#DDD5DD]"
+                  }`}
                 />
               </motion.div>
               {/* Animation for username error */}
@@ -184,8 +184,9 @@ const SignInForm = () => {
                 value={loginData.password}
                 onChange={(e) => handleUpdateField("password", e.target.value)}
                 placeholder="Must be 8 characters"
-                className={`w-full max-w-md- p-2.5 rounded-lg placeholder:text-base placeholder:tracking-tight placeholder:text-[#98A2B3] ${errors.password ? "border-red-500" : "border-[#DDD5DD]"
-                  } border`}
+                className={`w-full max-w-md- p-2.5 rounded-lg placeholder:text-base placeholder:tracking-tight placeholder:text-[#98A2B3] ${
+                  errors.password ? "border-red-500" : "border-[#DDD5DD]"
+                } border`}
               />
               {/* Password toggle to show/hide */}
               <div
@@ -237,7 +238,7 @@ const SignInForm = () => {
               className="w-full px-6 py-3  rounded-lg mt-4 font-normal text-[22px] bg-[#016130] hover:bg-[#003f1f]  text-white"
               disabled={loading}
             >
-              {loading ? 'Signing in...' : 'Sign In'}
+              {loading ? "Signing in..." : "Sign In"}
             </button>
           </form>
 
@@ -306,8 +307,6 @@ const SignInForm = () => {
           </div>
         </div>
       </div>
-
-
     </section>
   );
 };
