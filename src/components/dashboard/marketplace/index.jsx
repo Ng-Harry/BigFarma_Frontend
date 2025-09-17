@@ -20,7 +20,7 @@ const categories = [
 
 const MarketplacePage = () => {
   return (
-    <DashboardLayout>
+    <div>
       {/* sliders  */}
       <MarketplaceSlider />
 
@@ -37,28 +37,36 @@ const MarketplacePage = () => {
         </Button>
       </div>
 
-            {/* categories  */}
-            <section className='w-full grid grid-cols-2 lg:grid-cols-4 justify-between items-center gap-10'>
-                {categories.map(category => (
-                    <div key={category.id} className='py-2 h-22 cursor-pointer w-full lg:w-[1fr] px-5 rounded-lg bg-white shadow'>
-                        <div className='flex gap-10 justify-start items-center'>
-                            <img src={category.image} className=' rounded-lg overflow-hidden' />
-                            <p className='md:text-lg'>{category.name}</p>
-                        </div>
-                    </div>))}
-            </section>
-
-            <div className='flex justify-between items-center mt-12'>
-                <h4 className='font-semibold text-black text-xl'>Top Products</h4>
-                <Link to={''} className='text-[var(--color-primary)] px-6' >View all</Link>
+      {/* categories  */}
+      <section className="w-full grid grid-cols-2 lg:grid-cols-4 justify-between items-center gap-10">
+        {categories.map((category) => (
+          <div
+            key={category.id}
+            className="py-2 h-22 cursor-pointer w-full lg:w-[1fr] px-5 rounded-lg bg-white shadow"
+          >
+            <div className="flex gap-10 justify-start items-center">
+              <img
+                src={category.image}
+                className=" rounded-lg overflow-hidden"
+              />
+              <p className="md:text-lg">{category.name}</p>
             </div>
-            {/* product list  */}
-            <section className=' mt-5 mb-10'>
-                <ProductsList />
-            </section>
+          </div>
+        ))}
+      </section>
 
-        </DashboardLayout>
-    )
+      <div className="flex justify-between items-center mt-12">
+        <h4 className="font-semibold text-black text-xl">Top Products</h4>
+        <Link to={""} className="text-[var(--color-primary)] px-6">
+          View all
+        </Link>
+      </div>
+      {/* product list  */}
+      <section className=" mt-5 mb-10">
+        <ProductsList />
+      </section>
+    </div>
+  );
 }
 
 export default MarketplacePage;
