@@ -32,7 +32,7 @@ export default function ProductDetail() {
                         <img
                             src={data.images[0]}
                             alt={data.name}
-                            className="w-64 h-64 object-cover rounded"
+                            className="w-full h-64 bg-slate-50 mb-4  object-cover rounded"
                         />
                     </div>
                     <div className="flex items-center gap-4 mb-4">
@@ -59,7 +59,7 @@ export default function ProductDetail() {
                 </div>
 
                 <div className="p-6 w-full lg:w-1/2 bg-white rounded-lg shadow">
-                    <div className="space-y-6">
+                    <div className="space-y-10">
                         <section>
                             <h2 className="text-xl font-semibold capitalize">Fresh {data.name}</h2>
 

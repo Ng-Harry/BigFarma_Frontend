@@ -18,7 +18,7 @@ const categories = [
   { id: 4, name: "Protein", image: proteinCategory },
 ];
 
-const MarketplacePage = () => {
+const Marketplace = () => {
   return (
     <div>
       {/* sliders  */}
@@ -69,4 +69,4 @@ const MarketplacePage = () => {
   );
 }
 
-export default MarketplacePage;
+export default Marketplace;
