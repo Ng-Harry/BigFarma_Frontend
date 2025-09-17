@@ -21,7 +21,8 @@ export default function ProductDetail() {
     if (error) return <p>Product not found</p>;
 
     return (
-        <DashboardLayout>
+        // <DashboardLayout>
+        <>
             <Link to="/marketplace" className="flex items-center text-[var(--color-neutral)] mb-4 p-2 border border-slate-200 rounded-md w-fit">
                 <IoMdArrowBack />
                 <span className="ml-2 cursor-pointer font-semibold">Back to results</span>
@@ -51,7 +52,7 @@ export default function ProductDetail() {
                     </p>}
 
                     {/* buttons  */}
-                    <div className="flex flex-col items-center lg:flex-row gap-1 lg:gap-7 mt-3">
+                    <div className="flex justify-between  items-center gap-1 lg:justify-start lg:gap-7 mt-3">
                         <Link to={''} className=" py-2 underline text-[var(--color-primary)] capitalize" >Add to cart</Link>
                         <Link to={''} className=" px-6 py-2 text-white text-center rounded-md capitalize bg-[var(--color-primary)]">View details</Link>
                     </div>
@@ -61,10 +62,10 @@ export default function ProductDetail() {
                 <div className="p-6 w-full lg:w-1/2 bg-white rounded-lg shadow">
                     <div className="space-y-10">
                         <section>
-                            <h2 className="text-xl font-semibold capitalize">Fresh {data.name}</h2>
+                            <h2 className="text-lg font-semibold capitalize lg:text-xl">Fresh {data.name}</h2>
 
                             {/* details  */}
-                            <div className="space-y-3 mt-4 text-lg">
+                            <div className="space-y-3 mt-4 text-sm lg:text-lg">
                                 <p><span className="font-medium">Category: <span className="capitalize font-normal">{data.category}</span></span>   |  <span className="font-medium">Type: <span className="capitalize font-normal">{data.farmer.farm_type}</span></span>  |  <span className="font-medium">Type: <span className="capitalize font-normal">{data.farmer.farm_location}</span></span></p>
                                 <p><span className="font-medium">Availability:</span>{data.availability === "in_stock" ? <span> In Stock</span> : <span>Out of Stock</span>}</p>
                                 <p><span className="font-medium">Price:</span> ₦{data.price} per {data.quantity.split(" ").length > 1
@@ -75,15 +76,15 @@ export default function ProductDetail() {
 
                         <section>
                             <div className="space-y-3 ">
-                                <h2 className="text-xl font-semibold capitalize">Description</h2>
-                                <p className="text-lg">{data.description}</p>
+                                <h2 className="text-lg font-semibold capitalize lg:text-xl">Description</h2>
+                                <p className="text-sm lg:text-lg">{data.description}</p>
                             </div>
                         </section>
 
                         <section>
                             <div className="space-y-3 ">
-                                <h2 className="text-xl font-semibold capitalize">Key Details</h2>
-                                <div className="text-lg space-y-2">
+                                <h2 className="text-lg font-semibold capitalize lg:text-xl">Key Details</h2>
+                                <div className="text-sm space-y-2 lg:text-xl">
                                     <span className="flex items-center gap-2">
                                         <FaCheck />
                                         <p>Fresh, high-quality produce</p>
@@ -105,10 +106,10 @@ export default function ProductDetail() {
 
                         <section>
                             <div className="space-y-3 ">
-                                <h2 className="text-xl font-semibold capitalize">Farmer's Details</h2>
+                                <h2 className="text-lg font-semibold capitalize lg:text-xl">Farmer's Details</h2>
                                 <div className="flex flex-col gap-2">
                                     <img src={data.farmer.profile_picture} alt={data.farmer.full_name} className="w-14 h-14 bg-slate-50 rounded-full" />
-                                    <div className="text-lg">
+                                    <div className="text-sm lg:text-lg">
                                         <p><span className="font-medium capitalize">Name:</span> {data.farmer.full_name}</p>
                                         <p><span className="font-medium capitalize">Location:</span> {data.farmer.farm_location}</p>
                                         <p><span className="font-medium capitalize">Farm type:</span> {data.farmer.farm_type}</p>
@@ -119,6 +120,7 @@ export default function ProductDetail() {
                     </div>
                 </div>
             </div>
-        </DashboardLayout>
+        </>
+        // </DashboardLayout>
     );
 }
