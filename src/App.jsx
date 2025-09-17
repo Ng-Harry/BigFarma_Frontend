@@ -10,7 +10,7 @@ import InputOtp from "./pages/InputOtp";
 import ResetPassword from "./pages/ResetPassword";
 import RoleSelection from "./pages/RoleSelection";
 
-import { DashboardPage } from "./pages";
+import { DashboardPage, ConsumerOrderPage } from "./pages";
 import VerifyOtp from "./pages/VerifyOtp";
 import Success from "./pages/Success";
 import PaymentSetup from "./pages/PaymentSetupModal";
@@ -33,9 +33,9 @@ const App = () => {
         <Route path="/success" element={<Success />} />
         {/* Dashboard */}
         <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/order" element={<ConsumerOrderPage />} />
         <Route path="/marketplace" element={<MarketplacePage />} />
         <Route path="/payment" element={<PaymentSetup />} />
-
       </Routes>
     </>
   );
