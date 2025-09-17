@@ -1,12 +1,9 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProductById } from "@/lib/api";
-import DashboardLayout from '../dashboard-layout'
-import { IoMdArrowBack } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { demoMarketplaceProducts } from "@/lib/demoMarketplaceProducts"; // ⬅️ import your mock list
+import { IoMdArrowBack, IoIosStar } from "react-icons/io";
 import { FaCheck } from "react-icons/fa6";
-
-
 
 
 export default function ProductDetail() {
@@ -20,20 +17,30 @@ export default function ProductDetail() {
     if (isLoading) return <p>Loading...</p>;
     if (error) return <p>Product not found</p>;
 
+    // ✅ Find similar products from your mock list
+    const similar = demoMarketplaceProducts.filter(
+        (item) => item.category === data.category && item.id !== data.id
+    );
+
     return (
-        // <DashboardLayout>
         <>
-            <Link to="/marketplace" className="flex items-center text-[var(--color-neutral)] mb-4 p-2 border border-slate-200 rounded-md w-fit">
+            <Link
+                to="/marketplace"
+                className="flex items-center text-[var(--color-neutral)] mb-4 p-2 border border-slate-200 rounded-md w-fit"
+            >
                 <IoMdArrowBack />
                 <span className="ml-2 cursor-pointer font-semibold">Back to results</span>
             </Link>
+
+            {/* existing product detail code... */}
+
             <div className="flex flex-col lg:flex-row gap-9">
                 <div className="p-6 lg:w-1/2 bg-white rounded-lg shadow">
-                    <div className="mb-4 w-full lg:w-24">
+                    <div className="mb-4 lg:w-full h-64 lg:h-96 lg:mb-10">
                         <img
                             src={data.images[0]}
                             alt={data.name}
-                            className="w-full h-64 bg-slate-50 mb-4  object-cover rounded"
+                            className="h-full bg-slate-50 mb-4  object-cover rounded"
                         />
                     </div>
                     <div className="flex items-center gap-4 mb-4">
@@ -66,7 +73,7 @@ export default function ProductDetail() {
 
                             {/* details  */}
                             <div className="space-y-3 mt-4 text-sm lg:text-lg">
-                                <p><span className="font-medium">Category: <span className="capitalize font-normal">{data.category}</span></span>   |  <span className="font-medium">Type: <span className="capitalize font-normal">{data.farmer.farm_type}</span></span>  |  <span className="font-medium">Type: <span className="capitalize font-normal">{data.farmer.farm_location}</span></span></p>
+                                <p><span className="font-medium">Category: <span className="capitalize font-normal">{data.category}</span></span>   |  <span className="font-medium">Type: <span className="capitalize font-normal">{data.farmer.farm_type}</span></span>  |  <span className="font-medium">Origin: <span className="capitalize font-normal">{data.farmer.farm_location}</span></span></p>
                                 <p><span className="font-medium">Availability:</span>{data.availability === "in_stock" ? <span> In Stock</span> : <span>Out of Stock</span>}</p>
                                 <p><span className="font-medium">Price:</span> ₦{data.price} per {data.quantity.split(" ").length > 1
                                     ? data.quantity.split(" ").slice(1).join(" ")
@@ -75,14 +82,14 @@ export default function ProductDetail() {
                         </section>
 
                         <section>
-                            <div className="space-y-3 ">
+                            <div className="space-y-3 lg:space-y-4 ">
                                 <h2 className="text-lg font-semibold capitalize lg:text-xl">Description</h2>
                                 <p className="text-sm lg:text-lg">{data.description}</p>
                             </div>
                         </section>
 
                         <section>
-                            <div className="space-y-3 ">
+                            <div className="space-y-3 lg:space-y-4 ">
                                 <h2 className="text-lg font-semibold capitalize lg:text-xl">Key Details</h2>
                                 <div className="text-sm space-y-2 lg:text-xl">
                                     <span className="flex items-center gap-2">
@@ -105,7 +112,7 @@ export default function ProductDetail() {
                         </section>
 
                         <section>
-                            <div className="space-y-3 ">
+                            <div className="space-y-3 lg:space-y-4 ">
                                 <h2 className="text-lg font-semibold capitalize lg:text-xl">Farmer's Details</h2>
                                 <div className="flex flex-col gap-2">
                                     <img src={data.farmer.profile_picture} alt={data.farmer.full_name} className="w-14 h-14 bg-slate-50 rounded-full" />
@@ -120,7 +127,73 @@ export default function ProductDetail() {
                     </div>
                 </div>
             </div>
+
+
+
+            <div className="flex justify-between items-center my-8">
+                <h4 className="font-semibold text-black text-xl">Similar Products</h4>
+            </div>
+
+            {/* ✅ suggestions */}
+            {similar.length > 0 ? (
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    {similar.map((item) => (
+                        <div key={item.id} >
+                            <div className="p-4 bg-white shadow rounded-md">
+                                <div className="w-full h-48 rounded-t-md bg-slate-100 flex items-center justify-center">
+                                    <img
+                                        src={item.images[0]}
+                                        alt={item.name}
+                                        className=""
+                                    />
+                                </div>
+                                {/* details  */}
+                                <div className="space-y-1">
+                                    {/* name  */}
+                                    <div className="flex items-center gap-3 pt-3">
+                                        <h3 className="font-medium capitalize text-lg">{item.name}</h3>
+                                        {item.availability === "in_stock" ? <p className="text-xs text-green-700 py-1 px-2 rounded-md bg-green-100 capitalize">In stock</p> : <p className="text-sm text-red-700 p-3 rounded-md bg-red-100 capitalize">Out of stock</p>}
+                                    </div>
+
+                                    {/* price  */}
+                                    <div className="flex items-center gap-1">
+                                        <p className="font-semibold">₦{item.price}</p>
+                                        <p className="font-normal text-sm">per {item.quantity.split(" ").length > 1
+                                            ? item.quantity.split(" ").slice(1).join(" ")
+                                            : item.quantity}</p>
+                                    </div>
+                                    { /* rating  */}
+
+                                    <div className="flex items-center gap-1">
+                                        <IoIosStar className="inline text-yellow-500" />
+                                        <p className="text-sm">
+                                            {item.average_rating} ({item.total_ratings})
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* buttons  */}
+                                <div className="flex flex-col items-center lg:flex-row gap-1 mt-3">
+                                    <Link
+                                        to={"#"}
+                                        className="w-full py-2 underline text-[var(--color-primary)] capitalize"
+                                    >
+                                        Add to cart
+                                    </Link>
+                                    <Link
+                                        to={`/marketplace/products/${item.id}`}
+                                        className="w-full py-2 text-white text-center rounded-md capitalize bg-[var(--color-primary)]"
+                                    >
+                                        View details
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <p className="text-gray-500">No similar products found</p>
+            )}
         </>
-        // </DashboardLayout>
     );
 }
