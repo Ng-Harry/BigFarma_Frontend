@@ -231,7 +231,7 @@ const ProfileForm = ({ onNext }) => {
 					/>
 
 					{/* Submit Button */}
-					<div className="itms-center">
+					<div className="items-center">
 						<button
 							type="submit"
 							className="w-fit mx-auto flex justify-center px-7 items-center bg-green-700 text-white rounded-lg py-3 hover:bg-green-900 cursor-pointer transition duration-200">

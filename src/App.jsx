@@ -17,6 +17,9 @@ import PaymentSetup from "./pages/PaymentSetupModal";
 import MarketplacePage from "./components/dashboard/marketplace";
 import ProductDetail from "./components/dashboard/marketplace/product-detail";
 import DashboardLayout from "./components/dashboard/dashboard-layout";
+import GroupBuyPage from "./pages/GroupBuyPage";
+import CreateGroupModal from "./components/dashboard/GroupBuy/CreateGroupModal";
+
 
 const App = () => {
   return (
@@ -55,6 +58,22 @@ const App = () => {
           element={
             <DashboardLayout>
               <MarketplacePage />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path="/group-buy"
+          element={
+            <DashboardLayout>
+              <GroupBuyPage />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path="/group-buy/create"
+          element={
+            <DashboardLayout>
+              <CreateGroupModal />
             </DashboardLayout>
           }
         />
