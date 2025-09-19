@@ -144,7 +144,7 @@ export default function ProductDetail() {
                                     <img
                                         src={item.images[0]}
                                         alt={item.name}
-                                        className=""
+                                        className="w-fit"
                                     />
                                 </div>
                                 {/* details  */}
