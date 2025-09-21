@@ -30,7 +30,7 @@ const Dashboard = () => {
               },
             });
             const data = await response.data;
-						setProfileComplete(data && data.full_name ? true : false);
+						setProfileComplete(data.full_name ? true : false);
           } else if (role === "consumer") {
             response = await axios.get(endpoints().users.get_consumer_profile, {
               headers: {
@@ -38,22 +38,24 @@ const Dashboard = () => {
               },
             });
             const data = await response.data;
-						setProfileComplete(data && data.first_name ? true : false);
+						setProfileComplete(data.first_name ? true : false);
           }
           
         } catch (error) {
           console.error("Error checking profile completion:", error);
-          setProfileComplete(false); // Assume incomplete on error
+          setProfileComplete(false); 
         }
       } else {
         setProfileComplete(false); 
       }
     };
     checkProfileCompletion(); 
-  }, [role, setProfileComplete]);
+  }, [role]);
 
 
   console.log("Current role:", role);
+  console.log("Is profile complete?", profileComplete);
+
   return (
     <>
       {!profileComplete && (
