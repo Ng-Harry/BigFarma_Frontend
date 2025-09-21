@@ -53,7 +53,9 @@ const ProfileForm = ({ onNext }) => {
 			formDataToSend.append("home_address", formData.address);
 			formDataToSend.append("email", formData.email);
 			formDataToSend.append("phone", formData.phone);
-			formDataToSend.append("profile_picture", fileInputRef.current.files[0]); // actual file
+			if (fileInputRef.current.files.length > 0) {
+				formDataToSend.append("profile_picture", fileInputRef.current.files[0]);
+			}
 
 			try {
 				const res = await axios.post(
@@ -61,7 +63,7 @@ const ProfileForm = ({ onNext }) => {
 					formDataToSend,
 					{
 						headers: {
-							"Content-Type": "multipart/form-data",
+							"Content-Type": "application/json",
 							Authorization: `Bearer ${Cookies.get("BIGFARMA_ACCESS_TOKEN")}`,
 						},
 					}
