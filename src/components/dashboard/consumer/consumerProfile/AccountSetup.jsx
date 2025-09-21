@@ -71,7 +71,10 @@ export default function AccountSetup({ onSkip, onNext }) {
       dataToSend.append("phone", form.phone);
       if (fileInputRef.current?.files[0]) {
       dataToSend.append("profile_picture", fileInputRef.current.files[0]);
+      }else {
+        dataToSend.append("profile_picture", null);
       }
+      dataToSend.append("crop_preferences", "string");
 
     
       try {
@@ -80,17 +83,13 @@ export default function AccountSetup({ onSkip, onNext }) {
                 dataToSend,
                 {
                   headers: {
-                    "Content-Type": "multipart/form-data",
+                    "Content-Type": "application/json",
                     Authorization: `Bearer ${Cookies.get("BIGFARMA_ACCESS_TOKEN")}`,
                   },
                 }
               );
-              const data = res.data;
-      
-              // if (data.full_name) {
-              // 	localStorage.setItem('BIGFARMA_USERNAME', data.full_name);
-              // }
-      
+              const data = await res.data;
+            
               if (res.status === 200 || res.status === 201) {
                 toast.success(data.message || 'Saved successfully!');
                 onNext(data);
