@@ -14,7 +14,7 @@ import { axios } from "../../lib/axios";
 
 const Dashboard = () => {
   const { role } = useFocus();
-  const [profileComplete, setProfileComplete] = useState(true);
+  const [profileComplete, setProfileComplete] = useState(null);
 
   useEffect(() => {
     const token = Cookies.get("BIGFARMA_ACCESS_TOKEN");
