@@ -51,23 +51,33 @@ const AboutFarm = ({onNext}) => {
         e.preventDefault();
         if (formData.farmName && formData.location && formData.size && formData.farmType && formData.experience) {
             const dataToSend = new FormData();
+            
             dataToSend.append("farm_name", formData.farmName);
             dataToSend.append("farm_location", formData.location);
+            dataToSend.append("farm_type", formData.farmType);
             dataToSend.append("farm_size", formData.size);
             dataToSend.append("farm_type", formData.farmType);
             dataToSend.append("years_experience", formData.experience);
-
+            if (formData.images.length === 0) {
+                dataToSend.append("farm_image", null);
+            }else {
+                formData.images.forEach((image) => {
+                    dataToSend.append("farm_image", image);
+                });
+            }
             try {
-                const res = await axios.post(
-                    endpoints().users.create_farmer_profile,
-                    dataToSend,
-                    {
-                        headers: {
-                            "Content-Type": "multipart/form-data",
-                            Authorization: `Bearer ${Cookies.get("BIGFARMA_ACCESS_TOKEN")}`,
-                        },
-                    }
-                );
+                const res = await axios.put(
+									endpoints().users.update_farmer_profile,
+									dataToSend,
+									{
+										headers: {
+											"Content-Type": "application/json",
+											Authorization: `Bearer ${Cookies.get(
+												"BIGFARMA_ACCESS_TOKEN"
+											)}`,
+										},
+									}
+								);
                 const data = res.data;
 
                 if (res.status === 200 || res.status === 201) {
@@ -158,8 +168,6 @@ const AboutFarm = ({onNext}) => {
                             >
                                 <option value="">What kind of farm do you run?</option>
                                 <option value="crop">Crop Farm</option>
-                                <option value="livestock">Livestock Farm</option>
-                                <option value="mixed">Mixed Farm</option>
                             </select>
                         </div>
                     </div>

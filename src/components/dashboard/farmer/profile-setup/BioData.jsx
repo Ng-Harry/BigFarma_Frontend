@@ -39,12 +39,9 @@ const ProfileForm = ({ onNext }) => {
 			formData.firstName &&
 			formData.lastName &&
 			formData.phone &&
-			formData.email &&
-			formData.gender
+			formData.email 
 		) {
 			const formDataToSend = new FormData();
-
-			localStorage.setItem('BIGFARMA_USERNAME', `${formData.firstName} ${formData.lastName}`);
 
 			formDataToSend.append(
 				"full_name",
@@ -55,7 +52,16 @@ const ProfileForm = ({ onNext }) => {
 			formDataToSend.append("phone", formData.phone);
 			if (fileInputRef.current.files.length > 0) {
 				formDataToSend.append("profile_picture", fileInputRef.current.files[0]);
+			}else {
+				formDataToSend.append("profile_picture", null);
 			}
+			formDataToSend.append("id_document", "string");
+			formDataToSend.append("farm_name", "string");
+			formDataToSend.append("farm_type", "string");
+			formDataToSend.append("farm_image", null);
+			formDataToSend.append("farm_location", "string");
+			formDataToSend.append("farm_size", "string");
+			formDataToSend.append("years_experience", "string");
 
 			try {
 				const res = await axios.post(
@@ -69,10 +75,6 @@ const ProfileForm = ({ onNext }) => {
 					}
 				);
 				const data = res.data;
-
-				// if (data.full_name) {
-				// 	localStorage.setItem('BIGFARMA_USERNAME', data.full_name);
-				// }
 
 				if (res.status === 200 || res.status === 201) {
 					toast.success(data.message || 'Saved successfully!');

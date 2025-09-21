@@ -48,12 +48,12 @@ const IdentityVerification = ({onNext}) => {
 			formDataToSend.append("id_document", file);
 
 			try {
-				const res = await axios.post(
-					endpoints().users.create_farmer_profile,
+				const res = await axios.put(
+					endpoints().users.update_farmer_profile,
 					formDataToSend,
 					{
 						headers: {
-							"Content-Type": "multipart/form-data",
+							"Content-Type": "application/json",
 							Authorization: `Bearer ${Cookies.get("BIGFARMA_ACCESS_TOKEN")}`,
 						},
 					}

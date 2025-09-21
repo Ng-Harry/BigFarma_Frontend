@@ -8,7 +8,6 @@ import { useFocus } from "../../hooks"
 import Cookies from "js-cookie";
 import { endpoints } from "../config/endpoints";
 import { axios } from "../../lib/axios";
-import axiosDefault from "axios";
 
 export default function DashboardHeader({ onMenuClick }) {
   const { role } = useFocus();
