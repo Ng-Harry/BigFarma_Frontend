@@ -1,4 +1,4 @@
-import Dashboard from "./dashboard/Index";
+import Dashboard from "./dashboard";
 
 export {Dashboard}
 // import ConsumerDashboard from "./dashboard/consumer/Index";
