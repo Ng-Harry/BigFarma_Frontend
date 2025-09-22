@@ -1,3 +1,3 @@
-import PendingOrders from "./Table/Index";
+import PendingOrders from "./Table";
 
 export {  PendingOrders };

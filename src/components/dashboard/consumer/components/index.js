@@ -1,4 +1,4 @@
 import QuickLinks from "./QuickLinks";
-import RecentOrders from "./Table/Index";
+import RecentOrders from "./Table";
 
 export { QuickLinks, RecentOrders };

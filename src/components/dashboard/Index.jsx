@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import Charts from "./farmer/chart/Index";
-import DoughnutChart from "./consumer/chart/Index";
+import Charts from "./farmer/chart";
+import DoughnutChart from "./consumer/chart";
 import { QuickLinks, RecentOrders } from "./consumer/components";
 import { PendingOrders } from "./farmer/components";
 import ConsumerStatistics from "./consumer/statistics/Index";
-import FarmerStatistics from "./farmer/statistics/Index";
-import FarmerProfileSetup from "./farmer/profile-setup/Index";
-import ConsumerProfileSetup from "./consumer/consumerProfile/Index";
+import FarmerStatistics from "./farmer/statistics";
+import FarmerProfileSetup from "./farmer/profile-setup";
+import ConsumerProfileSetup from "./consumer/consumerProfile";
 import { useFocus } from "../../hooks";
 import Cookies from "js-cookie";
 import { endpoints } from "../config/endpoints";
