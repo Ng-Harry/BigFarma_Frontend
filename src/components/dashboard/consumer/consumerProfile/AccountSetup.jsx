@@ -74,7 +74,7 @@ export default function AccountSetup({ onSkip, onNext }) {
       }else {
         dataToSend.append("profile_picture", null);
       }
-      dataToSend.append("crop_preferences", "string");
+      dataToSend.append("crop_preferences", ["string"]);
 
     
       try {
