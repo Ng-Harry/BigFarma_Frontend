@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Charts from "./farmer/chart/Index.jsx";
+import Charts from "./farmer/chart/index.jsx";
 import DoughnutChart from "./consumer/chart";
 import { QuickLinks, RecentOrders } from "./consumer/components";
 import { PendingOrders } from "./farmer/components";
