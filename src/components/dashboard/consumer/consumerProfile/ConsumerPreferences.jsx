@@ -23,7 +23,7 @@ const ConsumerPreferences = ({ onNext }) => {
 
 			const res = await axios.put(
 				endpoints().users.update_consumer_profile,
-				{ crop_preferences: preferencesToSend },
+				{ crop_preferences: preferencesToSend ? preferencesToSend : ["Vegetables"] },
 				{
 					headers: {
 						"Content-Type": "application/json",
