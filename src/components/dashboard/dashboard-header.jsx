@@ -16,34 +16,71 @@ export default function DashboardHeader({ onMenuClick }) {
   const [profile, setProfile] = useState(null);
   const token = Cookies.get("BIGFARMA_ACCESS_TOKEN");
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      if (token) {
-        if (role === "farmer") {
-          const response = await axios.get(endpoints.users.get_farmer_profile, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          const data = await response.data;
-          setProfile(data);
-        } else if (role === "consumer") {
-          const response = await axios.get(endpoints().users.get_consumer_profile, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          const data = await response.data;
-          setProfile(data);
-        }
-      } else {
-        setProfile(null);
-      }
-    }
-    fetchProfile();
-  }, [role, setProfile, token]);
+  // useEffect(() => {
+  //   const fetchProfile = async () => {
+  //     if (token) {
+  //       if (role === "farmer") {
+  //         const response = await axios.get(endpoints.users.get_farmer_profile, {
+  //           headers: {
+  //             Authorization: `Bearer ${token}`,
+  //           },
+  //         });
+  //         const data = await response.data;
+  //         setProfile(data);
+  //       } else if (role === "consumer") {
+  //         const response = await axios.get(endpoints().users.get_consumer_profile, {
+  //           headers: {
+  //             Authorization: `Bearer ${token}`,
+  //           },
+  //         });
+  //         const data = await response.data;
+  //         setProfile(data);
+  //       }
+  //     } else {
+  //       setProfile(null);
+  //     }
+  //   }
+  //   fetchProfile();
+  // }, [role, token]);
 
-  console.log("Header profile:", profile);
+   useEffect(() => {
+      const fetchProfile = async () => {
+				if (token) {
+					try {
+						let response;
+						if (role === "farmer") {
+							response = await axios.get(endpoints().users.get_farmer_profile, {
+								headers: {
+									Authorization: `Bearer ${token}`,
+								},
+							});
+							const data = await response.data;
+							setProfile(data);
+						} else if (role === "consumer") {
+							response = await axios.get(
+								endpoints().users.get_consumer_profile,
+								{
+									headers: {
+										Authorization: `Bearer ${token}`,
+									},
+								}
+							);
+							const data = await response.data;
+							setProfile(data);
+						}
+					} catch (error) {
+						console.error("Error fetching profile:", error);
+						setProfile(null);
+					}
+				} else {
+					setProfile(null);
+				}
+			};
+      fetchProfile();
+    }, [role, token]);
+
+  console.log("Header profile:", profile?.first_name, profile?.full_name);
+  console.log("Header profile2:", profile);
 
   return (
     <>
@@ -59,7 +96,7 @@ export default function DashboardHeader({ onMenuClick }) {
 
 					<div className="hidden sm:block">
 						<h1 className="text-lg font-medium text-gray-900">
-							Hello, {profile?.full_name || profile?.first_name || "User"}{" "}
+							Hello, {profile.full_name || profile.first_name || "Hi User"}{" "}
 							<span className="text-red-500">👋</span>
 						</h1>
 					</div>
@@ -110,7 +147,7 @@ export default function DashboardHeader({ onMenuClick }) {
 								/>
 							</div>
 							<span className="hidden md:block text-sm font-bold text-gray-900">
-								{profile?.full_name || profile?.first_name || "User"}
+								{profile?.full_name || profile?.first_name || "Hi User"}
 							</span>
 						</div>
 					</div>

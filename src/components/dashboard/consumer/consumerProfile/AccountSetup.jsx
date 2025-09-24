@@ -141,16 +141,15 @@ export default function AccountSetup({ onSkip, onNext }) {
 			if (fileInputRef.current?.files[0]) {
 				base64Image = await toBase64(fileInputRef.current.files[0]);
 			}
-
-			// Construct plain JSON object
+      // Prepare data to send
 			const dataToSend = {
 				first_name: form.firstName,
 				last_name: form.lastName,
 				address: form.address,
 				email: form.email,
 				phone: form.phone,
-				profile_picture: base64Image, // null if not uploaded
-				crop_preferences: ["string"],
+				profile_picture: "string", 
+				crop_preferences: ["vegetables"],
 			};
 
 			try {
