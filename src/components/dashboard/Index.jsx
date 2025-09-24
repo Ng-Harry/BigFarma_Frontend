@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Charts from "./farmer/chart/Index.jsx";
 import DoughnutChart from "./consumer/chart/Index.jsx";
-import { QuickLinks, RecentOrders } from "./consumer/components/Index.jsx";
+import { QuickLinks, RecentOrders } from "./consumer/components/";
 import { PendingOrders } from "./farmer/components/Index.jsx";
 import ConsumerStatistics from "./consumer/statistics/Index/Index.jsx";
 import FarmerStatistics from "./farmer/statistics/Index.jsx";
