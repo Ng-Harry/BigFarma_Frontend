@@ -1,3 +1,3 @@
-import PendingOrders from "./Table";
+import PendingOrders from "./Table/Index.jsx";
 
 export {  PendingOrders };

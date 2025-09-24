@@ -1,5 +1,5 @@
 import { Group } from "lucide-react"
-import GroupBuy from  "../components/dashboard/GroupBuy/index.jsx"
+import GroupBuy from  "../components/dashboard/GroupBuy/Index.jsx"
 import React from 'react'
 
 const GroupBuyPage = () => {
