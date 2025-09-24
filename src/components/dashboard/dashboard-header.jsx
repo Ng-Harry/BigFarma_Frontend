@@ -4,13 +4,15 @@ import { useState, useEffect } from "react"
 import { Search, ShoppingCart, Bell, Menu } from "lucide-react"
 import Input from "../shared/Input"
 import Avatar from "../../assets/images/JohnDoe-avatar.jpg"
-import { useFocus } from "../../hooks"
+import { useFocus, useCart } from "../../hooks"
 import Cookies from "js-cookie";
 import { endpoints } from "../config/endpoints";
 import { axios } from "../../lib/axios";
+import { Link } from "react-router-dom";
 
 export default function DashboardHeader({ onMenuClick }) {
   const { role } = useFocus();
+  const { getCartCount } = useCart();
   const [profile, setProfile] = useState(null);
 
   useEffect(() => {
@@ -78,9 +80,14 @@ export default function DashboardHeader({ onMenuClick }) {
 					</div>
 					<div className="flex items-center gap-4">
 						{role === "consumer" && (
-							<button className="relative focus:outline-none focus:ring-0">
+							<Link to="/cart" className="relative focus:outline-none focus:ring-0">
 								<ShoppingCart className="h-5 w-5 text-[#8E8E93] border-none" />
-							</button>
+								{getCartCount() > 0 && (
+									<span className="absolute -top-2 -right-2 h-5 w-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+										{getCartCount()}
+									</span>
+								)}
+							</Link>
 						)}
 						<button className="relative focus:outline-none focus:ring-0">
 							<Bell className="h-5 w-5 text-[#8E8E93]" />

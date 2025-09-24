@@ -10,7 +10,7 @@ import InputOtp from "./pages/InputOtp";
 import ResetPassword from "./pages/ResetPassword";
 import RoleSelection from "./pages/RoleSelection";
 
-import { DashboardPage, ConsumerOrderPage } from "./pages";
+import { DashboardPage, ConsumerOrderPage, CartPage, CheckoutPage, PaymentProcessingPage, OrderConfirmationPage } from "./pages";
 import VerifyOtp from "./pages/VerifyOtp";
 import Success from "./pages/Success";
 import PaymentSetup from "./pages/PaymentSetupModal";
@@ -82,6 +82,38 @@ const App = () => {
           element={
             <DashboardLayout>
               <ProductDetail />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <DashboardLayout>
+              <CartPage />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path="/checkout"
+          element={
+            <DashboardLayout>
+              <CheckoutPage />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path="/payment-processing"
+          element={
+            <DashboardLayout>
+              <PaymentProcessingPage />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path="/order-confirmation"
+          element={
+            <DashboardLayout>
+              <OrderConfirmationPage />
             </DashboardLayout>
           }
         />
