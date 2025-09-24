@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import brandLogo from "../../assets/images/brand-logo.png";
+import Cookies from "js-cookie";
 
 import {
   LayoutDashboard,
@@ -30,6 +31,7 @@ const navigationItems = [
 export default function DashboardSidebar({ isOpen, onClose }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const token = Cookies.get("BIGFARMA_ACCESS_TOKEN");
 
   const handleNavClick = (item) => {
     if (item.name === "Logout") {
@@ -46,7 +48,9 @@ export default function DashboardSidebar({ isOpen, onClose }) {
 
   return (
     <>
-      {/* Desktop sidebar */}
+      {token && (
+      <>
+        {/* Desktop sidebar */ }
       <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
         <div className="flex flex-col flex-grow bg-white border-r border-gray-200">
           <div className="mt-6 px-4">
@@ -127,7 +131,8 @@ export default function DashboardSidebar({ isOpen, onClose }) {
             })}
           </nav>
         </div>
-      </div>
+          </div>
+      </>)}
     </>
   );
 }
