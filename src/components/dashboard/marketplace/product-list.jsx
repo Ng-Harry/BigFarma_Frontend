@@ -2,13 +2,24 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchProducts } from "@/lib/api";
 import { Link } from "react-router-dom";
 import { IoIosStar } from "react-icons/io";
-import Button from "@/components/shared/Button";
+import { useCart } from "@/hooks";
+import { toast } from "react-toastify";
 
 export default function ProductsList() {
+  const { addToCart } = useCart();
   const { data, isLoading, error } = useQuery({
     queryKey: ["products"],
     queryFn: fetchProducts,
   });
+
+  const handleAddToCart = (product) => {
+    if (product.availability !== "in_stock") {
+      toast.error("This product is out of stock");
+      return;
+    }
+    addToCart(product);
+    toast.success(`${product.name} added to cart!`);
+  };
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error loading products</p>;
@@ -52,12 +63,17 @@ export default function ProductsList() {
 
             {/* buttons  */}
             <div className="flex flex-col items-center lg:flex-row gap-1 mt-3">
-              <Link
-                to={""}
-                className="w-full py-2 underline text-[var(--color-primary)] capitalize"
+              <button
+                onClick={() => handleAddToCart(product)}
+                disabled={product.availability !== "in_stock"}
+                className={`w-full py-2 underline capitalize ${
+                  product.availability === "in_stock" 
+                    ? "text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] cursor-pointer" 
+                    : "text-gray-400 cursor-not-allowed"
+                }`}
               >
                 Add to cart
-              </Link>
+              </button>
               <Link
                 to={`/marketplace/products/${product.id}`}
                 className="w-full py-2 text-white text-center rounded-md capitalize bg-[var(--color-primary)]"
