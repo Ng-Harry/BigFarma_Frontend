@@ -39,34 +39,27 @@ const ProfileForm = ({ onNext }) => {
 			formData.firstName &&
 			formData.lastName &&
 			formData.phone &&
-			formData.email 
+			formData.email
 		) {
-			const formDataToSend = new FormData();
-
-			formDataToSend.append(
-				"full_name",
-				`${formData.firstName} ${formData.lastName}`
-			);
-			formDataToSend.append("home_address", formData.address);
-			formDataToSend.append("email", formData.email);
-			formDataToSend.append("phone", formData.phone);
-			if (fileInputRef.current.files.length > 0) {
-				formDataToSend.append("profile_picture", fileInputRef.current.files[0]);
-			}else {
-				formDataToSend.append("profile_picture", null);
-			}
-			formDataToSend.append("id_document", "string");
-			formDataToSend.append("farm_name", "string");
-			formDataToSend.append("farm_type", "string");
-			formDataToSend.append("farm_image", null);
-			formDataToSend.append("farm_location", "string");
-			formDataToSend.append("farm_size", "string");
-			formDataToSend.append("years_experience", "string");
+			const payload = {
+				full_name: `${formData.firstName} ${formData.lastName}`,
+				home_address: formData.address,
+				email: formData.email,
+				phone: formData.phone,
+				profile_picture: image || null,
+				id_document: "string",
+				farm_name: "string",
+				farm_type: "string",
+				farm_image: null,
+				farm_location: "string",
+				farm_size: "string",
+				years_experience: 0,
+			};
 
 			try {
 				const res = await axios.post(
 					endpoints().users.create_farmer_profile,
-					formDataToSend,
+					payload,
 					{
 						headers: {
 							"Content-Type": "application/json",
@@ -74,33 +67,22 @@ const ProfileForm = ({ onNext }) => {
 						},
 					}
 				);
+
 				const data = res.data;
 
 				if (res.status === 200 || res.status === 201) {
-					toast.success(data.message || 'Saved successfully!');
+					toast.success(data.message || "Saved successfully!");
 					onNext(data);
 				} else {
-					toast.error(data.message || 'Network error. Please try again.');
+					toast.error(data.message || "Network error. Please try again.");
 				}
 			} catch (error) {
 				console.error("Error:", error);
 				if (axiosDefault.isAxiosError(error) && error.response) {
-					return {
-						isSuccess: false,
-						statusCode: error.response.status.toString(),
-						message:
-							(error.response.data &&
-								(error.response.data.detail || error.response.data.message)) ||
-							"Profile setup failed",
-						data: null,
-					};
+					toast.error(error.response.data?.message || "Profile setup failed");
+				} else {
+					toast.error("Unable to connect to the server");
 				}
-				return {
-					isSuccess: false,
-					statusCode: "500",
-					message: "unabable to connect to the server",
-					data: null,
-				};
 			}
 		}
 	};

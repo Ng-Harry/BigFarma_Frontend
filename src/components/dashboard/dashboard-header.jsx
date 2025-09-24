@@ -14,10 +14,10 @@ export default function DashboardHeader({ onMenuClick }) {
   const { role } = useFocus();
   const { getCartCount } = useCart();
   const [profile, setProfile] = useState(null);
+  const token = Cookies.get("BIGFARMA_ACCESS_TOKEN");
 
   useEffect(() => {
     const fetchProfile = async () => {
-      const token = Cookies.get("BIGFARMA_ACCESS_TOKEN");
       if (token) {
         if (role === "farmer") {
           const response = await axios.get(endpoints.users.get_farmer_profile, {
@@ -41,10 +41,14 @@ export default function DashboardHeader({ onMenuClick }) {
       }
     }
     fetchProfile();
-  }, [role, setProfile]);
+  }, [role, setProfile, token]);
+
+  console.log("Header profile:", profile);
 
   return (
-		<header className="fixed top-0 right-0 left-0 lg:left-64 z-30 bg-white border-b border-gray-200 h-20">
+    <>
+      {token && (
+        <header className="fixed top-0 right-0 left-0 lg:left-64 z-30 bg-white border-b border-gray-200 h-20">
 			<div className="flex items-center justify-between h-full px-4 lg:px-10">
 				<div className="flex items-center gap-4">
 					<button
@@ -112,6 +116,7 @@ export default function DashboardHeader({ onMenuClick }) {
 					</div>
 				</div>
 			</div>
-		</header>
+    </header>)}
+    </>
 	);
 }

@@ -25,6 +25,8 @@ export default function AccountSetup({ onSkip, onNext }) {
   const [profileImage, setProfileImage] = useState(joy);
   const fileInputRef = useRef(null);
 
+
+
   // Update form fields
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -59,66 +61,132 @@ export default function AccountSetup({ onSkip, onNext }) {
     fileInputRef.current?.click();
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const toBase64 = (file) =>
+		new Promise((resolve, reject) => {
+			const reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = () => resolve(reader.result);
+			reader.onerror = (error) => reject(error);
+		});
 
-    if (form.firstName && form.lastName && form.phone && form.email) {
-      const dataToSend = new FormData();
-      dataToSend.append("first_name", form.firstName);
-      dataToSend.append("last_name", form.lastName);
-      dataToSend.append("address", form.address);
-      dataToSend.append("email", form.email);
-      dataToSend.append("phone", form.phone);
-      if (fileInputRef.current?.files[0]) {
-      dataToSend.append("profile_picture", fileInputRef.current.files[0]);
-      }else {
-        dataToSend.append("profile_picture", null);
-      }
-      dataToSend.append("crop_preferences", ["string"]);
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   if (form.firstName && form.lastName && form.phone && form.email) {
+  //     const dataToSend = new FormData();
+  //     dataToSend.append("first_name", form.firstName);
+  //     dataToSend.append("last_name", form.lastName);
+  //     dataToSend.append("address", form.address);
+  //     dataToSend.append("email", form.email);
+  //     dataToSend.append("phone", form.phone);
+  //     if (fileInputRef.current?.files[0]) {
+  //     dataToSend.append("profile_picture", fileInputRef.current.files[0]);
+  //     }else {
+  //       dataToSend.append("profile_picture", null);
+  //     }
+  //     dataToSend.append("crop_preferences", ["string"]);
 
     
-      try {
-              const res = await axios.post(
-                endpoints().users.create_consumer_profile,
-                dataToSend,
-                {
-                  headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${Cookies.get("BIGFARMA_ACCESS_TOKEN")}`,
-                  },
-                }
-              );
-              const data = await res.data;
+  //     try {
+  //             const res = await axios.post(
+  //               endpoints().users.create_consumer_profile,
+  //               dataToSend,
+  //               {
+  //                 headers: {
+  //                   "Content-Type": "application/json",
+  //                   Authorization: `Bearer ${Cookies.get("BIGFARMA_ACCESS_TOKEN")}`,
+  //                 },
+  //               }
+  //             );
+  //             const data = await res.data;
             
-              if (res.status === 200 || res.status === 201) {
-                toast.success(data.message || 'Saved successfully!');
-                onNext(data);
-              } else {
-                toast.error(data.message || 'Network error. Please try again.');
-              }
-            } catch (error) {
-              console.error("Error:", error);
-              if (axiosDefault.isAxiosError(error) && error.response) {
-                return {
-                  isSuccess: false,
-                  statusCode: error.response.status.toString(),
-                  message:
-                    (error.response.data &&
-                      (error.response.data.detail || error.response.data.message)) ||
-                    "Profile setup failed",
-                  data: null,
-                };
-              }
-              return {
-                isSuccess: false,
-                statusCode: "500",
-                message: "unable to connect to the server",
-                data: null,
-              };
-            }
-    }
+  //             if (res.status === 200 || res.status === 201) {
+  //               toast.success(data.message || 'Saved successfully!');
+  //               onNext(data);
+  //             } else {
+  //               toast.error(data.message || 'Network error. Please try again.');
+  //             }
+  //           } catch (error) {
+  //             console.error("Error:", error);
+  //             if (axiosDefault.isAxiosError(error) && error.response) {
+  //               return {
+  //                 isSuccess: false,
+  //                 statusCode: error.response.status.toString(),
+  //                 message:
+  //                   (error.response.data &&
+  //                     (error.response.data.detail || error.response.data.message)) ||
+  //                   "Profile setup failed",
+  //                 data: null,
+  //               };
+  //             }
+  //             return {
+  //               isSuccess: false,
+  //               statusCode: "500",
+  //               message: "unable to connect to the server",
+  //               data: null,
+  //             };
+  //           }
+  //   }
 
-  };
+  // };
+
+  const handleSubmit = async (e) => {
+		e.preventDefault();
+
+		if (form.firstName && form.lastName && form.phone && form.email) {
+			let base64Image = null;
+
+			// Convert selected image file to base64
+			if (fileInputRef.current?.files[0]) {
+				base64Image = await toBase64(fileInputRef.current.files[0]);
+			}
+
+			// Construct plain JSON object
+			const dataToSend = {
+				first_name: form.firstName,
+				last_name: form.lastName,
+				address: form.address,
+				email: form.email,
+				phone: form.phone,
+				profile_picture: base64Image, // null if not uploaded
+				crop_preferences: ["string"],
+			};
+
+			try {
+				const res = await axios.post(
+					endpoints().users.create_consumer_profile,
+					dataToSend,
+					{
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: `Bearer ${Cookies.get("BIGFARMA_ACCESS_TOKEN")}`,
+						},
+					}
+				);
+
+				const data = res.data;
+				if (res.status === 200 || res.status === 201) {
+					toast.success(data.message || "Saved successfully!");
+					onNext(data);
+				} else {
+					toast.error(data.message || "Network error. Please try again.");
+				}
+			} catch (error) {
+				console.error("Error:", error);
+				if (axiosDefault.isAxiosError(error) && error.response) {
+					toast.error(
+						error.response.data?.detail ||
+							error.response.data?.message ||
+							"Profile setup failed"
+					);
+				} else {
+					toast.error("Unable to connect to the server");
+				}
+			}
+		}
+	};
+
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">

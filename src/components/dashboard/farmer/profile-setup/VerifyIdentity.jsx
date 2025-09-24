@@ -44,13 +44,14 @@ const IdentityVerification = ({onNext}) => {
 	const handleUpload = async (e) => {
 		e.preventDefault();
 		if (file) {
-			const formDataToSend = new FormData();
-			formDataToSend.append("id_document", file);
+			const payload = {
+				id_document: file,
+			};
 
 			try {
 				const res = await axios.put(
 					endpoints().users.update_farmer_profile,
-					formDataToSend,
+					payload,
 					{
 						headers: {
 							"Content-Type": "application/json",

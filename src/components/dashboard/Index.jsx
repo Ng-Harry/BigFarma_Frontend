@@ -15,9 +15,9 @@ import { axios } from "../../lib/axios";
 const Dashboard = () => {
   const { role } = useFocus();
   const [profileComplete, setProfileComplete] = useState(null);
+  const token = Cookies.get("BIGFARMA_ACCESS_TOKEN");
 
   useEffect(() => {
-    const token = Cookies.get("BIGFARMA_ACCESS_TOKEN");
     const checkProfileCompletion = async () => {
       if (token) {
         try {
@@ -49,8 +49,8 @@ const Dashboard = () => {
         setProfileComplete(false); 
       }
     };
-    checkProfileCompletion(); 
-  }, [role]);
+    checkProfileCompletion();
+  }, [role, token]);
 
 
   console.log("Current role:", role);
@@ -58,7 +58,8 @@ const Dashboard = () => {
 
   return (
     <>
-      {!profileComplete && (
+      
+      {!profileComplete && token && (
         <>
           {role === "farmer" ? (
             <FarmerProfileSetup onComplete={() => setProfileComplete(true)} />
@@ -68,7 +69,7 @@ const Dashboard = () => {
         </>
       )}
 
-      {profileComplete && (
+      {profileComplete && token && (
         <>
           {role === "farmer" ? <FarmerStatistics /> : <ConsumerStatistics />}
 
@@ -89,6 +90,11 @@ const Dashboard = () => {
             {role === "consumer" && <QuickLinks />}
           </div>
         </>
+      )}
+      {!token && (
+        <div className="flex items-center justify-center h-[70vh]">
+          <p className="text-gray-500 text-lg">Please log in to view your dashboard.</p>
+        </div>
       )}
     </>
   );
