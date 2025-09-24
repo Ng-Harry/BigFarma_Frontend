@@ -1,18 +1,65 @@
-import { useParams, Link } from "react-router-dom";
+import { useState } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProductById } from "@/lib/api";
 import { demoMarketplaceProducts } from "@/lib/demoMarketplaceProducts"; // ⬅️ import your mock list
 import { IoMdArrowBack, IoIosStar } from "react-icons/io";
-import { FaCheck } from "react-icons/fa6";
+import { FaCheck, FaPlus, FaMinus } from "react-icons/fa6";
+import { useCart } from "@/hooks";
+import { toast } from "react-toastify";
 
 
 export default function ProductDetail() {
     const { id } = useParams();
+    const navigate = useNavigate();
+    const { addToCart } = useCart();
+    const [quantity, setQuantity] = useState(1);
 
     const { data, isLoading, error } = useQuery({
         queryKey: ["product", id],
         queryFn: () => fetchProductById(id),
     });
+
+    const handleAddToCart = (product) => {
+        if (product.availability !== "in_stock") {
+            toast.error("This product is out of stock");
+            return;
+        }
+        addToCart(product, quantity);
+        toast.success(`${quantity} ${product.name}${quantity > 1 ? 's' : ''} added to cart!`);
+    };
+
+    const handleAddSimilarToCart = (product) => {
+        if (product.availability !== "in_stock") {
+            toast.error("This product is out of stock");
+            return;
+        }
+        addToCart(product, 1);
+        toast.success(`${product.name} added to cart!`);
+    };
+
+    const handleBuyNow = (product) => {
+        if (product.availability !== "in_stock") {
+            toast.error("This product is out of stock");
+            return;
+        }
+        addToCart(product, quantity);
+        toast.success(`${quantity} ${product.name}${quantity > 1 ? 's' : ''} added to cart!`);
+        navigate('/checkout');
+    };
+
+    const incrementQuantity = () => {
+        const maxStock = parseInt(data.quantity.split(" ")[0]) || 999;
+        if (quantity < maxStock) {
+            setQuantity(prev => prev + 1);
+        }
+    };
+
+    const decrementQuantity = () => {
+        if (quantity > 1) {
+            setQuantity(prev => prev - 1);
+        }
+    };
 
     if (isLoading) return <p>Loading...</p>;
     if (error) return <p>Product not found</p>;
@@ -58,12 +105,55 @@ export default function ProductDetail() {
                         {data.quantity.split(" ")[0]} in stock
                     </p>}
 
+                    {/* Quantity selector */}
+                    {data.availability === "in_stock" && (
+                        <div className="flex items-center gap-3 my-4">
+                            <span className="text-sm font-medium">Quantity:</span>
+                            <div className="flex items-center border border-gray-300 rounded-md">
+                                <button
+                                    onClick={decrementQuantity}
+                                    disabled={quantity <= 1}
+                                    className="p-2 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                    <FaMinus className="h-3 w-3" />
+                                </button>
+                                <span className="px-4 py-2 min-w-[3rem] text-center">{quantity}</span>
+                                <button
+                                    onClick={incrementQuantity}
+                                    disabled={quantity >= parseInt(data.quantity.split(" ")[0])}
+                                    className="p-2 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                    <FaPlus className="h-3 w-3" />
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
                     {/* buttons  */}
                     <div className="flex justify-between  items-center gap-1 lg:justify-start lg:gap-7 mt-3">
-                        <Link to={''} className=" py-2 underline text-[var(--color-primary)] capitalize" >Add to cart</Link>
-                        <Link to={''} className=" px-6 py-2 text-white text-center rounded-md capitalize bg-[var(--color-primary)]">View details</Link>
+                        <button
+                            onClick={() => handleAddToCart(data)}
+                            disabled={data.availability !== "in_stock"}
+                            className={`py-2 underline capitalize ${
+                                data.availability === "in_stock" 
+                                    ? "text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] cursor-pointer" 
+                                    : "text-gray-400 cursor-not-allowed"
+                            }`}
+                        >
+                            Add {quantity > 1 ? `${quantity} ` : ''}to cart
+                        </button>
+                        <button 
+                            onClick={() => handleBuyNow(data)}
+                            disabled={data.availability !== "in_stock"}
+                            className={`px-6 py-2 text-white text-center rounded-md capitalize ${
+                                data.availability === "in_stock" 
+                                    ? "bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] cursor-pointer" 
+                                    : "bg-gray-400 cursor-not-allowed"
+                            }`}
+                        >
+                            Buy now
+                        </button>
                     </div>
-                    {/* <p>Farmer: {data.farmer.full_name}</p> */}
                 </div>
 
                 <div className="p-6 w-full lg:w-1/2 bg-white rounded-lg shadow">
@@ -174,12 +264,17 @@ export default function ProductDetail() {
 
                                 {/* buttons  */}
                                 <div className="flex flex-col items-center lg:flex-row gap-1 mt-3">
-                                    <Link
-                                        to={"#"}
-                                        className="w-full py-2 underline text-[var(--color-primary)] capitalize"
+                                    <button
+                                        onClick={() => handleAddSimilarToCart(item)}
+                                        disabled={item.availability !== "in_stock"}
+                                        className={`w-full py-2 underline capitalize ${
+                                            item.availability === "in_stock" 
+                                                ? "text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] cursor-pointer" 
+                                                : "text-gray-400 cursor-not-allowed"
+                                        }`}
                                     >
                                         Add to cart
-                                    </Link>
+                                    </button>
                                     <Link
                                         to={`/marketplace/products/${item.id}`}
                                         className="w-full py-2 text-white text-center rounded-md capitalize bg-[var(--color-primary)]"
