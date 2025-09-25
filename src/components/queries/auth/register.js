@@ -15,6 +15,7 @@ const RegisterMutation = async (payload) => {
       message: response.data.message,
       metaData: response.data.metaData || null,
       data: response.data.data,
+      role: response.data.category || response.data.data?.category || null
     };
   } catch (error) {
     if (axiosDefault.isAxiosError(error) && error.response) {
@@ -24,6 +25,7 @@ const RegisterMutation = async (payload) => {
         message: (error.response.data && (error.response.data.detail || error.response.data.message)) || "Registration failed",
         metaData: null,
         data: null,
+        role: null,
       };
     }
 
@@ -33,6 +35,7 @@ const RegisterMutation = async (payload) => {
       message: "An error occurred while connecting to the server",
       metaData: null,
       data: null,
+      role: null,
     };
   }
 };

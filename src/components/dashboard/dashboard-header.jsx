@@ -99,6 +99,11 @@ export default function DashboardHeader({ onMenuClick }) {
 							Hello, {profile?.full_name || profile?.first_name || "Hi User"}{" "}
 							<span className="text-red-500">👋</span>
 						</h1>
+						{role && (
+							<p className="text-sm text-gray-600 capitalize">
+								{role === "farmer" ? "🌱 Farmer" : "🛒 Consumer"} //
+							</p>
+						)}
 					</div>
 				</div>
 
@@ -146,9 +151,19 @@ export default function DashboardHeader({ onMenuClick }) {
 									className="h-full w-full rounded-full object-cover"
 								/>
 							</div>
-							<span className="hidden md:block text-sm font-bold text-gray-900">
-								{profile?.full_name || profile?.first_name || "Hi User"}
-							</span>
+							{/* <span className="hidden md:block text-sm font-bold text-gray-900">
+                                {profile?.full_name || profile?.first_name || "Hi User"}
+                            </span> */}
+							<div className="hidden md:block">
+								<span className="text-sm font-bold text-gray-900 block">
+									{profile?.full_name || profile?.first_name || "Hi User"} //
+								</span>
+								{role && (
+									<span className="text-xs text-gray-500 capitalize">
+										{role === "farmer" ? "Farmer" : "Consumer"}
+									</span>
+								)}
+							</div>
 						</div>
 					</div>
 				</div>
