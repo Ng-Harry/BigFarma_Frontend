@@ -96,7 +96,7 @@ export default function DashboardHeader({ onMenuClick }) {
 
 					<div className="hidden sm:block">
 						<h1 className="text-lg font-medium text-gray-900">
-							Hello, {profile.full_name || profile.first_name || "Hi User"}{" "}
+							Hello, {profile?.full_name || profile?.first_name || "Hi User"}{" "}
 							<span className="text-red-500">👋</span>
 						</h1>
 					</div>

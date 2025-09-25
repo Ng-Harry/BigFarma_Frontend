@@ -94,6 +94,9 @@ const Dashboard = () => {
       {!token && (
         <div className="flex items-center justify-center h-[70vh]">
           <p className="text-gray-500 text-lg">Please log in to view your dashboard.</p>
+          <button className="ml-4 px-4 py-2 bg-green-600 text-white rounded-md" onClick={() => window.location.href = '/login'}>
+           Click Here to Log In
+          </button>
         </div>
       )}
     </>
