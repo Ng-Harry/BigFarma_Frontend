@@ -16,6 +16,7 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import useForm from "../../hooks/useForm";
 import useIsMobile from "../../hooks/useIsMobile";
+import { useFocus } from "../../hooks/";
 
 // ==================== Components ====================
 import Dropdown from "@/components/shared/Dropdown";
@@ -33,6 +34,8 @@ const SignInForm = () => {
   const [loading, setLoading] = useState(false);
   const Navigate = useNavigate();
   const isMobile = useIsMobile(); // Tailwind's breakpoint can be passed as a value
+  const {role} = useFocus()
+
 
   const { loginData, errors, updateField, updateCountry } = useForm();
 
@@ -60,11 +63,18 @@ const SignInForm = () => {
     const loginValue = loginData.username;
     const password = loginData.password;
     try {
-      const result = await login({ login: loginValue, password });
+      const result = await login({ login: loginValue, password, role });
       if (result.isSuccess) {
         toast.success(result.message || "Login successful!");
         localStorage.setItem("token", result.token);
         console.log(result.token);
+        const role = result.user_category || role;
+        if (role) {
+          localStorage.setItem("role", role); 
+          console.log("Role:", role);
+        } else {
+          console.warn("No role found in response");
+        }
         Navigate("/dashboard");
       } else {
         toast.error(result.message || "Login failed.");
