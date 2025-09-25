@@ -1,26 +1,34 @@
 "use client";
 // import { useState } from "react";
-import { useFocus } from "../../../hooks/index";
+import { useContext } from "react";
+import { FocusContext } from "@/context/FocusContext";
 import { useNavigate } from "react-router-dom";
 import Button from "@/components/shared/Button";
 import FarmerIcon from "../../../assets/svgs/farmer.svg"
 import LightCart from "../../../assets/svgs/light-cart.svg"
 import Cart from "../../../assets/svgs/cart.svg"
 import LightFarmer from "../../../assets/svgs/light-farmer.svg"
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+
 export function RoleSelectionForm() {
-    const { role, setRole } = useFocus();
+  const {role, setRole } = useContext(FocusContext);
+    // const { role, setRole } = useFocus();
   // const [selectedRole, setSelectedRole] = useState(null);
   const navigate = useNavigate();
 
-  const handleRoleSelect = (selected) => {
-    setRole(selected);
+  const handleRoleSelect = (newRole) => {
+    setRole(newRole);
   };
 
   const handleContinue = () => {
     if (role) {
-
       // localStorage.setItem("selectedRole", selectedRole);
       navigate("/sign-up");
+      
+    }else{
+      toast.error("Please select a role first"); 
     }
   };
 

@@ -13,6 +13,8 @@ import Cookies from "js-cookie";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useContext } from "react";
+import { FocusContext } from "@/context/FocusContext";     
 
 const SignUpForm = () => {
   const navigate = useNavigate();
@@ -35,6 +37,7 @@ const SignUpForm = () => {
   const [focused, setFocused] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { role, setRole } = useContext(FocusContext);
 
   // Country selection
   const updateCountry = (country) => {
@@ -85,7 +88,7 @@ const SignUpForm = () => {
       setErrors({});
 
       let payload = {};
-      const selectedRole = localStorage.getItem("selectedRole");
+      const selectedRole = role;
 
       if (!selectedRole) {
         toast.error("Please select a role before signing up.");
@@ -112,6 +115,9 @@ const SignUpForm = () => {
           if (result.isSuccess) {
             if (result.token?.access_token) {
               Cookies.set("BIGFARMA_ACCESS_TOKEN", result.token.access_token);
+            }
+            if (result.data?.user?.category) {
+              setRole(result.data.user.category); 
             }
             toast.success(result.message || "Registration successful!");
             const userEmail = result.data?.user?.email || (phoneNumber.includes("@") ? phoneNumber : undefined);
