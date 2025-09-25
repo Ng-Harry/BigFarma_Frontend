@@ -1,6 +1,0 @@
-services:
-  - type: web
-    name: my-app
-    env: static
-    buildCommand: pnpm run build
-    staticPublishPath: dist
