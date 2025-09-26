@@ -7,13 +7,12 @@ import ConsumerStatistics from "./consumer/statistics/Index.jsx";
 import FarmerStatistics from "./farmer/statistics/Index.jsx";
 import FarmerProfileSetup from "./farmer/profile-setup/Index.jsx";
 import ConsumerProfileSetup from "./consumer/consumerProfile/Index.jsx";
-import { useFocus } from "../../hooks/";
 import Cookies from "js-cookie";
 import { endpoints } from "../config/endpoints";
 import { axios } from "../../lib/axios";
 
 const Dashboard = () => {
-  const { role } = useFocus();
+  const role = Cookies.get("BIGFARMA_ROLE");
   const [profileComplete, setProfileComplete] = useState(null);
   const token = Cookies.get("BIGFARMA_ACCESS_TOKEN");
 
