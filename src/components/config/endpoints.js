@@ -25,7 +25,10 @@ export const endpoints = () => {
       update_consumer_profile: `/users/consumer-profile`,
       delete_farmer_profile: `/users/farmer-profile`,
       delete_consumer_profile: `/users/consumer-profile`,
-    }
+    },
+    consumer: {
+      orders: `/orders`,
+    },
   };
 };
 

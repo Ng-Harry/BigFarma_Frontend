@@ -9,6 +9,7 @@ import { FocusProvider } from "./context/FocusProvider.jsx";
 import { CartProvider } from "./context/CartProvider.jsx";
 import { queryClient } from "./lib/queryClient";
 import 'react-toastify/dist/ReactToastify.css';
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -20,6 +21,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           </CartProvider>
         </FocusProvider>
       </BrowserRouter>
+      <ReactQueryDevtools />
     </QueryClientProvider>
   </StrictMode>
 );
