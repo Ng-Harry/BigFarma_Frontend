@@ -10,11 +10,13 @@ import ConsumerProfileSetup from "./consumer/consumerProfile/Index.jsx";
 import Cookies from "js-cookie";
 import { endpoints } from "../config/endpoints";
 import { axios } from "../../lib/axios";
+import LoaderSpinner from "../shared/Loader.jsx";
 
 const Dashboard = () => {
   const role = Cookies.get("BIGFARMA_ROLE");
-  const [profileComplete, setProfileComplete] = useState(null);
   const token = Cookies.get("BIGFARMA_ACCESS_TOKEN");
+  const [profileComplete, setProfileComplete] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const checkProfileCompletion = async () => {
@@ -29,7 +31,8 @@ const Dashboard = () => {
               },
             });
             const data = await response.data;
-						setProfileComplete(data.full_name ? true : false);
+            setProfileComplete(data.full_name ? true : false);
+            setLoading(false);
           } else if (role === "consumer") {
             response = await axios.get(endpoints().users.get_consumer_profile, {
               headers: {
@@ -38,11 +41,13 @@ const Dashboard = () => {
             });
             const data = await response.data;
 						setProfileComplete(data.first_name ? true : false);
+            setLoading(false);
           }
           
         } catch (error) {
           console.error("Error checking profile completion:", error);
-          setProfileComplete(false); 
+          setProfileComplete(false);
+          setLoading(false);
         }
       } else {
         setProfileComplete(false); 
@@ -57,8 +62,13 @@ const Dashboard = () => {
 
   return (
     <>
-      
-      {!profileComplete && (
+      {loading && (
+        <div className="flex items-center justify-center h-[70vh]">
+          <LoaderSpinner />
+        </div>
+      )}
+
+      {!profileComplete && !loading && (
         <>
           {role === "farmer" ? (
             <FarmerProfileSetup onComplete={() => setProfileComplete(true)} />
@@ -68,7 +78,7 @@ const Dashboard = () => {
         </>
       )}
 
-      {profileComplete && (
+      {profileComplete && !loading && (
         <>
           {role === "farmer" ? <FarmerStatistics /> : <ConsumerStatistics />}
 
