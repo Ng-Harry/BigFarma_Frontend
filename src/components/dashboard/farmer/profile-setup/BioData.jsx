@@ -46,13 +46,13 @@ const ProfileForm = ({ onNext }) => {
 				home_address: formData.address,
 				email: formData.email,
 				phone: formData.phone,
-				profile_picture: image || null,
+				profile_picture: null,
 				id_document: "string",
 				farm_name: "string",
-				farm_type: "string",
+				farm_type: "crop",
 				farm_image: null,
 				farm_location: "string",
-				farm_size: "string",
+				farm_size: "0 acres",
 				years_experience: 0,
 			};
 

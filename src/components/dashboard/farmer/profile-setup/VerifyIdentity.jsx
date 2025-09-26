@@ -1,17 +1,16 @@
-
 import React, { useState } from "react";
 import { ChangeEvent, DragEvent } from "react";
-import fileIcon from "../../../../assets/icons/fileIcon.png"
-import { toast } from 'react-toastify';
+import fileIcon from "../../../../assets/icons/fileIcon.png";
+import { toast } from "react-toastify";
 import Cookies from "js-cookie";
 import { endpoints } from "../../../config/endpoints";
 import { axios } from "../../../../lib/axios";
 import axiosDefault from "axios";
 
-const IdentityVerification = ({onNext}) => {
+const IdentityVerification = ({ onNext }) => {
 	const [file, setFile] = useState(null);
 	const [dragActive, setDragActive] = useState(false);
-	
+
 	const handleDragOver = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
@@ -41,11 +40,23 @@ const IdentityVerification = ({onNext}) => {
 		}
 	};
 
+	const toBase64 = (file) =>
+		new Promise((resolve, reject) => {
+			const reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = () => resolve(reader.result);
+			reader.onerror = (error) => reject(error);
+		});
+
 	const handleUpload = async (e) => {
 		e.preventDefault();
+		// Convert first image to base64 (if exists)
+		let farmImageBase64 = null;
+
 		if (file) {
+			farmImageBase64 = await toBase64(file);
 			const payload = {
-				id_document: file,
+				id_document: farmImageBase64,
 			};
 
 			try {
@@ -61,10 +72,10 @@ const IdentityVerification = ({onNext}) => {
 				);
 				const data = res.data;
 				if (res.status === 200 || res.status === 201) {
-					toast.success(data.message || 'ID uploaded successfully!');
+					toast.success(data.message || "ID uploaded successfully!");
 					onNext(data);
 				} else {
-					toast.error(data.message || 'Upload failed. Please try again.');
+					toast.error(data.message || "Upload failed. Please try again.");
 				}
 			} catch (error) {
 				console.error("Error:", error);
@@ -82,6 +93,9 @@ const IdentityVerification = ({onNext}) => {
 					data: null,
 				};
 			}
+		}
+		else {
+			toast.error("Please select a file to upload.");
 		}
 	};
 
