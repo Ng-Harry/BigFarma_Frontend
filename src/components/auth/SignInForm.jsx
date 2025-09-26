@@ -26,6 +26,7 @@ import Support from "./Support";
 // ==================== Animations ====================
 
 import { motion, AnimatePresence } from "framer-motion";
+import Cookies from "js-cookie";
 
 const SignInForm = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -70,8 +71,9 @@ const SignInForm = () => {
         
         // Store user role from login response
         if (result.role) {
+          Cookies.set("BIGFARMA_ROLE", result.role, { expires: 7 });
           setRole(result.role);
-          localStorage.setItem("selectedRole", result.role);
+          // localStorage.setItem("selectedRole", result.role);
         }
         
         console.log("Login successful - User role:", result.role); //
