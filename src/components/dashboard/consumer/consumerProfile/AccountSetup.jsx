@@ -67,70 +67,8 @@ export default function AccountSetup({ onSkip, onNext }) {
 			reader.readAsDataURL(file);
 			reader.onload = () => resolve(reader.result);
 			reader.onerror = (error) => reject(error);
-		});
-
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   if (form.firstName && form.lastName && form.phone && form.email) {
-  //     const dataToSend = new FormData();
-  //     dataToSend.append("first_name", form.firstName);
-  //     dataToSend.append("last_name", form.lastName);
-  //     dataToSend.append("address", form.address);
-  //     dataToSend.append("email", form.email);
-  //     dataToSend.append("phone", form.phone);
-  //     if (fileInputRef.current?.files[0]) {
-  //     dataToSend.append("profile_picture", fileInputRef.current.files[0]);
-  //     }else {
-  //       dataToSend.append("profile_picture", null);
-  //     }
-  //     dataToSend.append("crop_preferences", ["string"]);
-
-    
-  //     try {
-  //             const res = await axios.post(
-  //               endpoints().users.create_consumer_profile,
-  //               dataToSend,
-  //               {
-  //                 headers: {
-  //                   "Content-Type": "application/json",
-  //                   Authorization: `Bearer ${Cookies.get("BIGFARMA_ACCESS_TOKEN")}`,
-  //                 },
-  //               }
-  //             );
-  //             const data = await res.data;
-            
-  //             if (res.status === 200 || res.status === 201) {
-  //               toast.success(data.message || 'Saved successfully!');
-  //               onNext(data);
-  //             } else {
-  //               toast.error(data.message || 'Network error. Please try again.');
-  //             }
-  //           } catch (error) {
-  //             console.error("Error:", error);
-  //             if (axiosDefault.isAxiosError(error) && error.response) {
-  //               return {
-  //                 isSuccess: false,
-  //                 statusCode: error.response.status.toString(),
-  //                 message:
-  //                   (error.response.data &&
-  //                     (error.response.data.detail || error.response.data.message)) ||
-  //                   "Profile setup failed",
-  //                 data: null,
-  //               };
-  //             }
-  //             return {
-  //               isSuccess: false,
-  //               statusCode: "500",
-  //               message: "unable to connect to the server",
-  //               data: null,
-  //             };
-  //           }
-  //   }
-
-  // };
-
+    });
+  
   const handleSubmit = async (e) => {
 		e.preventDefault();
 
@@ -146,10 +84,10 @@ export default function AccountSetup({ onSkip, onNext }) {
 				first_name: form.firstName,
 				last_name: form.lastName,
 				address: form.address,
+				profile_picture: base64Image || "string",
+				crop_preferences: ["vegetables"],
 				email: form.email,
 				phone: form.phone,
-				profile_picture: "string", 
-				crop_preferences: ["vegetables"],
 			};
 
 			try {

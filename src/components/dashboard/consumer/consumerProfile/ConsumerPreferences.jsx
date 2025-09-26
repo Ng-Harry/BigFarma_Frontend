@@ -16,14 +16,18 @@ const ConsumerPreferences = ({ onNext }) => {
 	};
 
 	const handlePreferenceSubmit = async () => {
-    try {
-      const preferencesToSend = selectedPreferences.map(
-				(id) => preferenceOptions.find((p) => p.id === id)?.label
-			);
+		const preferencesToSend = selectedPreferences.map(
+			(id) => preferenceOptions.find((p) => p.id === id)?.label
+		);
+		const dataToSend = {
+			crop_preferences: preferencesToSend.length > 0 ? preferencesToSend : ["Vegetables"],
+		};
+		try {
+			
 
 			const res = await axios.put(
 				endpoints().users.update_consumer_profile,
-				{ crop_preferences: preferencesToSend ? preferencesToSend : ["Vegetables"] },
+				dataToSend,
 				{
 					headers: {
 						"Content-Type": "application/json",
@@ -39,8 +43,8 @@ const ConsumerPreferences = ({ onNext }) => {
 				toast.error(data.message || "Network error. Please try again.");
 			}
 		} catch (error) {
-      console.error("Error updating preferences:", error);
-      if (axiosDefault.isAxiosError(error) && error.response) {
+			console.error("Error updating preferences:", error);
+			if (axiosDefault.isAxiosError(error) && error.response) {
 				return {
 					isSuccess: false,
 					statusCode: error.response.status.toString(),
