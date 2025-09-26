@@ -4,44 +4,17 @@ import { useState, useEffect } from "react"
 import { Search, ShoppingCart, Bell, Menu } from "lucide-react"
 import Input from "../shared/Input"
 import Avatar from "../../assets/images/JohnDoe-avatar.jpg"
-import { useFocus, useCart } from "../../hooks"
+import { useCart } from "../../hooks"
 import Cookies from "js-cookie";
 import { endpoints } from "../config/endpoints";
 import { axios } from "../../lib/axios";
 import { Link } from "react-router-dom";
 
 export default function DashboardHeader({ onMenuClick }) {
-  const { role } = useFocus();
+	const role = Cookies.get("BIGFARMA_ROLE");
   const { getCartCount } = useCart();
   const [profile, setProfile] = useState(null);
   const token = Cookies.get("BIGFARMA_ACCESS_TOKEN");
-
-  // useEffect(() => {
-  //   const fetchProfile = async () => {
-  //     if (token) {
-  //       if (role === "farmer") {
-  //         const response = await axios.get(endpoints.users.get_farmer_profile, {
-  //           headers: {
-  //             Authorization: `Bearer ${token}`,
-  //           },
-  //         });
-  //         const data = await response.data;
-  //         setProfile(data);
-  //       } else if (role === "consumer") {
-  //         const response = await axios.get(endpoints().users.get_consumer_profile, {
-  //           headers: {
-  //             Authorization: `Bearer ${token}`,
-  //           },
-  //         });
-  //         const data = await response.data;
-  //         setProfile(data);
-  //       }
-  //     } else {
-  //       setProfile(null);
-  //     }
-  //   }
-  //   fetchProfile();
-  // }, [role, token]);
 
    useEffect(() => {
       const fetchProfile = async () => {
@@ -151,9 +124,8 @@ export default function DashboardHeader({ onMenuClick }) {
 									className="h-full w-full rounded-full object-cover"
 								/>
 							</div>
-							{/* <span className="hidden md:block text-sm font-bold text-gray-900">
-                                {profile?.full_name || profile?.first_name || "Hi User"}
-                            </span> */}
+							
+							  
 							<div className="hidden md:block">
 								<span className="text-sm font-bold text-gray-900 block">
 									{profile?.full_name || profile?.first_name || "Hi User"} 
