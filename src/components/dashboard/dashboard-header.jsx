@@ -84,7 +84,7 @@ export default function DashboardHeader({ onMenuClick }) {
 
   return (
     <>
-      {token && (
+      
         <header className="fixed top-0 right-0 left-0 lg:left-64 z-30 bg-white border-b border-gray-200 h-20">
 			<div className="flex items-center justify-between h-full px-4 lg:px-10">
 				<div className="flex items-center gap-4">
@@ -101,7 +101,7 @@ export default function DashboardHeader({ onMenuClick }) {
 						</h1>
 						{role && (
 							<p className="text-sm text-gray-600 capitalize">
-								{role === "farmer" ? "🌱 Farmer" : "🛒 Consumer"} //
+								{role === "farmer" ? "🌱 Farmer" : "🛒 Consumer"}
 							</p>
 						)}
 					</div>
@@ -156,7 +156,7 @@ export default function DashboardHeader({ onMenuClick }) {
                             </span> */}
 							<div className="hidden md:block">
 								<span className="text-sm font-bold text-gray-900 block">
-									{profile?.full_name || profile?.first_name || "Hi User"} //
+									{profile?.full_name || profile?.first_name || "Hi User"} 
 								</span>
 								{role && (
 									<span className="text-xs text-gray-500 capitalize">
@@ -168,7 +168,7 @@ export default function DashboardHeader({ onMenuClick }) {
 					</div>
 				</div>
 			</div>
-    </header>)}
+    </header>
     </>
 	);
 }

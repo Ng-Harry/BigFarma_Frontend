@@ -48,8 +48,7 @@ export default function DashboardSidebar({ isOpen, onClose }) {
 
   return (
     <>
-      {token && (
-      <>
+      
         {/* Desktop sidebar */ }
       <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
         <div className="flex flex-col flex-grow bg-white border-r border-gray-200">
@@ -132,7 +131,7 @@ export default function DashboardSidebar({ isOpen, onClose }) {
           </nav>
         </div>
           </div>
-      </>)}
+      
     </>
   );
 }
