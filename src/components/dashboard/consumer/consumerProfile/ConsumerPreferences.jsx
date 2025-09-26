@@ -16,18 +16,18 @@ const ConsumerPreferences = ({ onNext }) => {
 	};
 
 	const handlePreferenceSubmit = async () => {
+		const preferencesToSend = selectedPreferences.map(
+			(id) => preferenceOptions.find((p) => p.id === id)?.label
+		);
+		const dataToSend = {
+			crop_preferences: preferencesToSend.length > 0 ? preferencesToSend : ["Vegetables"],
+		};
 		try {
-			const preferencesToSend = selectedPreferences.map(
-				(id) => preferenceOptions.find((p) => p.id === id)?.label
-			);
+			
 
 			const res = await axios.put(
 				endpoints().users.update_consumer_profile,
-				{
-					crop_preferences: preferencesToSend
-						? preferencesToSend
-						: ["Vegetables"],
-				},
+				dataToSend,
 				{
 					headers: {
 						"Content-Type": "application/json",
