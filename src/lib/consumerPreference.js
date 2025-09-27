@@ -7,25 +7,25 @@ import poultry from "../assets/ProductImages/Chicken.png"
 export const preferences = [
     {
         id: 1,
-        label: "Vegetable",
+        label: "vegetable",
         profileImage:vegetable
     },
 
     {
         id: 2,
-        label: "Fruits",
+        label: "fruits",
         profileImage:fruits
     },
 
     {
         id: 3,
-        label: "Grains",
+        label: "grains",
         profileImage:rice
     },
 
     {
         id: 4,
-        label: "Poultry & Meat",
+        label: "poultry and meat",
         profileImage:poultry
     },
 ]
