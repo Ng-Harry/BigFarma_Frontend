@@ -9,7 +9,10 @@ import grainsCategory from '@/assets/ProductImages/categories/grains.png'
 import proteinCategory from '@/assets/ProductImages/categories/protein.png'
 import ProductsList from './product-list'
 import { Link } from 'react-router-dom'
-
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import { Pagination, Autoplay } from 'swiper/modules';
 
 const categories = [
   { id: 1, name: "Vegetables", image: vegetablesCategory },
@@ -22,7 +25,60 @@ const Marketplace = () => {
   return (
     <div>
       {/* sliders  */}
-      <MarketplaceSlider />
+      <section className="gap-5">
+        <Swiper
+          modules={[Pagination, Autoplay]}
+          spaceBetween={20}
+          slidesPerView={1.4}
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 4000 }}
+          loop={true}
+          className="w-full lg:w-full"
+        >
+          {/* First Slide */}
+          <SwiperSlide>
+            <div className="relative w-full bg-[#9AFFA1] h-[300px] rounded-lg px-20 py-10 flex justify-start items-center">
+              <div className="font-inter flex flex-col gap-3">
+                <h4 className="text-4xl font-bold text-[--color-neutral-dark]">Up to 10% offer</h4>
+                <p className="text-xl">Enjoy our big offer.</p>
+                <button className="font-semibold bg-[var(--color-primary)] text-white py-3 px-10 rounded-lg w-fit cursor-pointer">
+                  Buy Now
+                </button>
+              </div>
+              <img src="/marketplaceSlider/1_.png" alt="image" className="absolute right-10" />
+            </div>
+          </SwiperSlide>
+
+          {/* Second Slide */}
+          <SwiperSlide>
+            <div className="relative w-full bg-[#003F1F] h-[300px] rounded-lg px-20 py-10 flex justify-start items-center">
+              <div className="font-inter flex flex-col gap-3">
+                <h4 className="text-4xl font-bold text-white">Up to 5% offer</h4>
+                <p className="text-xl text-white">On first buyers.</p>
+                <button className="font-semibold bg-white text-[var(--color-neutral-dark)] py-3 px-10 rounded-lg w-fit cursor-pointer">
+                  Buy Now
+                </button>
+              </div>
+              <img src="/marketplaceSlider/2_.png" alt="image" className="absolute right-10" />
+            </div>
+          </SwiperSlide>
+
+          {/* Third Slide */}
+          <SwiperSlide>
+            <div className="relative w-full bg-[#FFA725] h-[300px] rounded-lg px-20 py-10 flex justify-start items-center">
+              <div className="font-inter flex flex-col gap-3">
+                <h4 className="text-4xl font-bold text-[--color-neutral-dark]">Up to 15% offer</h4>
+                <p className="text-xl text-[var(--color-primary)]">Enjoy our big offer.</p>
+                <button className="font-semibold bg-[var(--color-primary)] text-white py-3 px-10 rounded-lg w-fit cursor-pointer">
+                  Buy Now
+                </button>
+              </div>
+              <img src="/marketplaceSlider/3_.png" alt="image" className="absolute right-10" />
+            </div>
+          </SwiperSlide>
+        </Swiper>
+      </section>
+      {/* <MarketplaceSlider /> */}
 
       {/* explore categories  */}
       <div className="flex justify-between items-center my-8">
