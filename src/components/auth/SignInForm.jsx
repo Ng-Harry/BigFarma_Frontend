@@ -12,10 +12,12 @@ import { FcGoogle } from "react-icons/fc";
 import { countries } from "../../lib/countries";
 
 // ==================== React & Hooks ====================
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import useForm from "../../hooks/useForm";
 import useIsMobile from "../../hooks/useIsMobile";
+import { FocusContext } from "../../context/FocusContext";
+
 
 // ==================== Components ====================
 import Dropdown from "@/components/shared/Dropdown";
@@ -33,6 +35,7 @@ const SignInForm = () => {
   const [loading, setLoading] = useState(false);
   const Navigate = useNavigate();
   const isMobile = useIsMobile(); // Tailwind's breakpoint can be passed as a value
+  const { setRole } = useContext(FocusContext);
 
   const { loginData, errors, updateField, updateCountry } = useForm();
 
@@ -60,11 +63,18 @@ const SignInForm = () => {
     const loginValue = loginData.username;
     const password = loginData.password;
     try {
-      const result = await login({ login: loginValue, password });
+      const result = await login({ login: loginValue, password});
       if (result.isSuccess) {
         toast.success(result.message || "Login successful!");
         localStorage.setItem("token", result.token);
-        console.log(result.token);
+        
+        // Store user role from login response
+        if (result.role) {
+          setRole(result.role);
+          localStorage.setItem("selectedRole", result.role);
+        }
+        
+        console.log("Login successful - User role:", result.role); //
         Navigate("/dashboard");
       } else {
         toast.error(result.message || "Login failed.");
