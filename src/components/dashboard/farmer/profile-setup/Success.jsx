@@ -8,7 +8,7 @@ const SuccessForm = ({ onNext }) => {
 	
 	setTimeout(() => {
 		onNext();
-	}, 3000);
+	}, 1500);
 
 	return (
 		<div className="fixed inset-0 w-full min-h-screen bg-black/50  z-50 flex items-center justify-center">
