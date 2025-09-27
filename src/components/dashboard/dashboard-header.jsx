@@ -50,7 +50,7 @@ export default function DashboardHeader({ onMenuClick }) {
 				}
 			};
       fetchProfile();
-    }, [role, token, setProfile]);
+    }, [role, token, profile]);
 
   console.log("Header profile:", profile?.first_name, profile?.full_name);
   console.log("Header profile2:", profile);
