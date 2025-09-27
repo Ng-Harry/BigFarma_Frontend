@@ -32,7 +32,7 @@ const Dashboard = () => {
             });
             const data = await response.data;
             setProfileComplete(data.full_name ? true : false);
-            setLoading(false);
+            // setLoading(false);
           } else if (role === "consumer") {
             response = await axios.get(endpoints().users.get_consumer_profile, {
               headers: {
@@ -41,17 +41,20 @@ const Dashboard = () => {
             });
             const data = await response.data;
 						setProfileComplete(data.first_name ? true : false);
-            setLoading(false);
+            // setLoading(false);
           }
           
         } catch (error) {
           console.error("Error checking profile completion:", error);
           setProfileComplete(false);
-          setLoading(false);
+          // setLoading(false);
         }
       } else {
-        setProfileComplete(false); 
+        setProfileComplete(false);
       }
+      setTimeout(() => {
+        setLoading(false);
+      }, 1500); 
     };
     checkProfileCompletion();
   }, [role, token]);
@@ -60,15 +63,23 @@ const Dashboard = () => {
   console.log("Current role:", role);
   console.log("Is profile complete?", profileComplete);
 
+  if(loading) {
+    return (
+      <div className="flex items-center justify-center h-[70vh]">
+        <LoaderSpinner />
+      </div>
+    );
+  }
+
   return (
     <>
-      {loading && (
+      {/* {loading && (
         <div className="flex items-center justify-center h-[70vh]">
           <LoaderSpinner />
         </div>
-      )}
+      )} */}
 
-      {!profileComplete && !loading && (
+      {!profileComplete && (
         <>
           {role === "farmer" ? (
             <FarmerProfileSetup onComplete={() => setProfileComplete(true)} />
@@ -78,7 +89,7 @@ const Dashboard = () => {
         </>
       )}
 
-      {profileComplete && !loading && (
+      {profileComplete && (
         <>
           {role === "farmer" ? <FarmerStatistics /> : <ConsumerStatistics />}
 
