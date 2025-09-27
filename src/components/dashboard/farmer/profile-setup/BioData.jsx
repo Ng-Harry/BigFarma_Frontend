@@ -46,7 +46,7 @@ const ProfileForm = ({ onNext }) => {
 				home_address: formData.address,
 				email: formData.email,
 				phone: formData.phone,
-				profile_picture: null,
+				profile_picture: image || null,
 				id_document: "string",
 				farm_name: "string",
 				farm_type: "crop",
