@@ -10,6 +10,7 @@ import axiosDefault from "axios";
 
 export default function AccountSetup({ onSkip, onNext }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [profileImage, setProfileImage] = useState(null);
 
   // Form state
   const [form, setForm] = useState({
@@ -21,8 +22,6 @@ export default function AccountSetup({ onSkip, onNext }) {
     address: "",
   });
 
-  // Profile image state
-  const [profileImage, setProfileImage] = useState(joy);
   const fileInputRef = useRef(null);
 
 
@@ -49,42 +48,32 @@ export default function AccountSetup({ onSkip, onNext }) {
 
   // Handle profile image change
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setProfileImage(imageUrl);
-    }
-  };
-
+		if (e.target.files && e.target.files[0]) {
+			const file = e.target.files[0];
+			const reader = new FileReader();
+			reader.onloadend = () => {
+				setProfileImage(reader.result);
+			};
+			reader.readAsDataURL(file);
+		}
+	};
+  
   // Opens the hidden file input
   const handleEdit = () => {
     fileInputRef.current?.click();
   };
-
-  const toBase64 = (file) =>
-		new Promise((resolve, reject) => {
-			const reader = new FileReader();
-			reader.readAsDataURL(file);
-			reader.onload = () => resolve(reader.result);
-			reader.onerror = (error) => reject(error);
-    });
   
   const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		if (form.firstName && form.lastName && form.phone && form.email) {
-			let base64Image = null;
-
-			// Convert selected image file to base64
-			if (fileInputRef.current?.files[0]) {
-				base64Image = await toBase64(fileInputRef.current.files[0]);
-			}
+    if (form.firstName && form.lastName && form.phone && form.email) {
+      
       // Prepare data to send
 			const dataToSend = {
 				first_name: form.firstName,
 				last_name: form.lastName,
 				address: form.address,
-				profile_picture: base64Image || "string",
+				profile_picture: profileImage || null,
 				crop_preferences: ["vegetables"],
 				email: form.email,
 				phone: form.phone,
@@ -131,7 +120,7 @@ export default function AccountSetup({ onSkip, onNext }) {
         <div>
           <div className="mb-4">
             <img
-              src={profileImage}
+              src={profileImage || joy}
               alt="avatar"
               className="w-28 h-28 rounded-full mx-auto mb-2 object-cover border-4 border-gray-300"
             />
