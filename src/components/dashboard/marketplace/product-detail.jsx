@@ -1,8 +1,9 @@
+/* eslint-disable no-undef */
 import { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { fetchProductById } from "@/lib/api";
-import { demoMarketplaceProducts } from "@/lib/demoMarketplaceProducts"; // ⬅️ import your mock list
+import { fetchProductById, fetchProducts } from "@/lib/api";
+// import { demoMarketplaceProducts } from "@/lib/demoMarketplaceProducts"; // ⬅️ import your mock list
 import { IoMdArrowBack, IoIosStar } from "react-icons/io";
 import { FaCheck, FaPlus, FaMinus } from "react-icons/fa6";
 import { useCart } from "@/hooks";
@@ -19,6 +20,14 @@ export default function ProductDetail() {
         queryKey: ["product", id],
         queryFn: () => fetchProductById(id),
     });
+
+    // 🟢 fetch all products to find similar ones
+    const { data: productsData } = useQuery({
+        queryKey: ["products"],
+        queryFn: fetchProducts,
+    });
+
+
 
     const handleAddToCart = (product) => {
         if (product.availability !== "in_stock") {
@@ -62,10 +71,10 @@ export default function ProductDetail() {
     };
 
     if (isLoading) return <p>Loading...</p>;
-    if (error) return <p>Product not found</p>;
+    if (error) return <p>Error loading product</p>;
 
     // ✅ Find similar products from your mock list
-    const similar = demoMarketplaceProducts.filter(
+    const similar = productsData?.products?.filter(
         (item) => item.category === data.category && item.id !== data.id
     );
 
@@ -85,14 +94,14 @@ export default function ProductDetail() {
                 <div className="p-6 lg:w-1/2 bg-white rounded-lg shadow">
                     <div className="mb-4 lg:w-full h-64 lg:h-96 lg:mb-10">
                         <img
-                            src={data.images[0]}
+                            src={Array.isArray(data.images) ? data.images[0] : data.images}
                             alt={data.name}
                             className="h-full bg-slate-50 mb-4  object-cover rounded"
                         />
                     </div>
                     <div className="flex items-center gap-4 mb-4">
                         <h1 className="text-2xl font-semibold capitalize">{data.name}</h1>
-                        {data.availability === "in_stock" ? <p className=" w-fit text-md text-green-700 py-1 px-4 rounded-md bg-green-100 capitalize">In stock</p> : <p className=" w-fit text-md text-red-700 py-1 px-4 rounded-md bg-red-100 capitalize">Out of stock</p>}
+                        {data.availability === "in_stock" ? <p className=" w-fit text-md text-green-700 py-1 px-4 rounded-md bg-green-50 capitalize">In stock</p> : <p className=" w-fit text-md text-red-700 py-1 px-4 rounded-md bg-red-100 capitalize">Out of stock</p>}
                     </div>
                     <p className="text-gray-600">{data.description}</p>
                     <div className="flex items-center gap-2 my-4">
@@ -107,23 +116,23 @@ export default function ProductDetail() {
 
                     {/* Quantity selector */}
                     {data.availability === "in_stock" && (
-                        <div className="flex items-center gap-3 my-4">
-                            <span className="text-sm font-medium">Quantity:</span>
-                            <div className="flex items-center border border-gray-300 rounded-md">
+                        <div className="flex items-center gap-3 my-4 p-3">
+                            {/* <span className="text-sm font-medium">Quantity:</span> */}
+                            <div className="flex items-center bg-[#E6EFEA] rounded-lg">
                                 <button
                                     onClick={decrementQuantity}
                                     disabled={quantity <= 1}
                                     className="p-2 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
-                                    <FaMinus className="h-3 w-3" />
+                                    <FaMinus className="h-6 w-6 border-2 rounded-full p-1" />
                                 </button>
-                                <span className="px-4 py-2 min-w-[3rem] text-center">{quantity}</span>
+                                <span className="px-10 py-2 min-w-[3rem] text-center">{quantity}</span>
                                 <button
                                     onClick={incrementQuantity}
                                     disabled={quantity >= parseInt(data.quantity.split(" ")[0])}
                                     className="p-2 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
-                                    <FaPlus className="h-3 w-3" />
+                                    <FaPlus className="h-6 w-6 border-2 rounded-full p-1" />
                                 </button>
                             </div>
                         </div>
@@ -134,22 +143,20 @@ export default function ProductDetail() {
                         <button
                             onClick={() => handleAddToCart(data)}
                             disabled={data.availability !== "in_stock"}
-                            className={`py-2 underline capitalize ${
-                                data.availability === "in_stock" 
-                                    ? "text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] cursor-pointer" 
-                                    : "text-gray-400 cursor-not-allowed"
-                            }`}
+                            className={`py-2 underline capitalize ${data.availability === "in_stock"
+                                ? "text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] cursor-pointer"
+                                : "text-gray-400 cursor-not-allowed"
+                                }`}
                         >
-                            Add {quantity > 1 ? `${quantity} ` : ''}to cart
+                            Add to cart
                         </button>
-                        <button 
+                        <button
                             onClick={() => handleBuyNow(data)}
                             disabled={data.availability !== "in_stock"}
-                            className={`px-6 py-2 text-white text-center rounded-md capitalize ${
-                                data.availability === "in_stock" 
-                                    ? "bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] cursor-pointer" 
-                                    : "bg-gray-400 cursor-not-allowed"
-                            }`}
+                            className={`px-6 py-2 text-white text-center rounded-md capitalize ${data.availability === "in_stock"
+                                ? "bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] cursor-pointer"
+                                : "bg-gray-400 cursor-not-allowed"
+                                }`}
                         >
                             Buy now
                         </button>
@@ -232,7 +239,7 @@ export default function ProductDetail() {
                             <div className="p-4 bg-white shadow rounded-md">
                                 <div className="w-full h-48 rounded-t-md bg-slate-100 flex items-center justify-center">
                                     <img
-                                        src={item.images[0]}
+                                        src={item.image}
                                         alt={item.name}
                                         className="w-fit"
                                     />
@@ -267,11 +274,10 @@ export default function ProductDetail() {
                                     <button
                                         onClick={() => handleAddSimilarToCart(item)}
                                         disabled={item.availability !== "in_stock"}
-                                        className={`w-full py-2 underline capitalize ${
-                                            item.availability === "in_stock" 
-                                                ? "text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] cursor-pointer" 
-                                                : "text-gray-400 cursor-not-allowed"
-                                        }`}
+                                        className={`w-full py-2 underline capitalize ${item.availability === "in_stock"
+                                            ? "text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] cursor-pointer"
+                                            : "text-gray-400 cursor-not-allowed"
+                                            }`}
                                     >
                                         Add to cart
                                     </button>
