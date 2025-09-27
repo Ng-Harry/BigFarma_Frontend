@@ -30,7 +30,7 @@ const ProfileForm = ({ onNext }) => {
 	};
 
 	const handleEditClick = () => {
-		fileInputRef.current.click(); // Programmatically open file dialog
+		fileInputRef.current.click(); 
 	};
 
 	const handleSubmit = async (e) => {
