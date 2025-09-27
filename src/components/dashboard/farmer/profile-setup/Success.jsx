@@ -1,14 +1,18 @@
+import { useEffect } from "react";
 import Success from "../../../../assets/icons/success.svg";
 
 const SuccessForm = ({ onNext }) => {
-    
-    // const handleDashboardRedirect = () => {
-    //     onNext();
-	// }
-	
-	setTimeout(() => {
-		onNext();
-	}, 1500);
+
+	useEffect(() => {
+		// Redirect after 3 seconds
+		const timer = setTimeout(() => {
+			onNext();
+		}, 3000);
+
+		return () => {
+			clearTimeout(timer);
+		};
+	}, [onNext]);
 
 	return (
 		<div className="fixed inset-0 w-full min-h-screen bg-black/50  z-50 flex items-center justify-center">
@@ -26,12 +30,7 @@ const SuccessForm = ({ onNext }) => {
 						Your profile has been submitted for verification. We will notify you
 						once you are verified.
 					</p>
-                </div>
-                {/* <div className="mt-6">
-                    <button className="bg-green-700 text-white px-6 py-3 rounded-lg hover:bg-green-800 transition duration-200" onClick={handleDashboardRedirect}>
-                        Continue
-                    </button>
-                </div> */}
+				</div>
 			</div>
 		</div>
 	);

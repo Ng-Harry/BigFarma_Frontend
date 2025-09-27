@@ -1,26 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Pending from "../../../../assets/icons/pending.png";
 import LoaderSpinner from "../../../../components/shared/Loader";
 
 const PendingVerification = ({ onNext }) => {
 	const [loading, setLoading] = useState(false);
 
-	// const handleDashboardRedirect = () => {
-	//     onNext();
-	// }
+	useEffect(() => {
+		// show pending first, then switch to loading
+		const loaderTimer = setTimeout(() => {
+			setLoading(true);
+		}, 1500);
 
-	setTimeout(() => {
-		setLoading(true);
-	}, 1500);
+		// after loading, redirect
+		const redirectTimer = setTimeout(() => {
+			onNext();
+			setLoading(false);
+		}, 3000);
 
-	setTimeout(() => {
-		onNext();
-		setLoading(false);
-	}, 3000);
+		return () => {
+			clearTimeout(loaderTimer);
+			clearTimeout(redirectTimer);
+		};
+	}, [onNext]);
 
 	return (
 		<>
-			{loading && <LoaderSpinner />}
 			{!loading && (
 				<div className="fixed inset-0 w-full min-h-screen bg-black/50  z-50 flex items-center justify-center">
 					<div className="flex flex-col items-center justify-center h-auto bg-white p-6 rounded-lg shadow-lg">
@@ -39,16 +43,10 @@ const PendingVerification = ({ onNext }) => {
 								your products to the marketplace.
 							</p>
 						</div>
-						{/* <div className="mt-6">
-						<button
-							className="bg-green-700 text-white px-6 py-3 rounded-lg hover:bg-green-800 transition duration-200"
-							onClick={handleDashboardRedirect}>
-							Go to Dashboard
-						</button>
-					</div> */}
 					</div>
 				</div>
 			)}
+			{loading && <LoaderSpinner />}
 		</>
 	);
 };
