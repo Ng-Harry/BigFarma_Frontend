@@ -1,25 +1,34 @@
-import { Routes, Route } from "react-router-dom";
-import "./App.css";
-import { ToastContainer } from "react-toastify";
-import Home from "./components/landing-page-sections/Home";
+import { Routes, Route } from 'react-router-dom';
+import './App.css';
+import { ToastContainer } from 'react-toastify';
+import Home from './components/landing-page-sections/Home';
 // Page Auth
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/Signup";
-import ForgotPassword from "./pages/ForgotPassword";
-import InputOtp from "./pages/InputOtp";
-import ResetPassword from "./pages/ResetPassword";
-import RoleSelection from "./pages/RoleSelection";
+import SignIn from './pages/SignIn';
+import SignUp from './pages/Signup';
+import ForgotPassword from './pages/ForgotPassword';
+import InputOtp from './pages/InputOtp';
+import ResetPassword from './pages/ResetPassword';
+import RoleSelection from './pages/RoleSelection';
 
-import { DashboardPage, ConsumerOrderPage, CartPage, CheckoutPage, PaymentProcessingPage, OrderConfirmationPage } from "./pages";
-import VerifyOtp from "./pages/VerifyOtp";
-import Success from "./pages/Success";
-import PaymentSetup from "./pages/PaymentSetupModal";
-import MarketplacePage from "./components/dashboard/marketplace";
-import ProductDetail from "./components/dashboard/marketplace/product-detail";
-import DashboardLayout from "./components/dashboard/dashboard-layout";
-import GroupBuyPage from "./pages/GroupBuyPage";
-import CreateGroupModal from "./components/dashboard/GroupBuy/CreateGroupModal";
-
+import {
+  DashboardPage,
+  ConsumerOrderPage,
+  CartPage,
+  CheckoutPage,
+  PaymentProcessingPage,
+  OrderConfirmationPage,
+  FarmerOrderPage,
+  ProductOrdersPage,
+  SingleOrderPage,
+} from './pages';
+import VerifyOtp from './pages/VerifyOtp';
+import Success from './pages/Success';
+import PaymentSetup from './pages/PaymentSetupModal';
+import MarketplacePage from './components/dashboard/marketplace';
+import ProductDetail from './components/dashboard/marketplace/product-detail';
+import DashboardLayout from './components/dashboard/dashboard-layout';
+import GroupBuyPage from './pages/GroupBuyPage';
+import CreateGroupModal from './components/dashboard/GroupBuy/CreateGroupModal';
 
 const App = () => {
   return (
@@ -122,6 +131,33 @@ const App = () => {
           element={
             <DashboardLayout>
               <PaymentSetup />
+            </DashboardLayout>
+          }
+        />
+
+        <Route
+          path="/farmer-orders"
+          element={
+            <DashboardLayout>
+              <FarmerOrderPage />
+            </DashboardLayout>
+          }
+        />
+
+        <Route
+          path="/farmer-orders/:productId"
+          element={
+            <DashboardLayout>
+              <ProductOrdersPage />
+            </DashboardLayout>
+          }
+        />
+
+        <Route
+          path="/farmer-orders/:productId/:orderId"
+          element={
+            <DashboardLayout>
+              <SingleOrderPage />
             </DashboardLayout>
           }
         />

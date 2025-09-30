@@ -1,7 +1,6 @@
-import { User } from "lucide-react";
+import { User } from 'lucide-react';
 
 export const endpoints = () => {
-  
   return {
     auth: {
       password_reset: `/auth/password-reset`,
@@ -31,5 +30,3 @@ export const endpoints = () => {
     },
   };
 };
-
-
