@@ -26,14 +26,14 @@ export default function ProductsList() {
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8">
-      {data.map((product) => (
+      {data.products.map((product) => (
         <div key={product.id}>
           <div className="p-4 bg-white shadow rounded-md">
             <div className="w-full h-48 rounded-t-md bg-slate-100 flex items-center justify-center">
               <img
-                src={product.images[0]}
+                src={product.images}
                 alt={product.name}
-                className=""
+                className=" object-cover overflow-hidden w-full h-full rounded-t-md"
               />
             </div>
             {/* details  */}
@@ -41,7 +41,7 @@ export default function ProductsList() {
               {/* name  */}
               <div className="flex items-center gap-3 pt-3">
                 <h3 className="font-medium capitalize text-lg">{product.name}</h3>
-                {product.availability === "in_stock" ? <p className="text-xs text-green-700 py-1 px-2 rounded-md bg-green-100 capitalize">In stock</p> : <p className="text-sm text-red-700 p-3 rounded-md bg-red-100 capitalize">Out of stock</p>}
+                {product.availability === "in_stock" ? <p className="text-xs text-green-700 py-1 px-2 rounded-md bg-green-50 capitalize">In stock</p> : <p className="text-sm text-red-700 p-3 rounded-md bg-red-100 capitalize">Out of stock</p>}
               </div>
 
               {/* price  */}
@@ -66,11 +66,10 @@ export default function ProductsList() {
               <button
                 onClick={() => handleAddToCart(product)}
                 disabled={product.availability !== "in_stock"}
-                className={`w-full py-2 underline capitalize ${
-                  product.availability === "in_stock" 
-                    ? "text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] cursor-pointer" 
-                    : "text-gray-400 cursor-not-allowed"
-                }`}
+                className={`w-full py-2 underline capitalize ${product.availability === "in_stock"
+                  ? "text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] cursor-pointer"
+                  : "text-gray-400 cursor-not-allowed"
+                  }`}
               >
                 Add to cart
               </button>
