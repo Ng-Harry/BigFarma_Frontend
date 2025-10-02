@@ -25,9 +25,7 @@ const navigationItems = [
     name: 'My Orders',
     icon: ShoppingBag,
     path:
-      Cookies.get('BIGFARMA_USER_TYPE') === 'farmer'
-        ? '/farmer-orders'
-        : '/orders',
+      Cookies.get('BIGFARMA_ROLE') === 'farmer' ? '/farmer-orders' : '/orders',
   },
   { name: 'Investment', icon: TrendingUp, path: '/investment' },
   { name: 'Transaction', icon: ArrowLeftRight, path: '/transactions' },
