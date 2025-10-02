@@ -21,12 +21,7 @@ const navigationItems = [
   { name: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
   { name: 'Marketplace', icon: Store, path: '/marketplace' },
   { name: 'Group Buy', icon: Users, path: '/group-buy' },
-  {
-    name: 'My Orders',
-    icon: ShoppingBag,
-    path:
-      Cookies.get('BIGFARMA_ROLE') === 'farmer' ? '/farmer-orders' : '/orders',
-  },
+  { name: 'My Orders', icon: ShoppingBag, path: '/orders' },
   { name: 'Investment', icon: TrendingUp, path: '/investment' },
   { name: 'Transaction', icon: ArrowLeftRight, path: '/transactions' },
   { name: 'Settings', icon: Settings, path: '/settings' },
@@ -41,15 +36,27 @@ export default function DashboardSidebar({ isOpen, onClose }) {
   const handleNavClick = (item) => {
     if (item.name === 'Logout') {
       navigate('/sign-in');
+    } else if (item.name === 'My Orders') {
+      const userRole = Cookies.get('BIGFARMA_ROLE');
+      const ordersPath = userRole === 'farmer' ? '/farmer-orders' : '/orders';
+      navigate(ordersPath);
     } else {
       navigate(item.path);
     }
   };
 
-  const isPathActive = (itemPath) =>
-    itemPath &&
-    itemPath !== '/sign-in' &&
-    location.pathname.startsWith(itemPath);
+  const isPathActive = (itemPath) => {
+    if (!itemPath || itemPath === '/sign-in') return false;
+
+    if (itemPath === '/orders') {
+      return (
+        location.pathname.startsWith('/orders') ||
+        location.pathname.startsWith('/farmer-orders')
+      );
+    }
+
+    return location.pathname.startsWith(itemPath);
+  };
 
   return (
     <>
