@@ -1,31 +1,31 @@
 import vegetable from "../assets/ProductImages/Paprika.png"
 import fruits from "../assets/ProductImages/Fruit.png"
-import rice from "../assets/ProductImages/Rice.png"
+import rice from "../assets/ProductImages/Grains.png"
 import poultry from "../assets/ProductImages/Chicken.png"
 
 
 export const preferences = [
     {
         id: 1,
-        label: "Vegetable",
+        label: "vegetables",
         profileImage:vegetable
     },
 
     {
         id: 2,
-        label: "Fruits",
+        label: "fruits",
         profileImage:fruits
     },
 
     {
         id: 3,
-        label: "Grains",
+        label: "grains",
         profileImage:rice
     },
 
     {
         id: 4,
-        label: "Poultry & Meat",
+        label: "poultry and meat",
         profileImage:poultry
     },
 ]

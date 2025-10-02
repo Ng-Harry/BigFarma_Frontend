@@ -55,18 +55,17 @@ export default function DashboardSidebar({ isOpen, onClose }) {
 
   return (
     <>
-      {token && (
-        <>
-          {/* Desktop sidebar */}
-          <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
-            <div className="flex flex-col flex-grow bg-white border-r border-gray-200">
-              <div className="mt-6 px-4">
-                <img
-                  src={brandLogo}
-                  alt="brand logo"
-                  className="h-10 w-auto object-contain"
-                />
-              </div>
+      
+        {/* Desktop sidebar */ }
+      <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
+        <div className="flex flex-col flex-grow bg-white border-r border-gray-200">
+          <div className="mt-6 px-4">
+            <img
+              src={brandLogo}
+              alt="brand logo"
+              className="h-10 w-auto object-contain"
+            />
+          </div>
 
               <nav className="flex-1 px-4 py-6 space-y-2 mt-6">
                 {navigationItems.map((item) => {
@@ -142,8 +141,7 @@ export default function DashboardSidebar({ isOpen, onClose }) {
               </nav>
             </div>
           </div>
-        </>
-      )}
+      
     </>
   );
 }

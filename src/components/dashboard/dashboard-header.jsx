@@ -4,44 +4,17 @@ import { useState, useEffect } from "react"
 import { Search, ShoppingCart, Bell, Menu } from "lucide-react"
 import Input from "../shared/Input"
 import Avatar from "../../assets/images/JohnDoe-avatar.jpg"
-import { useFocus, useCart } from "../../hooks"
+import { useCart } from "../../hooks"
 import Cookies from "js-cookie";
 import { endpoints } from "../config/endpoints";
 import { axios } from "../../lib/axios";
 import { Link } from "react-router-dom";
 
 export default function DashboardHeader({ onMenuClick }) {
-  const { role } = useFocus();
+	const role = Cookies.get("BIGFARMA_ROLE");
   const { getCartCount } = useCart();
   const [profile, setProfile] = useState(null);
   const token = Cookies.get("BIGFARMA_ACCESS_TOKEN");
-
-  // useEffect(() => {
-  //   const fetchProfile = async () => {
-  //     if (token) {
-  //       if (role === "farmer") {
-  //         const response = await axios.get(endpoints.users.get_farmer_profile, {
-  //           headers: {
-  //             Authorization: `Bearer ${token}`,
-  //           },
-  //         });
-  //         const data = await response.data;
-  //         setProfile(data);
-  //       } else if (role === "consumer") {
-  //         const response = await axios.get(endpoints().users.get_consumer_profile, {
-  //           headers: {
-  //             Authorization: `Bearer ${token}`,
-  //           },
-  //         });
-  //         const data = await response.data;
-  //         setProfile(data);
-  //       }
-  //     } else {
-  //       setProfile(null);
-  //     }
-  //   }
-  //   fetchProfile();
-  // }, [role, token]);
 
    useEffect(() => {
       const fetchProfile = async () => {
@@ -77,14 +50,14 @@ export default function DashboardHeader({ onMenuClick }) {
 				}
 			};
       fetchProfile();
-    }, [role, token]);
+    }, [role, token, setProfile]);
 
   console.log("Header profile:", profile?.first_name, profile?.full_name);
   console.log("Header profile2:", profile);
 
   return (
     <>
-      {token && (
+      
         <header className="fixed top-0 right-0 left-0 lg:left-64 z-30 bg-white border-b border-gray-200 h-20">
 			<div className="flex items-center justify-between h-full px-4 lg:px-10">
 				<div className="flex items-center gap-4">
@@ -101,7 +74,7 @@ export default function DashboardHeader({ onMenuClick }) {
 						</h1>
 						{role && (
 							<p className="text-sm text-gray-600 capitalize">
-								{role === "farmer" ? "🌱 Farmer" : "🛒 Consumer"} //
+								{role === "farmer" ? "🌱 Farmer" : "🛒 Consumer"}
 							</p>
 						)}
 					</div>
@@ -146,17 +119,16 @@ export default function DashboardHeader({ onMenuClick }) {
 						<div className="flex items-center gap-2 ml-2">
 							<div className="h-10 w-10 rounded-full bg-red-500 flex items-center justify-center text-gray-500 font-bold text-sm">
 								<img
-									src={Avatar}
+									src={profile?.profile_picture || Avatar}
 									alt="Avatar"
 									className="h-full w-full rounded-full object-cover"
 								/>
 							</div>
-							{/* <span className="hidden md:block text-sm font-bold text-gray-900">
-                                {profile?.full_name || profile?.first_name || "Hi User"}
-                            </span> */}
+							
+							  
 							<div className="hidden md:block">
 								<span className="text-sm font-bold text-gray-900 block">
-									{profile?.full_name || profile?.first_name || "Hi User"} //
+									{profile?.full_name || profile?.first_name || "Hi User"} 
 								</span>
 								{role && (
 									<span className="text-xs text-gray-500 capitalize">
@@ -168,7 +140,7 @@ export default function DashboardHeader({ onMenuClick }) {
 					</div>
 				</div>
 			</div>
-    </header>)}
+    </header>
     </>
 	);
 }

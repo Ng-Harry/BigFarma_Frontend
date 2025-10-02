@@ -11,6 +11,7 @@ const login = async ({ login, password }) => {
     );
     if (response.data.access_token) {
       Cookies.set('BIGFARMA_ACCESS_TOKEN', response.data.access_token);
+      Cookies.set('BIGFARMA_ROLE', response.data.user_category);
     }
     return {
       isSuccess: response.status === 200 || response.status === 201,
