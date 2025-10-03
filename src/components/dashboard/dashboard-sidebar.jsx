@@ -32,13 +32,14 @@ export default function DashboardSidebar({ isOpen, onClose }) {
   const navigate = useNavigate();
   const location = useLocation();
   const token = Cookies.get('BIGFARMA_ACCESS_TOKEN');
+  const role = Cookies.get('BIGFARMA_ROLE');
+  console.log('Sidebar - Role:', role, 'Current Path:', location.pathname);
 
   const handleNavClick = (item) => {
     if (item.name === 'Logout') {
       navigate('/sign-in');
     } else if (item.name === 'My Orders') {
-      const userRole = Cookies.get('BIGFARMA_ROLE');
-      const ordersPath = userRole === 'farmer' ? '/farmer-orders' : '/orders';
+      const ordersPath = role === 'farmer' ? '/farmer-orders' : '/orders';
       navigate(ordersPath);
     } else {
       navigate(item.path);
@@ -49,10 +50,11 @@ export default function DashboardSidebar({ isOpen, onClose }) {
     if (!itemPath || itemPath === '/sign-in') return false;
 
     if (itemPath === '/orders') {
-      return (
-        location.pathname.startsWith('/orders') ||
-        location.pathname.startsWith('/farmer-orders')
-      );
+      if (role === 'farmer') {
+        return location.pathname.startsWith('/farmer-orders');
+      } else {
+        return location.pathname.startsWith('/orders');
+      }
     }
 
     return location.pathname.startsWith(itemPath);
