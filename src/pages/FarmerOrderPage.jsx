@@ -1,7 +1,7 @@
 // src/pages/FarmerOrderPage.jsx
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { useFarmerOrders } from '../../hooks/useFarmerOrders.js';
+import { useFarmerOrder } from '../hooks/useFarmerOrder';
 
 // Fallback images
 import eggs from '../assets/ProductImages/categories/Egg image.png';
@@ -28,7 +28,7 @@ const FarmerOrderPage = () => {
   const [filter, setFilter] = useState('all');
 
   // Use TanStack Query to fetch orders
-  const { data: apiOrders, isLoading, error, refetch } = useFarmerOrders();
+  const { data: apiOrders, isLoading, error, refetch } = useFarmerOrder();
 
   console.log('🔍 API Orders Data:', apiOrders);
 
