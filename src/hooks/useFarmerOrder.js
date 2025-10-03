@@ -1,6 +1,6 @@
 // src/hooks/useFarmerOrders.js
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { farmerApi } from '../services/farmerApi';
+import { farmerApi } from '../lib/farmerApi';
 
 // Query keys
 export const farmerOrderKeys = {
@@ -12,7 +12,7 @@ export const farmerOrderKeys = {
 };
 
 // Main hook for fetching orders
-export const useFarmerOrders = (filters = {}) => {
+export const useFarmerOrder = (filters = {}) => {
   return useQuery({
     queryKey: farmerOrderKeys.list(filters),
     queryFn: async () => {
