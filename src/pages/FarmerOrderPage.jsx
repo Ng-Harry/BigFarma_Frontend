@@ -30,7 +30,7 @@ const FarmerOrderPage = () => {
   // Use TanStack Query to fetch orders
   const { data: apiOrders, isLoading, error, refetch } = useFarmerOrder();
 
-  console.log('🔍 API Orders Data:', apiOrders);
+  console.log(' API Orders Data:', apiOrders);
 
   // Transform API data to match your UI structure
   const transformedOrders = useMemo(() => {
@@ -41,7 +41,7 @@ const FarmerOrderPage = () => {
       ? apiOrders
       : apiOrders.orders || apiOrders.data || [];
 
-    console.log('🔄 Transforming orders:', ordersData);
+    console.log(' Transforming orders:', ordersData);
 
     return ordersData.map((order, index) => {
       // Use product_id or generate a unique ID
@@ -143,7 +143,8 @@ const FarmerOrderPage = () => {
         <div className="flex items-center space-x-4">
           <h1 className="text-2xl font-bold">Orders</h1>
           <span className="bg-green-100 text-green-700 text-sm font-semibold px-3 py-1 rounded-lg">
-            {filteredOrders.length}
+            {filteredOrders.length}{' '}
+            {filteredOrders.length === 1 ? 'Order' : 'Orders'}
           </span>
         </div>
         <div className="flex items-center space-x-4">
@@ -154,7 +155,7 @@ const FarmerOrderPage = () => {
             id="filter"
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
-            className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-green-500 min-w-[150px]"
+            className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-green-200 min-w-[150px]"
           >
             <option value="all">All</option>
             <option value="Active">Active</option>
@@ -192,6 +193,7 @@ const FarmerOrderPage = () => {
               </th>
             </tr>
           </thead>
+
           <tbody className="bg-white divide-y divide-gray-200">
             {filteredOrders.length > 0 ? (
               filteredOrders.map((order) => (
@@ -199,10 +201,42 @@ const FarmerOrderPage = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="7" className="px-6 py-8 text-center text-gray-500">
-                  {transformedOrders.length === 0
-                    ? 'No orders found'
-                    : 'No orders match your filter'}
+                <td colSpan="7" className="px-6 py-12 text-center">
+                  <div className="flex flex-col items-center justify-center">
+                    <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                      <svg
+                        className="w-12 h-12 text-gray-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                        />
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-medium text-gray-900 mb-2">
+                      {apiOrders && apiOrders.length === 0
+                        ? 'No Orders Yet'
+                        : 'No Orders Match Filter'}
+                    </h3>
+                    <p className="text-gray-500 mb-4 max-w-md text-center">
+                      {apiOrders && apiOrders.length === 0
+                        ? "You don't have any orders at the moment. When customers place orders for your products, they will appear here."
+                        : 'No orders match your current filter. Try changing the filter to see more orders.'}
+                    </p>
+                    {apiOrders && apiOrders.length === 0 && (
+                      <Link
+                        to="/marketplace"
+                        className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-md font-medium"
+                      >
+                        Go to Marketplace
+                      </Link>
+                    )}
+                  </div>
                 </td>
               </tr>
             )}
@@ -210,8 +244,9 @@ const FarmerOrderPage = () => {
         </table>
       </div>
 
-      {/* Debug info - remove in production */}
-      {process.env.NODE_ENV === 'development' && (
+      {/* // Debug info - remove in production */}
+
+      {/* {process.env.NODE_ENV === 'development' && (
         <div className="mt-4 p-4 bg-gray-100 rounded-lg">
           <details>
             <summary className="cursor-pointer font-medium">
@@ -222,7 +257,7 @@ const FarmerOrderPage = () => {
             </pre>
           </details>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
