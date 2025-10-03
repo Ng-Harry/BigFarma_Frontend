@@ -3,7 +3,6 @@
 import { cn } from '@/lib/utils';
 import brandLogo from '../../assets/images/brand-logo.png';
 import Cookies from 'js-cookie';
-import { useState, useEffect } from 'react';
 
 import {
   LayoutDashboard,
@@ -34,24 +33,12 @@ export default function DashboardSidebar({ isOpen, onClose }) {
   const location = useLocation();
   const token = Cookies.get('BIGFARMA_ACCESS_TOKEN');
 
-  // Add state for role
-  const [role, setRole] = useState(null);
-
-  // Use useEffect to get role
-  useEffect(() => {
-    const userRole = Cookies.get('BIGFARMA_ROLE');
-    console.log('🔍 Sidebar - Role from cookie:', userRole);
-    setRole(userRole);
-  }, []);
-
   const handleNavClick = (item) => {
     if (item.name === 'Logout') {
       navigate('/sign-in');
     } else if (item.name === 'My Orders') {
-      // Now role is properly managed with state
-      console.log('🔍 Click - Current role:', role);
-      const ordersPath = role === 'farmer' ? '/farmer-orders' : '/orders';
-      console.log('🔍 Navigating to:', ordersPath);
+      const userRole = Cookies.get('BIGFARMA_ROLE');
+      const ordersPath = userRole === 'farmer' ? '/farmer-orders' : '/orders';
       navigate(ordersPath);
     } else {
       navigate(item.path);
@@ -61,7 +48,7 @@ export default function DashboardSidebar({ isOpen, onClose }) {
   const isPathActive = (itemPath) => {
     if (!itemPath || itemPath === '/sign-in') return false;
 
-    // Special handling for My Orders
+    // Special handling for "My Orders" - both consumer and farmer order paths
     if (itemPath === '/orders') {
       return (
         location.pathname.startsWith('/orders') ||
@@ -69,6 +56,7 @@ export default function DashboardSidebar({ isOpen, onClose }) {
       );
     }
 
+    // Default behavior for all other paths
     return location.pathname.startsWith(itemPath);
   };
 

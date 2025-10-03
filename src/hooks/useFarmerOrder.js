@@ -1,6 +1,6 @@
 // src/hooks/useFarmerOrders.js
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { farmerApi } from '../lib/farmerApi';
+import { farmerApi } from '../services/farmerApi';
 
 // Query keys
 export const farmerOrderKeys = {
@@ -12,15 +12,18 @@ export const farmerOrderKeys = {
 };
 
 // Main hook for fetching orders
-export const useFarmerOrder = (filters = {}) => {
+export const useFarmerOrders = (filters = {}) => {
   return useQuery({
     queryKey: farmerOrderKeys.list(filters),
     queryFn: async () => {
+      console.log('🔄 Fetching farmer orders...');
       const response = await farmerApi.getOrders();
+      console.log('✅ Farmer orders response:', response.data);
       return response.data;
     },
     staleTime: 5 * 60 * 1000, // 5 minutes
     gcTime: 10 * 60 * 1000, // 10 minutes
+    retry: 2,
   });
 };
 
@@ -36,14 +39,6 @@ export const useUpdateOrderStatus = () => {
       queryClient.invalidateQueries({
         queryKey: farmerOrderKeys.lists(),
       });
-
-      // Update specific order in cache if needed
-      if (variables && variables.orderId) {
-        queryClient.setQueryData(
-          farmerOrderKeys.detail(variables.orderId),
-          data
-        );
-      }
     },
     onError: (error) => {
       console.error('Failed to update order status:', error);
@@ -59,7 +54,7 @@ export const useOrder = (orderId) => {
       const response = await farmerApi.getOrder(orderId);
       return response.data;
     },
-    enabled: !!orderId, // Only fetch if orderId exists
+    enabled: !!orderId,
     staleTime: 2 * 60 * 1000, // 2 minutes
   });
 };
