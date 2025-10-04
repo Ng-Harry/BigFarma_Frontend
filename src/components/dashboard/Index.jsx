@@ -109,11 +109,6 @@ const Dashboard = () => {
 
   return (
     <>
-      {/* {loading && (
-        <div className="flex items-center justify-center h-[70vh]">
-          <LoaderSpinner />
-        </div>
-      )} */}
 
       {!profileComplete && (
         <>
