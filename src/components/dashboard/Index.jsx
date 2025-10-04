@@ -10,19 +10,45 @@ import ConsumerProfileSetup from "./consumer/consumerProfile/Index.jsx";
 import Cookies from "js-cookie";
 import { endpoints } from "../config/endpoints";
 import { axios } from "../../lib/axios";
+<<<<<<< HEAD
 import LoaderSpinner from "../shared/Loader.jsx";
 
 const Dashboard = () => {
   const role = Cookies.get("BIGFARMA_ROLE");
+=======
+import { useContext } from "react";
+import { FocusContext } from "@/context/FocusContext";  
+
+const Dashboard = () => {
+  const { role: contextRole } = useContext(FocusContext);
+  const iniRole = contextRole || Cookies.get("BIGFARMA_ROLE") || null;
+  const [role, setRole] = useState(iniRole);
+  // const { role } = useContext(FocusContext);
+  const [profileComplete, setProfileComplete] = useState(null);
+>>>>>>> d0a38b4 (Fix: Role selection)
   const token = Cookies.get("BIGFARMA_ACCESS_TOKEN");
   const [profileComplete, setProfileComplete] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const checkProfileCompletion = async () => {
+<<<<<<< HEAD
+    const checkProfileCompletion = async () => { 
       if (token) {
+=======
+    if (contextRole) setRole(contextRole);
+  }, [contextRole]);
+
+    useEffect(() => {
+    if (!role) {
+      window.location.href = "/sign-in";
+    }
+  }, [role]);
+
+  useEffect(() => {
+    const checkProfileCompletion = async () => {
+      if (token && role) {
+>>>>>>> d0a38b4 (Fix: Role selection)
         try {
-          
           let response;
           if (role === "farmer") {
             response = await axios.get(endpoints().users.get_farmer_profile, {
@@ -31,8 +57,13 @@ const Dashboard = () => {
               },
             });
             const data = await response.data;
+<<<<<<< HEAD
             setProfileComplete(data.full_name ? true : false);
             // setLoading(false);
+=======
+						// setProfileComplete(data.full_name ? true : false);
+            setProfileComplete(!!data.full_name);
+>>>>>>> d0a38b4 (Fix: Role selection)
           } else if (role === "consumer") {
             response = await axios.get(endpoints().users.get_consumer_profile, {
               headers: {
@@ -40,8 +71,13 @@ const Dashboard = () => {
               },
             });
             const data = await response.data;
+<<<<<<< HEAD
 						setProfileComplete(data.first_name ? true : false);
             // setLoading(false);
+=======
+						// setProfileComplete(data.first_name ? true : false);
+            setProfileComplete(!!data.first_name);
+>>>>>>> d0a38b4 (Fix: Role selection)
           }
           
         } catch (error) {

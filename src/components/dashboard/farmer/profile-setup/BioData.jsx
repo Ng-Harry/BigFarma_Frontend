@@ -58,7 +58,7 @@ const ProfileForm = ({ onNext }) => {
 
 			try {
 				const res = await axios.post(
-					endpoints().users.create_farmer_profile,
+					endpoints().users.create_farmer_profile, 
 					payload,
 					{
 						headers: {
