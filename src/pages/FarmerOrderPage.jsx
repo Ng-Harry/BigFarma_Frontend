@@ -4,14 +4,14 @@ import { Link } from "react-router-dom";
 import { useFarmerOrder } from "../hooks/useFarmerOrder";
 
 // Fallback images
-import eggs from "../assets/ProductImages/categories/Egg image.png";
-import onions from "../assets/ProductImages/onions.png";
-import watermelon from "../assets/ProductImages/watermelon.png";
-import carrot from "../assets/ProductImages/categories/Carrot image.png";
-import rice from "../assets/ProductImages/rice.png";
-import tomatoes from "../assets/ProductImages/tomatoes.png";
-import vegetable from "../assets/ProductImages/categories/vegetables.png";
-import cassava from "../assets/ProductImages/cassava.png";
+import eggs from '../assets/ProductImages/categories/Egg image.png';
+import onions from '../assets/ProductImages/onions.png';
+import watermelon from '../assets/ProductImages/watermelon.png';
+import carrot from '../assets/ProductImages/categories/Carrot image.png';
+import rice from '../assets/ProductImages/Rice.png';
+import tomatoes from '../assets/ProductImages/tomatoes.png';
+import vegetable from '../assets/ProductImages/categories/vegetables.png';
+import cassava from '../assets/ProductImages/cassava.png';
 
 const productImages = {
   Eggs: eggs,
