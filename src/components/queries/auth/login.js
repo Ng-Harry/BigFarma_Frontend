@@ -20,7 +20,7 @@ const login = async ({ login, password }) => {
       token: response.data.access_token,
       user: response.data.user,
       data: response.data.data,
-      role: response.data.user?.user_category || response.data.data?.user?.user_category || null, //
+      role: response.data.user?.user_category || response.data.data?.user?.user_category || null, 
       
     };
   } catch (error) {

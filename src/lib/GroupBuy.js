@@ -1,17 +1,17 @@
+import Tomatoes from "/productImages/tomatoes.png";
+import Pepper from "/productImages/pepper.png";
+import Plantain from "/productImages/plantain.png";
+import Onions from "/productImages/onions.png";
+import Egg from '/productImages/Crate of eggs.png';
+import Melon from '/productImages/melon.png';
 
 
 export const GroupData = [
-    {name: "Downtown Rice Group", status: "Active", location: "Downtown District", product: "Organic Rice", total: 100, unit: 200, member: 3, target: 768700, description: "Bulk buying organic rice for the downtown community" },
-    {name: "Fresh Apple Collective", status: "Closed", location: "Riverside Area", product: "Fresh Apples", total: 100, unit: 100, member: 2, target: 869400, description: "Getting fresh seasonal apples for our neighborhood " },
-    {name: "Premium Beans Group ", status: "Active", location: "Kano District", product: "Brown Beans", total: 120, unit: 180, member: 5, target: 540000, description: "Bulk buying organic rice for the downtown community " },
-    {name: "Premium Beans Group ", status: "Active", location: "Kano District", product: "Brown Beans", total: 120, unit: 180, member: 5, target: 540000, description: "Bulk buying organic rice for the downtown community " },
-    {name: "Downtown Rice Group", status: "Active", location: "Downtown District", product: "Organic Rice", total: 100, unit: 200, member: 3, target: 768700, description: "Bulk buying organic rice for the downtown community" },
-    {name: "Fresh Apple Collective", status: "Closed", location: "Riverside Area", product: "Fresh Apples", total: 100, unit: 100, member: 2, target: 869400, description: "Getting fresh seasonal apples for our neighborhood " },
-    {name: "Premium Beans Group ", status: "Active", location: "Kano District", product: "Brown Beans", total: 120, unit: 180, member: 5, target: 540000, description: "Bulk buying organic rice for the downtown community " },
-    {name: "Premium Beans Group ", status: "Active", location: "Kano District", product: "Brown Beans", total: 120, unit: 180, member: 5, target: 540000, description: "Bulk buying organic rice for the downtown community " },
-    {name: "Downtown Rice Group", status: "Active", location: "Downtown District", product: "Organic Rice", total: 100, unit: 200, member: 3, target: 768700, description: "Bulk buying organic rice for the downtown community" },
-    {name: "Fresh Apple Collective", status: "Closed", location: "Riverside Area", product: "Fresh Apples", total: 100, unit: 100, member: 2, target: 869400, description: "Getting fresh seasonal apples for our neighborhood " },
-    {name: "Premium Beans Group ", status: "Active", location: "Kano District", product: "Brown Beans", total: 120, unit: 180, member: 5, target: 540000, description: "Bulk buying organic rice for the downtown community " },
-    {name: "Premium Beans Group ", status: "Active", location: "Kano District", product: "Brown Beans", total: 120, unit: 180, member: 5, target: 540000, description: "Bulk buying organic rice for the downtown community " },
+    {id: 1, name: "Tomatoes", image: Tomatoes,status: "AlmostFull", location: "Kano", product: "Tomatoes", total: 100, price: 2000, slotTaken: 8, slot: 10,  },
+    {id:2,name: "Pepper", image: Pepper,status: "AlmostFull", location: "Jos", product: "Pepper", total: 100, price: 5000, slotTaken: 15, slot: 20,  },
+    {id:3,name: "Plantain", image: Plantain,status: "Complete", location: "Lagos", product: "Plantain", total: 100, price: 8000, slotTaken: 15, slot: 15,  },
+    {id:4,name: "Onions", image: Onions,status: "AlmostFull", location: "Abuja", product: "Onions", total: 100, price: 8000, slotTaken: 10, slot: 25,  },
+    {id:5,name: "Egg",  image: Egg,status: "Complete", location: "Cross River", product: "Egg", total: 100, price: 8000, slotTaken: 3, slot: 15,  },
+    {id:6,name: "Melon",  image: Melon,status: "AlmostFull", location: "Cross River", product: "Egg", total: 100, price: 8000, slotTaken: 25, slot: 30,  }
    
 ]
