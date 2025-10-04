@@ -143,8 +143,8 @@ const FarmerOrderPage = () => {
         <div className="flex items-center space-x-4">
           <h1 className="text-2xl font-bold">Orders</h1>
           <span className="bg-green-100 text-green-700 text-sm font-semibold px-3 py-1 rounded-lg">
-            {filteredOrders.length}{' '}
-            {filteredOrders.length === 1 ? 'Order' : 'Orders'}
+            {filteredOrders?.length}{' '}
+            {filteredOrders?.length === 1 ? 'Order' : 'Orders'}
           </span>
         </div>
         <div className="flex items-center space-x-4">
@@ -195,8 +195,8 @@ const FarmerOrderPage = () => {
           </thead>
 
           <tbody className="bg-white divide-y divide-gray-200">
-            {filteredOrders.length > 0 ? (
-              filteredOrders.map((order) => (
+            {filteredOrders?.length > 0 ? (
+              filteredOrders?.map((order) => (
                 <OrderRow key={order.id} order={order} />
               ))
             ) : (
@@ -219,16 +219,16 @@ const FarmerOrderPage = () => {
                       </svg>
                     </div>
                     <h3 className="text-lg font-medium text-gray-900 mb-2">
-                      {apiOrders && apiOrders.length === 0
+                      {apiOrders && apiOrders?.length === 0
                         ? 'No Orders Yet'
                         : 'No Orders Match Filter'}
                     </h3>
                     <p className="text-gray-500 mb-4 max-w-md text-center">
-                      {apiOrders && apiOrders.length === 0
+                      {apiOrders && apiOrders?.length === 0
                         ? "You don't have any orders at the moment. When customers place orders for your products, they will appear here."
                         : 'No orders match your current filter. Try changing the filter to see more orders.'}
                     </p>
-                    {apiOrders && apiOrders.length === 0 && (
+                    {apiOrders && apiOrders?.length === 0 && (
                       <Link
                         to="/marketplace"
                         className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-md font-medium"

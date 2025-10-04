@@ -1,5 +1,4 @@
 import { User } from 'lucide-react';
-
 export const endpoints = () => {
   return {
     auth: {
@@ -28,5 +27,8 @@ export const endpoints = () => {
     consumer: {
       orders: `/orders`,
     },
+    groupBuy: {
+      list: `/groups`,
+    }
   };
 };

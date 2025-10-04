@@ -3,15 +3,14 @@ export const StatusLabel = {
     label: "",
     className: "",
   },
-  Active: {
-    label: "Active",
-    className: "text-[#027A48] bg-[#ECFDF3]",
-    Dot: "bg-[#027A48]"
+  AlmostFull: {
+    label: "Almost Full",
+    className: "text-[#ffffff] bg-[#FFA725]",
   },
-  Closed: {
-    label: "Closed",
-    className: "text-[#B42318] bg-[#FEF3F2]",
-    Dot: "bg-[#B42318]"
+  Complete: {
+    label: "Complete",
+    className: "text-[#ffffff] bg-[#016130]",
+
   },
 };
 
