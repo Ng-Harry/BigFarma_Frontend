@@ -19,10 +19,9 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const checkProfileCompletion = async () => {
+    const checkProfileCompletion = async () => { 
       if (token) {
         try {
-          
           let response;
           if (role === "farmer") {
             response = await axios.get(endpoints().users.get_farmer_profile, {
