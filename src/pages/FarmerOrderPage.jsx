@@ -1,7 +1,7 @@
 // src/pages/FarmerOrderPage.jsx
-import React, { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
-import { useFarmerOrder } from '../hooks/useFarmerOrder';
+import React, { useState, useMemo } from "react";
+import { Link } from "react-router-dom";
+import { useFarmerOrder } from "../hooks/useFarmerOrder";
 
 // Fallback images
 import eggs from '../assets/ProductImages/categories/Egg image.png';
@@ -25,12 +25,12 @@ const productImages = {
 };
 
 const FarmerOrderPage = () => {
-  const [filter, setFilter] = useState('all');
+  const [filter, setFilter] = useState("all");
 
   // Use TanStack Query to fetch orders
   const { data: apiOrders, isLoading, error, refetch } = useFarmerOrder();
 
-  console.log(' API Orders Data:', apiOrders);
+  console.log(" API Orders Data:", apiOrders);
 
   // Transform API data to match your UI structure
   const transformedOrders = useMemo(() => {
@@ -41,7 +41,7 @@ const FarmerOrderPage = () => {
       ? apiOrders
       : apiOrders.orders || apiOrders.data || [];
 
-    console.log(' Transforming orders:', ordersData);
+    console.log(" Transforming orders:", ordersData);
 
     return ordersData.map((order, index) => {
       // Use product_id or generate a unique ID
@@ -69,8 +69,8 @@ const FarmerOrderPage = () => {
         productID: order.order_number || `#ORDER${order.id || index}`,
         price: order.total_price
           ? `₦${order.total_price.toLocaleString()}`
-          : '₦0',
-        quantity: order.quantity_ordered || '1',
+          : "₦0",
+        quantity: order.quantity_ordered || "1",
         orders: 1, // Each API order is one row
         status: status,
         // Keep original API data for reference
@@ -82,7 +82,7 @@ const FarmerOrderPage = () => {
   // Filter orders based on selection
   const filteredOrders = useMemo(() => {
     return transformedOrders.filter((order) => {
-      if (filter === 'all') return true;
+      if (filter === "all") return true;
       return order.status === filter;
     });
   }, [transformedOrders, filter]);
@@ -90,15 +90,15 @@ const FarmerOrderPage = () => {
   // Map API order status to your UI product status
   const mapOrderStatusToProductStatus = (apiStatus) => {
     const statusMap = {
-      pending: 'Active',
-      confirmed: 'Active',
-      shipped: 'Active',
-      delivered: 'Active',
-      cancelled: 'Out of stock',
-      refunded: 'Out of stock',
+      pending: "Active",
+      confirmed: "Active",
+      shipped: "Active",
+      delivered: "Active",
+      cancelled: "Out of stock",
+      refunded: "Out of stock",
     };
 
-    return statusMap[apiStatus] || 'Active';
+    return statusMap[apiStatus] || "Active";
   };
 
   // Loading state
@@ -120,7 +120,7 @@ const FarmerOrderPage = () => {
           <br />
           {error.response?.data?.detail ||
             error.message ||
-            'Failed to load orders'}
+            "Failed to load orders"}
         </div>
         <button
           onClick={() => refetch()}
@@ -143,8 +143,8 @@ const FarmerOrderPage = () => {
         <div className="flex items-center space-x-4">
           <h1 className="text-2xl font-bold">Orders</h1>
           <span className="bg-green-100 text-green-700 text-sm font-semibold px-3 py-1 rounded-lg">
-            {filteredOrders?.length}{' '}
-            {filteredOrders?.length === 1 ? 'Order' : 'Orders'}
+            {filteredOrders.length}{" "}
+            {filteredOrders.length === 1 ? "Order" : "Orders"}
           </span>
         </div>
         <div className="flex items-center space-x-4">
@@ -218,17 +218,20 @@ const FarmerOrderPage = () => {
                         />
                       </svg>
                     </div>
+
                     <h3 className="text-lg font-medium text-gray-900 mb-2">
-                      {apiOrders && apiOrders?.length === 0
-                        ? 'No Orders Yet'
-                        : 'No Orders Match Filter'}
+                      {transformedOrders.length === 0
+                        ? "No Orders Yet"
+                        : "No Orders Match Filter"}
                     </h3>
+
                     <p className="text-gray-500 mb-4 max-w-md text-center">
-                      {apiOrders && apiOrders?.length === 0
+                      {transformedOrders.length === 0
                         ? "You don't have any orders at the moment. When customers place orders for your products, they will appear here."
-                        : 'No orders match your current filter. Try changing the filter to see more orders.'}
+                        : "No orders match your current filter. Try changing the filter to see more orders."}
                     </p>
-                    {apiOrders && apiOrders?.length === 0 && (
+
+                    {transformedOrders.length === 0 && (
                       <Link
                         to="/marketplace"
                         className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-md font-medium"
@@ -239,6 +242,45 @@ const FarmerOrderPage = () => {
                   </div>
                 </td>
               </tr>
+              // <tr>
+              //   <td colSpan="7" className="px-6 py-12 text-center">
+              //     <div className="flex flex-col items-center justify-center">
+              //       <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+              //         <svg
+              //           className="w-12 h-12 text-gray-400"
+              //           fill="none"
+              //           stroke="currentColor"
+              //           viewBox="0 0 24 24"
+              //         >
+              //           <path
+              //             strokeLinecap="round"
+              //             strokeLinejoin="round"
+              //             strokeWidth={2}
+              //             d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+              //           />
+              //         </svg>
+              //       </div>
+              //       <h3 className="text-lg font-medium text-gray-900 mb-2">
+              //         {apiOrders && apiOrders.length === 0
+              //           ? 'No Orders Yet'
+              //           : 'No Orders Match Filter'}
+              //       </h3>
+              //       <p className="text-gray-500 mb-4 max-w-md text-center">
+              //         {apiOrders && apiOrders.length === 0
+              //           ? "You don't have any orders at the moment. When customers place orders for your products, they will appear here."
+              //           : 'No orders match your current filter. Try changing the filter to see more orders.'}
+              //       </p>
+              //       {apiOrders && apiOrders.length === 0 && (
+              //         <Link
+              //           to="/marketplace"
+              //           className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-md font-medium"
+              //         >
+              //           Go to Marketplace
+              //         </Link>
+              //       )}
+              //     </div>
+              //   </td>
+              // </tr>
             )}
           </tbody>
         </table>
@@ -281,7 +323,7 @@ const OrderRow = ({ order }) => {
               {order.product}
             </span>
             <span className="text-xs text-gray-500 block">
-              {order.originalData.farm_name || 'Farm'}
+              {order.originalData.farm_name || "Farm"}
             </span>
           </div>
         </div>
@@ -301,11 +343,11 @@ const OrderRow = ({ order }) => {
       <td className="px-6 py-4 whitespace-nowrap">
         <span
           className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-            order.status === 'Active'
-              ? 'bg-green-100 text-green-800'
-              : order.status === 'Draft'
-              ? 'bg-gray-100 text-gray-800'
-              : 'bg-red-100 text-red-800'
+            order.status === "Active"
+              ? "bg-green-100 text-green-800"
+              : order.status === "Draft"
+              ? "bg-gray-100 text-gray-800"
+              : "bg-red-100 text-red-800"
           }`}
         >
           {order.status}
@@ -328,7 +370,3 @@ const OrderRow = ({ order }) => {
 };
 
 export default FarmerOrderPage;
-
-
-
-

@@ -29,6 +29,7 @@ import ProductDetail from './components/dashboard/marketplace/product-detail';
 import DashboardLayout from './components/dashboard/dashboard-layout';
 import GroupBuyPage from './pages/GroupBuyPage';
 import CreateGroupModal from './components/dashboard/GroupBuy/CreateGroupModal';
+import GroupDetailsPage from './pages/GroupDetailsPage';
 
 const App = () => {
   return (
@@ -162,7 +163,16 @@ const App = () => {
             </DashboardLayout>
           }
         />
+      <Route
+          path="/group-buy/:id"
+          element={
+            <DashboardLayout>
+              <GroupDetailsPage />
+            </DashboardLayout>
+          }
+        />
       </Routes>
+        
     </>
   );
 };
