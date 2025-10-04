@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import DashboardLayout from '../dashboard-layout'
 import MarketplaceSlider from '@/components/shared/MarketplaceSlider'
 import Button from '@/components/shared/Button'
@@ -13,6 +13,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination, Autoplay } from 'swiper/modules';
+import FiltersComponent from '@/lib/filterOptions'
 
 const categories = [
   { id: 1, name: "Vegetables", image: vegetablesCategory },
@@ -21,7 +22,10 @@ const categories = [
   { id: 4, name: "Protein", image: proteinCategory },
 ];
 
+
 const Marketplace = () => {
+  const [filterOpen, setFilterOpen] = useState(false);
+
   return (
     <div>
       {/* sliders  */}
@@ -80,35 +84,49 @@ const Marketplace = () => {
       </section>
       {/* <MarketplaceSlider /> */}
 
-      {/* explore categories  */}
-      <div className="flex justify-between items-center my-8">
-        <h4 className="font-semibold text-black text-xl">Explore Categories</h4>
-        <Button
-          text="Filter"
-          variant="ghost"
-          className="text-[var(--color-primary)] border-2 border-[var(--color-primary)] px-6"
-        >
-          <img src={filterIcon} alt="filter" />
-          <p>Filter</p>
-        </Button>
-      </div>
-
-      {/* categories  */}
-      <section className="w-full grid grid-cols-2 lg:grid-cols-4 justify-between items-center gap-10">
-        {categories.map((category) => (
-          <div
-            key={category.id}
-            className="py-2 h-22 cursor-pointer w-full lg:w-[1fr] px-5 rounded-lg bg-white shadow"
+      <section className='relative'>
+        {/* explore categories  */}
+        <div className="flex justify-between items-center my-8">
+          <h4 className="font-semibold text-black text-xl">Explore Categories</h4>
+          <Button
+            text="Filter"
+            variant="ghost"
+            onClick={() => setFilterOpen(true)}
+            className="text-[var(--color-primary)] border-2 border-[var(--color-primary)] px-6"
           >
-            <div className="flex gap-10 justify-start items-center">
-              <img
-                src={category.image}
-                className=" rounded-lg overflow-hidden"
-              />
-              <p className="md:text-lg">{category.name}</p>
+            <img src={filterIcon} alt="filter" />
+            <p>Filter</p>
+          </Button>
+        </div>
+
+
+
+        {/* categories  */}
+        <section className="w-full grid grid-cols-2 lg:grid-cols-4 justify-between items-center gap-10 relative">
+
+
+          {categories.map((category) => (
+            <div
+              key={category.id}
+              className="py-2 h-22 cursor-pointer w-full lg:w-[1fr] px-5 rounded-lg bg-white shadow"
+            >
+              <div className="flex gap-10 justify-start items-center">
+                <img
+                  src={category.image}
+                  className=" rounded-lg overflow-hidden"
+                />
+                <p className="md:text-lg">{category.name}</p>
+              </div>
             </div>
+          ))}
+        </section>
+
+        {/* Filter Component - positioned on the right */}
+        {filterOpen && (
+          <div className="absolute right-0 w-full max-w-md scale-75 top-0">
+            <FiltersComponent setFilterOpen={setFilterOpen} />
           </div>
-        ))}
+        )}
       </section>
 
       <div className="flex justify-between items-center mt-12">
