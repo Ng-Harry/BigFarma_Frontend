@@ -2,6 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const baseURL = import.meta.env.VITE_SERVER_URL;
+// const baseURL = "https://bigfarma-backend.onrender.com/api/v1";
 const refreshEndpoint = '/auth/refresh-token';
 
 let isRefreshing = false;

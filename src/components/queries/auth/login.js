@@ -28,7 +28,7 @@ const login = async ({ login, password }) => {
       return {
         isSuccess: false,
         statusCode: error.response.status.toString(),
-        message: (error.response.data && (error.response.data.detail || error.response.data.message)) || "Login failed",
+        message: (error.response.data && (error.response.data.detail || error.response.data.message)) || "Login failed.",
         data: null,
       };
     }
