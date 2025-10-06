@@ -5,7 +5,7 @@ import CartPage from './CartPage.jsx';
 import CheckoutPage from './CheckoutPage.jsx';
 import PaymentProcessingPage from './PaymentProcessingPage.jsx';
 import OrderConfirmationPage from './OrderConfirmationPage.jsx';
-// import FarmerOrderPage from './FarmerOrderPage.jsx';
+import FarmerOrderPage from './FarmerOrderPage.jsx';
 import ProductOrdersPage from './ProductOrdersPage.jsx';
 import SingleOrderPage from './SingleOrderPage.jsx';
 
@@ -17,7 +17,7 @@ export {
   CheckoutPage,
   PaymentProcessingPage,
   OrderConfirmationPage,
-  // FarmerOrderPage,
+  FarmerOrderPage,
   ProductOrdersPage,
   SingleOrderPage,
 };

@@ -17,7 +17,7 @@ import {
   CheckoutPage,
   PaymentProcessingPage,
   OrderConfirmationPage,
-  // FarmerOrderPage,
+  FarmerOrderPage,
   ProductOrdersPage,
   SingleOrderPage,
 } from './pages';
@@ -137,14 +137,14 @@ const App = () => {
           }
         />
 
-        {/* <Route
+        <Route
           path="/farmer-orders"
           element={
             <DashboardLayout>
               <FarmerOrderPage />
             </DashboardLayout>
           }
-        /> */}
+        />
 
         <Route
           path="/farmer-orders/:productId"
