@@ -38,14 +38,28 @@ const CreateGroupModal = () => {
       trimmed.Quantity &&
       trimmed.Description
     ) {
-      const payload = {
-        group_name: trimmed.groupName,
-        group_description: trimmed.Description,
-        group_location: trimmed.groupLocation,
-        product_id: Number(trimmed.items),
-        target_quantity: trimmed.Quantity,
-        quantity_unit: "kg",
-      };
+      // const payload = {
+      //   group_name: trimmed.groupName,
+      //   group_description: trimmed.Description,
+      //   group_location: trimmed.groupLocation,
+      //   product_id: Number(trimmed.items),
+      //   target_quantity: trimmed.Quantity,
+      //   quantity_unit: "kg",
+      //     "target_quantity_numeric": 1,
+      // };
+    const payload = {
+  group_name: trimmed.groupName,
+  group_description: trimmed.Description,
+  group_location: trimmed.groupLocation,
+  product_id: trimmed.items,
+  target_quantity: trimmed.Quantity,
+  target_quantity_numeric: 1,
+  quantity_unit: "kg",
+  individual_contribution: 1,
+  is_public: true,
+  max_members: 1,
+  deadline: "2025-10-07T15:22:55.210Z"
+};
       try {
         const res = await axios.post(endpoints().groupBuy.list, payload, {
           headers: {
