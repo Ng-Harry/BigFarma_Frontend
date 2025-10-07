@@ -26,9 +26,8 @@ const Data = ({ props, onViewDetails }) => {
 					<p>{product}</p>
 				</div>
 			</td>
-			<td>{productID}</td>
 			<td>{quantity}</td>
-			<td>{price}</td>
+			<td>{`₦ ${price}`}</td>
 			<td>{location}</td>
 			{/* <td>
 				<span
