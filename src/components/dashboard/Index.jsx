@@ -97,7 +97,6 @@ const Dashboard = () => {
 									{role === "farmer" ? "Pending Orders" : "Recent Orders"}
 								</p>
 								{role === "farmer" ? <PendingOrders /> : <RecentOrders />}
-								{/* {role === "consumer" && <RecentOrders />} */}
 							</div>
 						</div>
 						{role === "consumer" && <QuickLinks />}
