@@ -12,7 +12,8 @@ import {
 	TrendingUp,
 	ArrowLeftRight,
 	Settings,
-	LogOut,
+  LogOut,
+  ShoppingCart,
   ChevronLeft,
   Wallet,
 } from "lucide-react";
@@ -24,7 +25,7 @@ const navigationItems = [
 	{ name: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
 
 	role === "farmer"
-		? { name: "My Products", icon: ShoppingBag, path: "/my-products" }
+		? { name: "My Products", icon: ShoppingCart, path: "/my-products" }
 		: { name: "Marketplace", icon: Store, path: "/marketplace" },
 
 	role === "farmer"
