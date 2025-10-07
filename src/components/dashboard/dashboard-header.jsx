@@ -71,7 +71,7 @@ export default function DashboardHeader({ onMenuClick }) {
               </h1>
               {role && (
                 <p className="text-sm text-gray-600 capitalize">
-                  {role === 'farmer' ? '🌱Farmer' : '🛒 Consumer'}
+                  {role === 'farmer' ? '🌱A Farmer' : '🛒 Consumer'}
                 </p>
               )}
             </div>

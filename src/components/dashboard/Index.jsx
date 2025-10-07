@@ -71,41 +71,40 @@ const Dashboard = () => {
   }
 
   return (
-    <>
+		<>
+			{!profileComplete && (
+				<>
+					{role === "farmer" ? (
+						<FarmerProfileSetup onComplete={() => setProfileComplete(true)} />
+					) : (
+						<ConsumerProfileSetup onComplete={() => setProfileComplete(true)} />
+					)}
+				</>
+			)}
 
-      {!profileComplete && (
-        <>
-          {role === "farmer" ? (
-            <FarmerProfileSetup onComplete={() => setProfileComplete(true)} />
-          ) : (
-            <ConsumerProfileSetup onComplete={() => setProfileComplete(true)} />
-          )}
-        </>
-      )}
+			{profileComplete && (
+				<>
+					{/* {role === "farmer" ? <FarmerStatistics /> : <ConsumerStatistics />} */}
+					{role === "farmer" ? "Farmer" : <ConsumerStatistics />}
 
-      {profileComplete && (
-        <>
-          {role === "farmer" ? <FarmerStatistics /> : <ConsumerStatistics />}
-
-          <div
-            className={`grid gap-6 mt-6 ${
-              role === "farmer" ? "grid-cols-2" : "grid-cols-3"
-            }`}
-          >
-            <div className="col-span-2">
-              {role === "farmer" ? <Charts /> : <DoughnutChart />}
-              <div className="border-2 border-grey-100 p-5 mt-6 rounded-lg">
-                <p className="mb-5 font-semibold text-2xl">
-                  {role === "farmer" ? "Pending Orders" : "Recent Orders"}
-                </p>
-                {role === "farmer" ? <PendingOrders /> : <RecentOrders />}
-              </div>
-            </div>
-            {role === "consumer" && <QuickLinks />}
-          </div>
-        </>
-      )}
-      {/* {!token && (
+					<div
+						className={`grid gap-6 mt-6 ${
+							role === "farmer" ? "grid-cols-2" : "grid-cols-3"
+						}`}>
+						<div className="col-span-2">
+							{role === "farmer" ? <Charts /> : <DoughnutChart />}
+							<div className="border-2 border-grey-100 p-5 mt-6 rounded-lg">
+								<p className="mb-5 font-semibold text-2xl">
+									{role === "farmer" ? "Pending Orders" : "Recent Orders"}
+								</p>
+								{role === "farmer" ? <PendingOrders /> : <RecentOrders />}
+							</div>
+						</div>
+						{role === "consumer" && <QuickLinks />}
+					</div>
+				</>
+			)}
+			{/* {!token && (
         <div className="flex items-center justify-center h-[70vh]">
           <p className="text-gray-500 text-lg">Please log in to view your dashboard.</p>
           <button className="ml-4 px-4 py-2 bg-green-600 text-white rounded-md" onClick={() => window.location.href = '/login'}>
@@ -113,8 +112,8 @@ const Dashboard = () => {
           </button>
         </div>
       )} */}
-    </>
-  );
+		</>
+	);
 };
 
 export default Dashboard;
