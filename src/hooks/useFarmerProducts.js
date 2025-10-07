@@ -1,0 +1,126 @@
+// src/hooks/useFarmerProducts.js
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { farmerApi } from '../lib/farmerApi';
+
+// Fetch all farmer products
+export const useFarmerProducts = () => {
+  return useQuery({
+    queryKey: ['farmerProducts'],
+    queryFn: async () => {
+      try {
+        const response = await farmerApi.getProducts();
+        console.log('Products API Response:', response.data);
+        return response.data;
+      } catch (error) {
+        console.error('Error fetching products:', error);
+        throw new Error(
+          error.response?.data?.detail ||
+            error.response?.data?.message ||
+            'Failed to fetch products'
+        );
+      }
+    },
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    retry: 2,
+  });
+};
+
+// Fetch single product
+export const useFarmerProduct = (productId) => {
+  return useQuery({
+    queryKey: ['farmerProduct', productId],
+    queryFn: async () => {
+      try {
+        const response = await farmerApi.getProduct(productId);
+        return response.data;
+      } catch (error) {
+        throw new Error(
+          error.response?.data?.detail || 'Failed to fetch product details'
+        );
+      }
+    },
+    enabled: !!productId, // Only run if productId exists
+  });
+};
+
+// Create new product
+export const useCreateFarmerProduct = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (productData) => {
+      const response = await farmerApi.createProduct(productData);
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['farmerProducts']);
+    },
+    onError: (error) => {
+      console.error('Error creating product:', error);
+    },
+  });
+};
+
+// Update product
+export const useUpdateFarmerProduct = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ productId, productData }) => {
+      const response = await farmerApi.updateProduct(productId, productData);
+      return response.data;
+    },
+    onSuccess: (data, variables) => {
+      // Invalidate both the list and the specific product
+      queryClient.invalidateQueries(['farmerProducts']);
+      queryClient.invalidateQueries(['farmerProduct', variables.productId]);
+    },
+  });
+};
+
+// Delete product
+export const useDeleteFarmerProduct = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (productId) => {
+      const response = await farmerApi.deleteProduct(productId);
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['farmerProducts']);
+    },
+  });
+};
+
+// Restock product
+export const useRestockFarmerProduct = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ productId, quantity }) => {
+      const response = await farmerApi.restockProduct(productId, { quantity });
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['farmerProducts']);
+    },
+  });
+};
+
+// Update product status
+export const useUpdateProductStatus = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ productId, status }) => {
+      const response = await farmerApi.updateProductStatus(productId, {
+        status,
+      });
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['farmerProducts']);
+    },
+  });
+};
