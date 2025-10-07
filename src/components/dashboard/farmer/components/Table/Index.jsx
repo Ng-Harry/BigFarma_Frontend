@@ -43,6 +43,8 @@ const products = [
   },
 ];
 
+
+
 const PendingOrders = ({ ordersData }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -78,12 +80,12 @@ const PendingOrders = ({ ordersData }) => {
           [...Array(4)].map((_, index) => (
             <LoadingSkeleton key={index} itemKey={index} />
           ))
-        ) : ordersData.length === 0 ? (
+        ) : products.length === 0 ? (
           <tr colSpan={7}>
             <td>No recent order</td>
           </tr>
         ) : (
-          ordersData.map((product) => (
+          products.map((product) => (
             <tr
               key={product.id}
               className="table-row cursor-pointer text-sm *:px-4 lg:*:px-6 *:py-2 lg:*:py-3 lg:py-0 border-t border-grey-200 bg-white font-bold"
