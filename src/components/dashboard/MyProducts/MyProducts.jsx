@@ -1,8 +1,12 @@
 // src/pages/FarmerProductsPage.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
-import DataTablePage from '../../dashboard/farmer/components/farmer-table/dataTable';
-import { useFarmerProducts } from '../hooks/useFarmerProducts';
+import DataTablePage from '../components/DataTablePage';
+import {
+  useFarmerProducts,
+  useDeleteFarmerProduct,
+  useRestockFarmerProduct,
+} from '../hooks/useFarmerProducts';
 
 // Fallback images
 import eggs from '../assets/ProductImages/categories/Egg image.png';
@@ -27,23 +31,57 @@ const productImages = {
 
 const MyProducts = () => {
   const { data: apiProducts, isLoading, error, refetch } = useFarmerProducts();
+  const deleteMutation = useDeleteFarmerProduct();
+  const restockMutation = useRestockFarmerProduct();
+
+  console.log('API Products Data:', apiProducts);
 
   // Transform API data for the table
   const transformedProducts = React.useMemo(() => {
     if (!apiProducts) return [];
 
-    return apiProducts.map((product, index) => ({
+    // Handle different response structures
+    const productsData = Array.isArray(apiProducts)
+      ? apiProducts
+      : apiProducts.results || apiProducts.data || [];
+
+    return productsData.map((product, index) => ({
       id: product.id?.toString() || `product-${index}`,
       product: product.name || `Product ${index + 1}`,
-      image: product.image || productImages[product.name] || watermelon,
+      image: product.images?.[0] || productImages[product.name] || watermelon,
       productID: product.code || `#${product.id || index}`,
-      price: product.price ? `₦${product.price.toLocaleString()}` : '₦0',
-      quantity: product.quantity || '0',
+      price: product.price
+        ? `₦${parseFloat(product.price).toLocaleString()}`
+        : '₦0',
+      quantity: `${product.quantity || '0'} ${product.unit || ''}`.trim(),
       status: product.status || 'Draft',
-      actions: product.id,
       originalData: product,
     }));
   }, [apiProducts]);
+
+  const handleDelete = (productId) => {
+    if (window.confirm('Are you sure you want to delete this product?')) {
+      deleteMutation.mutate(productId, {
+        onError: (error) => {
+          alert(`Failed to delete product: ${error.message}`);
+        },
+      });
+    }
+  };
+
+  const handleRestock = (productId) => {
+    const quantity = prompt('Enter new quantity:');
+    if (quantity && !isNaN(quantity)) {
+      restockMutation.mutate(
+        { productId, quantity: parseInt(quantity) },
+        {
+          onError: (error) => {
+            alert(`Failed to restock: ${error.message}`);
+          },
+        }
+      );
+    }
+  };
 
   // Column configuration for products
   const productColumns = [
@@ -87,11 +125,11 @@ const MyProducts = () => {
       render: (item) => (
         <span
           className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-            item.status === 'Active'
+            item.status === 'active' || item.status === 'Active'
               ? 'bg-green-100 text-green-800'
-              : item.status === 'Draft'
+              : item.status === 'draft' || item.status === 'Draft'
               ? 'bg-gray-100 text-gray-800'
-              : item.status === 'Out of stock'
+              : item.status === 'out_of_stock' || item.status === 'Out of stock'
               ? 'bg-red-100 text-red-800'
               : 'bg-blue-100 text-blue-800'
           }`}
@@ -105,10 +143,16 @@ const MyProducts = () => {
       label: 'Action',
       render: (item) => (
         <div className="flex space-x-2">
-          <button className="text-blue-700 bg-blue-200 hover:text-blue-900 rounded-xl py-1 px-2 font-medium text-sm">
+          <button
+            onClick={() => handleRestock(item.originalData.id)}
+            className="text-blue-700 bg-blue-200 hover:text-blue-900 rounded-xl py-1 px-2 font-medium text-sm"
+          >
             Restock
           </button>
-          <button className="text-red-700 bg-red-200 hover:text-red-900 rounded-xl py-1 px-2 font-medium text-sm">
+          <button
+            onClick={() => handleDelete(item.originalData.id)}
+            className="text-red-700 bg-red-200 hover:text-red-900 rounded-xl py-1 px-2 font-medium text-sm"
+          >
             Delete
           </button>
         </div>
@@ -118,10 +162,11 @@ const MyProducts = () => {
 
   // Filter options for products
   const productFilterOptions = [
-    { value: 'Active', label: 'Active' },
-    { value: 'Draft', label: 'Draft' },
-    { value: 'Out of stock', label: 'Out of stock' },
-    { value: 'Pending', label: 'Pending' },
+    { value: 'all', label: 'All' },
+    { value: 'active', label: 'Active' },
+    { value: 'draft', label: 'Draft' },
+    { value: 'out_of_stock', label: 'Out of stock' },
+    { value: 'pending', label: 'Pending' },
   ];
 
   // Empty state for products
