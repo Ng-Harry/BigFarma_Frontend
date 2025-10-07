@@ -84,8 +84,7 @@ const Dashboard = () => {
 
 			{profileComplete && (
 				<>
-					{/* {role === "farmer" ? <FarmerStatistics /> : <ConsumerStatistics />} */}
-					{role === "farmer" ? "Farmer" : <ConsumerStatistics />}
+					{role === "farmer" ? <FarmerStatistics /> : <ConsumerStatistics />}
 
 					<div
 						className={`grid gap-6 mt-6 ${
@@ -97,7 +96,8 @@ const Dashboard = () => {
 								<p className="mb-5 font-semibold text-2xl">
 									{role === "farmer" ? "Pending Orders" : "Recent Orders"}
 								</p>
-								{role === "farmer" ? <PendingOrders /> : <RecentOrders />}
+								{/* {role === "farmer" ? <PendingOrders /> : <RecentOrders />} */}
+								{role === "consumer" && <RecentOrders />}
 							</div>
 						</div>
 						{role === "consumer" && <QuickLinks />}
