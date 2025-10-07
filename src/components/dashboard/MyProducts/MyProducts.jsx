@@ -1,7 +1,7 @@
 // src/pages/FarmerProductsPage.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
-import DataTablePage from '../components/DataTablePage';
+import DataTablePage from '../farmer/components/farmer-table/dataTable';
 import {
   useFarmerProducts,
   useDeleteFarmerProduct,

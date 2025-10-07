@@ -1,7 +1,7 @@
 // src/pages/FarmerOrderPage.jsx
 import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import DataTablePage from '../components/DataTablePage';
+import DataTablePage from '../components/dashboard/farmer/components/farmer-table/dataTable';
 import { useFarmerOrder } from '../hooks/useFarmerOrder';
 
 // Fallback images
