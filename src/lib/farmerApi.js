@@ -19,12 +19,12 @@ export const farmerApi = {
 	getProducts: () =>
 		axios.get(endpoints().farmerProducts.get_product, {
 			headers: {
-				"Content-Type": "application/json",
+				
 				Authorization: `Bearer ${Cookies.get("BIGFARMA_ACCESS_TOKEN")}`,
 			},
 		}),
 
-	getProduct: (productId) => axios.get(`${BASE_URL}/products/${productId}/`),
+	// getProduct: (productId) => axios.get(`${BASE_URL}/products/${productId}/`),
 	createProduct: (productData) => {
 		const formData = new FormData();
 
