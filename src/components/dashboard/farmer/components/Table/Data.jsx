@@ -47,7 +47,7 @@ const Data = ({ props, onViewDetails }) => {
 			</td> */}
 			<td>
 				<button
-					className="p-2.5 px-6 rounded-lg bg-[#EFEFEF] text-[#000000]"
+					className="p-2.5 px-6 rounded-lg bg-[#EFEFEF] text-[#000000] cursor-pointer"
 					onClick={onViewDetails}>
 					View Details
 				</button>
