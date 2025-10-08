@@ -1,7 +1,7 @@
 // src/components/AddProductModal.jsx
 import React, { useState } from 'react';
 import { useCreateFarmerProduct } from '../../../hooks/useFarmerProducts';
-import axios from "../../../lib/axios";
+import {axios} from "../../../lib/axios";
 import Cookies from 'js-cookie';
 import { endpoints } from '../../config/endpoints';
 import { toast } from "react-toastify";
