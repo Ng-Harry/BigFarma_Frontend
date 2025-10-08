@@ -92,7 +92,7 @@ const AddProductModal = ({ isOpen, onClose }) => {
     price: formData.price,
     discount_percentage: 0,
     location: formData.location,
-    images: formData.images
+    images: null,
   }
 
   const handleSubmit = async (e) => {
@@ -116,7 +116,7 @@ const AddProductModal = ({ isOpen, onClose }) => {
             console.log(data)
 
 						if (res.status === 200 || res.status === 201) {
-							toast.success(data.message || "Saved successfully!");
+							toast.success(data.message || "Product added successfully!");
 							
 						} else {
 							toast.error(data.message || "Network error. Please try again.");
@@ -125,7 +125,7 @@ const AddProductModal = ({ isOpen, onClose }) => {
 						console.error("Error:", error);
 						if (axiosDefault.isAxiosError(error) && error.response) {
 							toast.error(
-								error.response.data?.message || "Profile setup failed"
+								error.response.data?.message || "Unable to add products"
 							);
 						} else {
 							toast.error("Unable to connect to the server");
