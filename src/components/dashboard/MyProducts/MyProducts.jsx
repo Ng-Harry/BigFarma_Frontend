@@ -1,12 +1,12 @@
 // src/pages/FarmerProductsPage.jsx
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useMemo, useState } from 'react';
 import DataTablePage from '../farmer/components/farmer-table/dataTable';
 import {
   useFarmerProducts,
   useDeleteFarmerProduct,
   useRestockFarmerProduct,
 } from '../../../hooks/useFarmerProducts';
+import AddProductModal from './AddProductModal';
 
 // Fallback images
 import eggs from '../../../assets/ProductImages/categories/Egg image.png';
@@ -33,11 +33,12 @@ const MyProducts = () => {
   const { data: apiProducts, isLoading, error, refetch } = useFarmerProducts();
   const deleteMutation = useDeleteFarmerProduct();
   const restockMutation = useRestockFarmerProduct();
+  const [isAddProductModalOpen, setIsAddProductModalOpen] = useState(false); // Add this state
 
   console.log('API Products Data:', apiProducts);
 
   // Transform API data for the table
-  const transformedProducts = React.useMemo(() => {
+  const transformedProducts = useMemo(() => {
     if (!apiProducts) return [];
 
     // Handle different response structures
@@ -81,6 +82,11 @@ const MyProducts = () => {
         }
       );
     }
+  };
+
+  const handleProductAdded = () => {
+    setIsAddProductModalOpen(false);
+    refetch(); // Refresh the product list after adding a new product
   };
 
   // Column configuration for products
@@ -194,27 +200,58 @@ const MyProducts = () => {
         You haven't added any products yet. Start by adding your first product
         to sell on the marketplace.
       </p>
-      <Link
-        to="/add-product"
+      <button
+        onClick={() => setIsAddProductModalOpen(true)}
         className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-md font-medium"
       >
         Add New Product
-      </Link>
+      </button>
     </div>
   );
 
   return (
-    <DataTablePage
-      title="My Products"
-      data={transformedProducts}
-      isLoading={isLoading}
-      error={error}
-      refetch={refetch}
-      filterOptions={productFilterOptions}
-      columns={productColumns}
-      emptyState={emptyProductsState}
-      type="products"
-    />
+    <>
+      <DataTablePage
+        title="My Products"
+        data={transformedProducts}
+        isLoading={isLoading}
+        error={error}
+        refetch={refetch}
+        filterOptions={productFilterOptions}
+        columns={productColumns}
+        emptyState={emptyProductsState}
+        type="products"
+      />
+
+      {/* Add Product Button - Floating Action Button */}
+      {transformedProducts.length > 0 && (
+        <button
+          onClick={() => setIsAddProductModalOpen(true)}
+          className="fixed bottom-6 right-6 bg-green-600 hover:bg-green-700 text-white p-4 rounded-full shadow-lg transition-all duration-200 hover:scale-110 z-50"
+        >
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 4v16m8-8H4"
+            />
+          </svg>
+        </button>
+      )}
+
+      {/* Add Product Modal */}
+      <AddProductModal
+        isOpen={isAddProductModalOpen}
+        onClose={() => setIsAddProductModalOpen(false)}
+        onProductAdded={handleProductAdded}
+      />
+    </>
   );
 };
 
