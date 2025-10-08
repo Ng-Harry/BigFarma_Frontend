@@ -70,6 +70,17 @@ const AddProductModal = ({ isOpen, onClose }) => {
       ...prev,
       images: [...prev.images, ...files],
     }));
+    if (e.target.files && e.target.files[0]) {
+			const file = e.target.files[0];
+			const reader = new FileReader();
+			reader.onloadend = () => {
+				setFormData((prev) => ({
+					...prev,
+					images: [...prev.images, ...reader.result],
+				}));
+			};
+			reader.readAsDataURL(file);
+		}
   };
 
   const removeImage = (index) => {
@@ -92,7 +103,7 @@ const AddProductModal = ({ isOpen, onClose }) => {
     price: formData.price,
     discount_percentage: 0,
     location: formData.location,
-    images: null,
+    images: formData.images,
   }
 
   const handleSubmit = async (e) => {
