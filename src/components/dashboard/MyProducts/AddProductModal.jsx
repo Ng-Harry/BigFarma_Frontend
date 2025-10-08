@@ -518,7 +518,7 @@ const AddProductModal = ({ isOpen, onClose }) => {
   const categories = [
     "Crop",
     "Livestock",
-    "Vegetables",
+    "vegetables",
     "Fruit",
     "Poultry",
     "Dairy",
