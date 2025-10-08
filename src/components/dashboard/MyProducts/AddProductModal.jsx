@@ -1,8 +1,13 @@
 // src/components/AddProductModal.jsx
 import React, { useState } from 'react';
 import { useCreateFarmerProduct } from '../../../hooks/useFarmerProducts';
+import axios from "../../../lib/axios";
+import Cookies from 'js-cookie';
+import { endpoints } from '../../config/endpoints';
+import { toast } from "react-toastify";
+import axiosDefault from "axios";
 
-const AddProductModal = ({ isOpen, onClose, onProductAdded }) => {
+const AddProductModal = ({ isOpen, onClose }) => {
   const createProductMutation = useCreateFarmerProduct();
 
   const [formData, setFormData] = useState({
@@ -40,7 +45,6 @@ const AddProductModal = ({ isOpen, onClose, onProductAdded }) => {
     'crates',
     'bags',
     'baskets',
-    'pieces',
     'dozens',
     'packs',
     'bundles',
@@ -79,18 +83,58 @@ const AddProductModal = ({ isOpen, onClose, onProductAdded }) => {
     }));
   };
 
+  
+  const payload = {
+    name: formData.name,
+    category: formData.category,
+    description: formData.description,
+    quantity: formData.quantity,
+    price: formData.price,
+    discount_percentage: 0,
+    location: formData.location,
+    images: formData.images
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    			try {
+						const res = await axios.post(
+							endpoints().farmerProducts.create_product,
+							payload,
+							{
+								headers: {
+									"Content-Type": "application/json",
+									Authorization: `Bearer ${Cookies.get(
+										"BIGFARMA_ACCESS_TOKEN"
+									)}`,
+								},
+							}
+						);
 
-    try {
-      await createProductMutation.mutateAsync(formData);
-      alert('Product added successfully!');
-      resetForm();
-      onProductAdded();
-    } catch (error) {
-      alert(`Failed to add product: ${error.message}`);
-    }
-  };
+            const data = res.data;
+            console.log(data)
+
+						if (res.status === 200 || res.status === 201) {
+							toast.success(data.message || "Saved successfully!");
+							
+						} else {
+							toast.error(data.message || "Network error. Please try again.");
+						}
+					} catch (error) {
+						console.error("Error:", error);
+						if (axiosDefault.isAxiosError(error) && error.response) {
+							toast.error(
+								error.response.data?.message || "Profile setup failed"
+							);
+						} else {
+							toast.error("Unable to connect to the server");
+						}
+					}
+    
+  } 
+    
+  
 
   const resetForm = () => {
     setFormData({
