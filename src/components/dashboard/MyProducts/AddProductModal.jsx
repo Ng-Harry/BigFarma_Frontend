@@ -1,8 +1,13 @@
 // src/components/AddProductModal.jsx
 import React, { useState } from 'react';
 import { useCreateFarmerProduct } from '../../../hooks/useFarmerProducts';
+import {axios} from "../../../lib/axios";
+import Cookies from 'js-cookie';
+import { endpoints } from '../../config/endpoints';
+import { toast } from "react-toastify";
+import axiosDefault from "axios";
 
-const AddProductModal = ({ isOpen, onClose, onProductAdded }) => {
+const AddProductModal = ({ isOpen, onClose }) => {
   const createProductMutation = useCreateFarmerProduct();
 
   const [formData, setFormData] = useState({
@@ -20,13 +25,13 @@ const AddProductModal = ({ isOpen, onClose, onProductAdded }) => {
   const [imagePreviews, setImagePreviews] = useState([]);
 
   const categories = [
-    'Crop',
-    'Livestock',
-    'Vegetable',
-    'Fruit',
-    'Poultry',
-    'Dairy',
-  ];
+		"Crop",
+		"Livestock",
+		"vegetables",
+		"Fruit",
+		"Poultry",
+		"Dairy",
+	];
 
   const units = [
     'kg',
@@ -40,7 +45,6 @@ const AddProductModal = ({ isOpen, onClose, onProductAdded }) => {
     'crates',
     'bags',
     'baskets',
-    'pieces',
     'dozens',
     'packs',
     'bundles',
@@ -66,6 +70,17 @@ const AddProductModal = ({ isOpen, onClose, onProductAdded }) => {
       ...prev,
       images: [...prev.images, ...files],
     }));
+    if (e.target.files && e.target.files[0]) {
+			const file = e.target.files[0];
+			const reader = new FileReader();
+			reader.onloadend = () => {
+				setFormData((prev) => ({
+					...prev,
+					images: [...prev.images, ...reader.result],
+				}));
+			};
+			reader.readAsDataURL(file);
+		}
   };
 
   const removeImage = (index) => {
@@ -79,18 +94,58 @@ const AddProductModal = ({ isOpen, onClose, onProductAdded }) => {
     }));
   };
 
+  
+  const payload = {
+    name: formData.name,
+    category: formData.category,
+    description: formData.description,
+    quantity: formData.quantity,
+    price: formData.price,
+    discount_percentage: 0,
+    location: formData.location,
+    images: formData.images,
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    			try {
+						const res = await axios.post(
+							endpoints().farmerProducts.create_product,
+							payload,
+							{
+								headers: {
+									"Content-Type": "application/json",
+									Authorization: `Bearer ${Cookies.get(
+										"BIGFARMA_ACCESS_TOKEN"
+									)}`,
+								},
+							}
+						);
 
-    try {
-      await createProductMutation.mutateAsync(formData);
-      alert('Product added successfully!');
-      resetForm();
-      onProductAdded();
-    } catch (error) {
-      alert(`Failed to add product: ${error.message}`);
-    }
-  };
+            const data = res.data;
+            console.log(data)
+
+						if (res.status === 200 || res.status === 201) {
+							toast.success(data.message || "Product added successfully!");
+							
+						} else {
+							toast.error(data.message || "Network error. Please try again.");
+						}
+					} catch (error) {
+						console.error("Error:", error);
+						if (axiosDefault.isAxiosError(error) && error.response) {
+							toast.error(
+								error.response.data?.message || "Unable to add products"
+							);
+						} else {
+							toast.error("Unable to connect to the server");
+						}
+					}
+    
+  } 
+    
+  
 
   const resetForm = () => {
     setFormData({
