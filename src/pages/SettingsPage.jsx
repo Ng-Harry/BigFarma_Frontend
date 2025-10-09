@@ -6,8 +6,8 @@ import { toast } from "react-toastify";
 import axiosDefault from "axios";
 
 const AccountSettings = () => {
-	const [firstname, setFirstname] = useState("");
-	const [lastname, setLastname] = useState("");
+	const [firstname, setFirstname] = useState(null);
+	const [lastname, setLastname] = useState(null);
 	const [email, setEmail] = useState("");
 	const [phone, setPhone] = useState("");
 	const [address, setAddress] = useState("");
