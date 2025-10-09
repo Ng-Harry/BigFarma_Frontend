@@ -654,7 +654,7 @@ const AddProductModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-white/20 backdrop-blur-xs z-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-800/20  z-50">
       <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4">
@@ -716,7 +716,7 @@ const AddProductModal = ({ isOpen, onClose }) => {
                 value={formData.name}
                 onChange={handleInputChange}
                 placeholder="Enter Product Name"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-green-200"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm  focus:ring-green-700 focus:outline-none focus:ring-1 focus:border-none"
                 required
               />
             </div>
@@ -734,7 +734,7 @@ const AddProductModal = ({ isOpen, onClose }) => {
                 name="category"
                 value={formData.category}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 border text-gray-400 border-gray-300 rounded-md focus:ring-2 focus:ring-green-200"
+                className="w-full px-3 py-2 border text-gray-400 border-gray-300 rounded-md focus:ring-green-700 focus:outline-none focus:ring-1 focus:border-none"
                 required
               >
                 <option value="" className="">
@@ -763,7 +763,7 @@ const AddProductModal = ({ isOpen, onClose }) => {
                 value={formData.quantity}
                 onChange={handleInputChange}
                 placeholder="Enter Quantity"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-700 focus:outline-none focus:ring-1 focus:border-none"
                 required
                 min="0"
                 step="0.01"
@@ -781,7 +781,7 @@ const AddProductModal = ({ isOpen, onClose }) => {
                 name="unit"
                 value={formData.unit}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 border text-gray-400 text-right  border-gray-300 rounded-md focus:ring-2 focus:ring-green-500"
+                className="w-full px-3 py-2 border text-gray-400 border-gray-300 rounded-md focus:ring-green-700 focus:outline-none focus:ring-1 focus:border-none"
                 required
               >
                 {units.map((unit) => (
@@ -807,7 +807,7 @@ const AddProductModal = ({ isOpen, onClose }) => {
                 value={formData.min_quantity}
                 onChange={handleInputChange}
                 placeholder="Enter minimum quantity"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-700 focus:outline-none focus:ring-1 focus:border-none"
                 required
                 min="0"
                 step="0.01"
@@ -829,7 +829,7 @@ const AddProductModal = ({ isOpen, onClose }) => {
                 value={formData.price}
                 onChange={handleInputChange}
                 placeholder="Enter Price"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-700 focus:outline-none focus:ring-1 focus:border-none"
                 required
                 min="0"
                 step="0.01"
@@ -851,7 +851,7 @@ const AddProductModal = ({ isOpen, onClose }) => {
                 value={formData.location}
                 onChange={handleInputChange}
                 placeholder="Farm Location or Pickup Address"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-700 focus:outline-none focus:ring-1 focus:border-none"
                 required
               />
             </div>
@@ -871,7 +871,7 @@ const AddProductModal = ({ isOpen, onClose }) => {
                 onChange={handleInputChange}
                 rows={4}
                 placeholder="Describe your product (quality, freshness, etc.).  minimum of 20 characters"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 resize-vertical"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-700 focus:outline-none focus:ring-1 focus:border-none resize-vertical"
                 required
               />
             </div>
