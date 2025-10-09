@@ -1,17 +1,76 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Cookies from "js-cookie";
+import { endpoints } from "../components/config/endpoints";
+import { axios } from "../lib/axios";
+import { toast } from "react-toastify";
+import axiosDefault from "axios";
 
 const AccountSettings = () => {
-	const [formData, setFormData] = useState({
-		firstName: "John",
-		lastName: "Doe",
-		email: "John Doe",
-		phone: "08022222222",
-		gender: "Female",
-		address: "123 Example Street, Ikeja, Lagos.",
-	});
+	const [firstname, setFirstname] = useState("");
+	const [lastname, setLastname] = useState("");
+	const [email, setEmail] = useState("");
+	const [phone, setPhone] = useState("");
+	const [address, setAddress] = useState("");
+	const [profileImage, setProfileImage] = useState(null);
+	const [imagePreview, setImagePreview] = useState(null);
 
-	const [profileImage, setProfileImage] = useState("/profile.pic.jpg");
-	const [imagePreview, setImagePreview] = useState("/profile.pic.jpg");
+	const token = Cookies.get("BIGFARMA_ACCESS_TOKEN");
+	const role = Cookies.get("BIGFARMA_ROLE");
+
+	useEffect(() => {
+		const fetchProfileDetails = async () => {
+			if (token) {
+				try {
+					let response;
+					if (role === "farmer") {
+						response = await axios.get(endpoints().users.get_farmer_profile, {
+							headers: {
+								"Content-Type": "application/json",
+								Authorization: `Bearer ${token}`,
+							},
+						});
+						const data = await response.data;
+						setFirstname(data.full_name.split(" ")[0]);
+						setLastname(data.full_name.split(" ")[1]);
+						setEmail(data.email);
+						setPhone(data.phone);
+						setAddress(data.home_address);
+						setProfileImage(data.profile_picture);
+						setImagePreview(data.profile_picture);
+					} else if (role === "consumer") {
+						response = await axios.get(endpoints().users.get_consumer_profile, {
+							headers: {
+								Authorization: `Bearer ${token}`,
+							},
+						});
+						const data = await response.data;
+						setFirstname(data.first_name);
+						setLastname(data.last_name);
+						setEmail(data.email);
+						setPhone(data.phone);
+						setAddress(data.address);
+						setProfileImage(data.profile_picture);
+						setImagePreview(data.profile_picture);
+					}
+				} catch (error) {
+					console.error("Error fetching profile:", error);
+					handleResetForm();
+				}
+			} else {
+				handleResetForm();
+			}
+		};
+		fetchProfileDetails();
+	}, [role, token]);
+
+	const [formData, setFormData] = useState({
+		firstName: firstname,
+		lastName: lastname,
+		email: email,
+		phone: phone,
+		gender: "gender",
+		address: address,
+	});
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -27,9 +86,77 @@ const AccountSettings = () => {
 		}
 	};
 
-	const handleSubmit = (e) => {
+	const handleResetForm = () => {
+		setFirstname(null);
+		setLastname(null);
+		setEmail(null);
+		setPhone(null);
+		setAddress(null);
+		setProfileImage(null);
+		setImagePreview(null);
+	}
+
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		alert("Changes saved successfully!");
+
+		const farmerPayload = {
+			full_name: `${formData.firstName} ${formData.lastName}`,
+			home_address: formData.address,
+			email: formData.email,
+			phone: formData.phone,
+			profile_picture: profileImage || null,
+		};
+
+		const consumerPayload = {
+			first_name: formData.firstName,
+			last_name: formData.lastName,
+			address: formData.address,
+			profile_picture: profileImage || null,
+			email: formData.email,
+			phone: formData.phone,
+		};
+
+		try {
+			let response;
+			if (role === "farmer") {
+				response = await axios.put(
+					endpoints().users.update_farmer_profile,
+					farmerPayload,
+					{
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: `Bearer ${token}`,
+						},
+					}
+				);
+				const data = await response.data;
+				if (response.status === 200 || response.status === 201) {
+					toast.success(data.message || "Changes Saved Successfully");
+				} else {
+					toast.error(data.message || "Network error. Please try again.");
+				}
+			} else if (role === "consumer") {
+				response = await axios.put(endpoints().users.update_consumer_profile, consumerPayload, {
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				});
+				const data = await response.data;
+				if (response.status === 200 || response.status === 201) {
+					toast.success(data.message || "Changes Saved Successfully");
+				} else {
+					toast.error(data.message || "Network error. Please try again.");
+				}
+			}
+		} catch (error) {
+			console.error("Error:", error);
+			if (axiosDefault.isAxiosError(error) && error.response) {
+				toast.error(error.response.data?.message || "Profile setup failed");
+			} else {
+				toast.error("Unable to connect to the server");
+			}
+		}
+
 		console.log("Submitted data:", formData);
 	};
 
@@ -78,7 +205,7 @@ const AccountSettings = () => {
 						<div>
 							<p className="font-semibold text-gray-800">Upload A New Photo</p>
 							<p className="text-sm text-gray-500">
-								{profileImage.name || "Profile.pic.jpg"}
+								{profileImage?.name || "Profile.pic.jpg"}
 							</p>
 							<input
 								type="file"
@@ -90,7 +217,7 @@ const AccountSettings = () => {
 						</div>
 					</div>
 					<button
-						className="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800 transition"
+						className="border border-green-700 text-green-700 px-4 py-2 rounded-lg hover:bg-green-50 transition"
 						onClick={() => document.getElementById("fileInput").click()}>
 						Update
 					</button>
@@ -146,9 +273,9 @@ const AccountSettings = () => {
 								Phone Number <span className="text-red-500">*</span>
 							</label>
 							<div className="flex items-center gap-2">
-								<span className="px-3 py-2 border border-green-700 rounded-lg text-gray-600">
+								{/* <span className="px-3 py-2 border border-green-700 rounded-lg text-gray-600">
 									🇳🇬 +234
-								</span>
+								</span> */}
 								<input
 									type="tel"
 									name="phone"
@@ -170,7 +297,6 @@ const AccountSettings = () => {
 								className="mt-1 block w-full border border-green-700 rounded-lg p-2 focus:ring-green-600 focus:outline-none">
 								<option>Female</option>
 								<option>Male</option>
-								<option>Other</option>
 							</select>
 						</div>
 
@@ -189,7 +315,8 @@ const AccountSettings = () => {
 						<div className="flex justify-end gap-3 md:col-span-2 mt-2">
 							<button
 								type="button"
-								className="border border-green-700 text-green-700 px-4 py-2 rounded-lg hover:bg-green-50 transition">
+								className="border border-green-700 text-green-700 px-4 py-2 rounded-lg hover:bg-green-50 transition"
+								onClick={handleResetForm}>
 								Discard Changes
 							</button>
 							<button
