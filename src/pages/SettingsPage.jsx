@@ -505,6 +505,7 @@ const AccountSettings = () => {
 			if (response?.status === 200 || response?.status === 201) {
 				toast.success("Changes Saved Successfully");
 				setTimeout(() => window.location.reload(), 1200);
+				handleResetForm();
 			} else {
 				toast.error("Network error. Please try again.");
 			}
@@ -629,7 +630,7 @@ const AccountSettings = () => {
 							/>
 						</div>
 
-						<div>
+						{/* <div>
 							<label className="block text-sm font-medium text-gray-700">
 								Email
 							</label>
@@ -639,6 +640,19 @@ const AccountSettings = () => {
 								value={formData.email}
 								onChange={handleChange}
 								className="mt-1 block w-full border border-green-700 rounded-lg p-2 focus:ring-green-600 focus:outline-none"
+							/>
+						</div> */}
+
+						<div>
+							<label className="block text-sm font-medium text-gray-700">
+								Email
+							</label>
+							<input
+								type="email"
+								name="email"
+								value={formData.email}
+								onChange={handleChange}
+								className="w-full border border-green-700 rounded-lg p-2 focus:ring-green-600 focus:outline-none"
 							/>
 						</div>
 
@@ -655,7 +669,7 @@ const AccountSettings = () => {
 							/>
 						</div>
 
-						<div>
+						<div className="md:col-span-2">
 							<label className="block text-sm font-medium text-gray-700">
 								Gender
 							</label>
