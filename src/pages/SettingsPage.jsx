@@ -592,7 +592,7 @@ const AccountSettings = () => {
 					</div>
 					<button
 						type="button"
-						className="border border-green-700 text-green-700 px-4 py-2 rounded-lg hover:bg-green-50 transition"
+						className="border border-green-700 text-green-700 px-4 py-2 rounded-lg hover:bg-green-50 transition cursor-pointer"
 						onClick={() => document.getElementById("fileInput").click()}>
 						Update
 					</button>
@@ -699,13 +699,13 @@ const AccountSettings = () => {
 						<div className="flex justify-end gap-3 md:col-span-2 mt-2">
 							<button
 								type="button"
-								className="border border-green-700 text-green-700 px-4 py-2 rounded-lg hover:bg-green-50 transition"
+								className="border border-green-700 text-green-700 px-4 py-2 rounded-lg hover:bg-green-50 transition cursor-pointer"
 								onClick={handleResetForm}>
 								Discard Changes
 							</button>
 							<button
 								type="submit"
-								className="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800 transition">
+								className="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800 transition cursor-pointer">
 								Save Changes
 							</button>
 						</div>
