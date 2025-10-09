@@ -18,7 +18,7 @@ const sidebar = [
 const Main = ({ children }) => {
 	return (
 		<>
-			<div className="min-h-screen bg-gray-50 p-6 flex flex-col md:flex-row gap-6">
+			<div>
 				{children}
 			</div>
 		</>
