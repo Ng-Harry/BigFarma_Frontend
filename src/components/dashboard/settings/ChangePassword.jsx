@@ -63,7 +63,7 @@ const ChangePassword = () => {
 	};
 
 	return (
-		<div className="w-full md:w-full space-y-3 bg-white rounded-lg shadow-[0_0_8px_rgba(0,0,0,0.15)] shadow-md p-6">
+		<div className="w-full md:w-2/3 space-y-3 bg-white rounded-lg shadow-[0_0_8px_rgba(0,0,0,0.15)] p-6">
 			<h2 className="text-lg font-semibold text-gray-800">
 				Change your password
 			</h2>
@@ -211,12 +211,12 @@ const ChangePassword = () => {
 					<button
 						type="button"
 						onClick={handleDiscard}
-						className="border border-green-700 text-green-700 px-4 py-2 rounded-lg hover:bg-green-50 transition">
+						className="border border-green-700 text-green-700 px-8 py-2 rounded-lg hover:bg-green-50 transition">
 						Discard Changes
 					</button>
 					<button
 						type="submit"
-						className="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800 transition">
+						className="bg-green-700 text-white px-8 py-2 rounded-lg hover:bg-green-800 transition">
 						Save Changes
 					</button>
 				</div>
