@@ -195,9 +195,9 @@ const ResetBioData = () => {
 	return (
 		<>
 			{/* Main Section */}
-			<div className="w-full md:w-2/3 space-y-3">
+			<div className="w-full md:w-full space-y-3">
 				{/* Upload Section */}
-				<div className="flex items-center justify-between border rounded-xl p-4 bg-white">
+				<div className="flex items-center justify-between shadow-md rounded-lg p-4 bg-white">
 					<div className="flex items-center gap-4">
 						<img
 							src={
@@ -230,7 +230,7 @@ const ResetBioData = () => {
 				</div>
 
 				{/* Form Section */}
-				<div className="border rounded-xl p-6 bg-white shadow-sm">
+				<div className="shadow-md rounded-lg p-6 bg-white shadow-sm">
 					<h3 className="font-semibold text-lg text-gray-800 mb-4">
 						Change User Information
 					</h3>

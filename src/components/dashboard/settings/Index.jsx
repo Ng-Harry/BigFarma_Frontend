@@ -34,7 +34,7 @@ const AccountSettings = () => {
 					return (
 						<div
 							key={data.Title}
-							className="border rounded-xl p-4 hover:border-green-700 cursor-pointer transition">
+							className="shadow-md rounded-lg p-4 hover:border-green-700 cursor-pointer transition">
 							<h3 className="font-semibold text-lg text-gray-800">
 								{data.Title}
 							</h3>
