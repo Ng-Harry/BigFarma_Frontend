@@ -12,10 +12,10 @@ import {
 	TrendingUp,
 	ArrowLeftRight,
 	Settings,
-  LogOut,
-  ShoppingCart,
-  ChevronLeft,
-  Wallet,
+	LogOut,
+	ShoppingCart,
+	ChevronLeft,
+	Wallet,
 } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -33,7 +33,7 @@ const navigationItems = [
 		: { name: "Group Buy", icon: Users, path: "/group-buy" },
 
 	role === "farmer"
-		? { name: "Investment", icon: TrendingUp, path: "/investment" }
+		? { name: "Marketplace", icon: TrendingUp, path: "/marketplace" }
 		: { name: "My Orders", icon: ShoppingBag, path: "/orders" },
 
 	role === "farmer"
@@ -41,7 +41,7 @@ const navigationItems = [
 		: { name: "Investment", icon: TrendingUp, path: "/investment" },
 
 	role === "farmer"
-		? { name: "Marketplace", icon: Store, path: "/marketplace" }
+		? { name: "Investment", icon: Store, path: "/investment" }
 		: { name: "Transaction", icon: ArrowLeftRight, path: "/transactions" },
 
 	{ name: "Settings", icon: Settings, path: "/settings" },

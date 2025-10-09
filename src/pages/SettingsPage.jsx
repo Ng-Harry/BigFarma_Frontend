@@ -1,58 +1,230 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Cookies from "js-cookie";
+import { endpoints } from "../components/config/endpoints";
+import { axios } from "../lib/axios";
+import { toast } from "react-toastify";
+import axiosDefault from "axios";
+import LoadingSkeleton from "../components/shared/LoadingSkeleton";
+
+const sidebar = [
+	{
+		Title: "Account Settings",
+		Description: "Details about your personal information",
+	},
+	{
+		Title: "Password & Security",
+		Description: "Change your password anytime",
+	},
+	{
+		Title: "Delete your account",
+		Description: "Find how you can delete your account",
+	},
+];
 
 const AccountSettings = () => {
 	const [formData, setFormData] = useState({
-		firstName: "John",
-		lastName: "Doe",
-		email: "John Doe",
-		phone: "08022222222",
-		gender: "Female",
-		address: "123 Example Street, Ikeja, Lagos.",
+		firstName: "",
+		lastName: "",
+		email: "",
+		phone: "",
+		gender: "gender",
+		address: "",
 	});
 
-	const [profileImage, setProfileImage] = useState("/profile.pic.jpg");
-	const [imagePreview, setImagePreview] = useState("/profile.pic.jpg");
+	const [profileImage, setProfileImage] = useState(""); // will store base64 string
+	const [imagePreview, setImagePreview] = useState(null);
+	const [loading, setLoading] = useState(true);
+
+	const token = Cookies.get("BIGFARMA_ACCESS_TOKEN");
+	const role = Cookies.get("BIGFARMA_ROLE");
+
+	useEffect(() => {
+		const fetchProfileDetails = async () => {
+			if (!token) return handleResetForm();
+
+			try {
+				let response;
+				if (role === "farmer") {
+					response = await axios.get(endpoints().users.get_farmer_profile, {
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: `Bearer ${token}`,
+						},
+					});
+					const data = response.data;
+					const [firstName, lastName] = data.full_name?.split(" ") || ["", ""];
+
+					setFormData({
+						firstName,
+						lastName,
+						email: data.email || "",
+						phone: data.phone || "",
+						address: data.home_address || "",
+						gender: data.gender || "gender",
+					});
+					setProfileImage(data.profile_picture || "");
+					setImagePreview(data.profile_picture || "");
+				} else if (role === "consumer") {
+					response = await axios.get(endpoints().users.get_consumer_profile, {
+						headers: {
+							Authorization: `Bearer ${token}`,
+						},
+					});
+					const data = response.data;
+					setFormData({
+						firstName: data.first_name || "",
+						lastName: data.last_name || "",
+						email: data.email || "",
+						phone: data.phone || "",
+						address: data.address || "",
+						gender: data.gender || "gender",
+					});
+					setProfileImage(data.profile_picture || "");
+					setImagePreview(data.profile_picture || "");
+				}
+			} catch (error) {
+				console.error("Error fetching profile:", error);
+				handleResetForm();
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		fetchProfileDetails();
+	}, [role, token]);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setFormData((prev) => ({ ...prev, [name]: value }));
 	};
 
+	// ✅ Convert uploaded image to Base64
 	const handleImageChange = (e) => {
 		const file = e.target.files[0];
-		if (file) {
-			const imageUrl = URL.createObjectURL(file);
-			setImagePreview(imageUrl);
-			setProfileImage(file);
+		if (!file) return;
+
+		if (!file.type.startsWith("image/")) {
+			toast.error("Please upload a valid image file.");
+			return;
+		}
+
+		const reader = new FileReader();
+		reader.onloadend = () => {
+			const base64String = reader.result; // backend expects string
+			setProfileImage(base64String);
+			setImagePreview(base64String);
+		};
+		reader.readAsDataURL(file);
+	};
+
+	const handleResetForm = () => {
+		setFormData({
+			firstName: "",
+			lastName: "",
+			email: "",
+			phone: "",
+			gender: "gender",
+			address: "",
+		});
+		setProfileImage("");
+		setImagePreview("");
+	};
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+
+		const farmerPayload = {
+			full_name: `${formData.firstName} ${formData.lastName}`,
+			home_address: formData.address,
+			email: formData.email,
+			phone: formData.phone,
+			profile_picture: profileImage || null, // base64 string
+		};
+
+		const consumerPayload = {
+			first_name: formData.firstName,
+			last_name: formData.lastName,
+			address: formData.address,
+			profile_picture: profileImage || null, // base64 string
+			email: formData.email,
+			phone: formData.phone,
+		};
+
+		try {
+			let response;
+			if (role === "farmer") {
+				response = await axios.put(
+					endpoints().users.update_farmer_profile,
+					farmerPayload,
+					{
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: `Bearer ${token}`,
+						},
+					}
+				);
+			} else if (role === "consumer") {
+				response = await axios.put(
+					endpoints().users.update_consumer_profile,
+					consumerPayload,
+					{
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: `Bearer ${token}`,
+						},
+					}
+				);
+			}
+
+			if (response?.status === 200 || response?.status === 201) {
+				toast.success("Changes Saved Successfully");
+				setTimeout(() => window.location.reload(), 1200);
+				handleResetForm();
+			} else {
+				toast.error("Network error. Please try again.");
+			}
+		} catch (error) {
+			console.error("Error:", error);
+			if (axiosDefault.isAxiosError(error) && error.response) {
+				toast.error(error.response.data?.message || "Profile update failed");
+			} else {
+				toast.error("Unable to connect to the server");
+			}
 		}
 	};
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		alert("Changes saved successfully!");
-		console.log("Submitted data:", formData);
-	};
+	// ✅ Loader Skeleton
+	if (loading) {
+		return (
+			<div className="flex justify-center items-center min-h-screen bg-gray-50">
+				<div className="flex flex-col items-center">
+					<div className="w-12 h-12 border-4 border-green-700 border-t-transparent rounded-full animate-spin"></div>
+					<p className="mt-3 text-green-700 font-medium">
+						<LoadingSkeleton />
+					</p>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div className="min-h-screen bg-gray-50 p-6 flex flex-col md:flex-row gap-6">
 			{/* Sidebar */}
 			<div className="w-full md:w-1/3 space-y-3">
-				<div className="border rounded-xl p-4 hover:border-green-700 cursor-pointer transition">
-					<h3 className="font-semibold text-lg text-gray-800">
-						Account Settings
-					</h3>
-					<p className="text-gray-500 text-sm">
-						Details about your personal information
-					</p>
-				</div>
+				{sidebar.map((data) => {
+					return (<div key={data.Title} className="border rounded-xl p-4 hover:border-green-700 cursor-pointer transition">
+						<h3 className="font-semibold text-lg text-gray-800">
+							{data.Title}
+						</h3>
+						<p className="text-gray-500 text-sm">{data.Description}</p>
+					</div>)
+				})}
 
-				<div className="border rounded-xl p-4 hover:border-green-700 cursor-pointer transition">
+				{/* <div className="border rounded-xl p-4 hover:border-green-700 cursor-pointer transition">
 					<h3 className="font-semibold text-lg text-gray-800">
 						Password & Security
 					</h3>
-					<p className="text-gray-500 text-sm">
-						Change your password at anytime
-					</p>
+					<p className="text-gray-500 text-sm">Change your password anytime</p>
 				</div>
 
 				<div className="border rounded-xl p-4 hover:border-green-700 cursor-pointer transition">
@@ -62,23 +234,26 @@ const AccountSettings = () => {
 					<p className="text-gray-500 text-sm">
 						Find how you can delete your account
 					</p>
-				</div>
+				</div> */}
 			</div>
 
 			{/* Main Section */}
 			<div className="w-full md:w-2/3 space-y-6">
 				{/* Upload Section */}
-				<div className="flex items-center justify-between border rounded-xl p-4">
+				<div className="flex items-center justify-between border rounded-xl p-4 bg-white">
 					<div className="flex items-center gap-4">
 						<img
-							src={imagePreview}
+							src={
+								imagePreview ||
+								"https://cdn-icons-png.flaticon.com/512/847/847969.png"
+							}
 							alt="Profile"
 							className="w-16 h-16 rounded-full object-cover border"
 						/>
 						<div>
 							<p className="font-semibold text-gray-800">Upload A New Photo</p>
 							<p className="text-sm text-gray-500">
-								{profileImage.name || "Profile.pic.jpg"}
+								{profileImage ? "Selected Image" : "Profile.pic.jpg"}
 							</p>
 							<input
 								type="file"
@@ -90,7 +265,8 @@ const AccountSettings = () => {
 						</div>
 					</div>
 					<button
-						className="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800 transition"
+						type="button"
+						className="border border-green-700 text-green-700 px-4 py-2 rounded-lg hover:bg-green-50 transition cursor-pointer"
 						onClick={() => document.getElementById("fileInput").click()}>
 						Update
 					</button>
@@ -99,7 +275,7 @@ const AccountSettings = () => {
 				{/* Form Section */}
 				<div className="border rounded-xl p-6 bg-white shadow-sm">
 					<h3 className="font-semibold text-lg text-gray-800 mb-4">
-						Change User Information here
+						Change User Information
 					</h3>
 					<form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-4">
 						<div>
@@ -128,7 +304,7 @@ const AccountSettings = () => {
 							/>
 						</div>
 
-						<div>
+						{/* <div>
 							<label className="block text-sm font-medium text-gray-700">
 								Email
 							</label>
@@ -139,27 +315,35 @@ const AccountSettings = () => {
 								onChange={handleChange}
 								className="mt-1 block w-full border border-green-700 rounded-lg p-2 focus:ring-green-600 focus:outline-none"
 							/>
+						</div> */}
+
+						<div>
+							<label className="block text-sm font-medium text-gray-700">
+								Email
+							</label>
+							<input
+								type="email"
+								name="email"
+								value={formData.email}
+								onChange={handleChange}
+								className="w-full border border-green-700 rounded-lg p-2 focus:ring-green-600 focus:outline-none"
+							/>
 						</div>
 
 						<div>
 							<label className="block text-sm font-medium text-gray-700">
 								Phone Number <span className="text-red-500">*</span>
 							</label>
-							<div className="flex items-center gap-2">
-								<span className="px-3 py-2 border border-green-700 rounded-lg text-gray-600">
-									🇳🇬 +234
-								</span>
-								<input
-									type="tel"
-									name="phone"
-									value={formData.phone}
-									onChange={handleChange}
-									className="flex-1 border border-green-700 rounded-lg p-2 focus:ring-green-600 focus:outline-none"
-								/>
-							</div>
+							<input
+								type="tel"
+								name="phone"
+								value={formData.phone}
+								onChange={handleChange}
+								className="w-full border border-green-700 rounded-lg p-2 focus:ring-green-600 focus:outline-none"
+							/>
 						</div>
 
-						<div>
+						<div className="md:col-span-2">
 							<label className="block text-sm font-medium text-gray-700">
 								Gender
 							</label>
@@ -168,9 +352,9 @@ const AccountSettings = () => {
 								value={formData.gender}
 								onChange={handleChange}
 								className="mt-1 block w-full border border-green-700 rounded-lg p-2 focus:ring-green-600 focus:outline-none">
+								<option value="gender">Select Gender</option>
 								<option>Female</option>
 								<option>Male</option>
-								<option>Other</option>
 							</select>
 						</div>
 
@@ -189,12 +373,13 @@ const AccountSettings = () => {
 						<div className="flex justify-end gap-3 md:col-span-2 mt-2">
 							<button
 								type="button"
-								className="border border-green-700 text-green-700 px-4 py-2 rounded-lg hover:bg-green-50 transition">
+								className="border border-green-700 text-green-700 px-4 py-2 rounded-lg hover:bg-green-50 transition cursor-pointer"
+								onClick={handleResetForm}>
 								Discard Changes
 							</button>
 							<button
 								type="submit"
-								className="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800 transition">
+								className="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800 transition cursor-pointer">
 								Save Changes
 							</button>
 						</div>
