@@ -6,168 +6,190 @@ import { endpoints } from '../../config/endpoints';
 import { toast } from 'react-toastify';
 import axiosDefault from 'axios';
 import formHeader from '../../../assets/images/addProductHeader.png';
+import LoadingSkeleton from "../../shared/LoadingSkeleton";
+
 
 const AddProductModal = ({ isOpen, onClose }) => {
-  const createProductMutation = useCreateFarmerProduct();
+	const createProductMutation = useCreateFarmerProduct();
 
-  const [formData, setFormData] = useState({
-    name: '',
-    category: '',
-    quantity: '',
-    min_quantity: '',
-    price: '',
-    location: '',
-    description: '',
-    images: [], // will hold base64 strings
-    unit: 'kg',
-  });
+	const [formData, setFormData] = useState({
+		name: "",
+		category: "",
+		quantity: "",
+		min_quantity: "",
+		price: "",
+		location: "",
+		description: "",
+		images: [], // will hold base64 strings
+		unit: "kg",
+	});
 
-  const [imagePreviews, setImagePreviews] = useState([]);
+	const [imagePreviews, setImagePreviews] = useState([]);
 
-  const categories = [
-    'crop',
-    'livestock',
-    'vegetables',
-    'fruit',
-    'poultry',
-    'dairy',
-  ];
+	const [isLoading, setIsLoading] = useState(false);
 
-  const units = [
-    'kg',
-    'g',
-    'lb',
-    'oz',
-    'tonnes',
-    'liters',
-    'ml',
-    'gallons',
-    'crates',
-    'bags',
-    'baskets',
-    'dozens',
-    'packs',
-    'bundles',
-  ];
+	const categories = [
+		"crop",
+		"livestock",
+		"vegetables",
+		"fruit",
+		"poultry",
+		"dairy",
+	];
 
-  // Handle text input and dropdown changes
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+	const units = [
+		"kg",
+		"g",
+		"lb",
+		"oz",
+		"tonnes",
+		"liters",
+		"ml",
+		"gallons",
+		"crates",
+		"bags",
+		"baskets",
+		"dozens",
+		"packs",
+		"bundles",
+	];
 
-  // Convert selected images to base64 strings
-  const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
+	// Handle text input and dropdown changes
+	const handleInputChange = (e) => {
+		const { name, value } = e.target;
+		setFormData((prev) => ({
+			...prev,
+			[name]: value,
+		}));
+	};
 
-    // Create local previews for display
-    const previews = files.map((file) => URL.createObjectURL(file));
-    setImagePreviews((prev) => [...prev, ...previews]);
+	// Convert selected images to base64 strings
+	const handleImageChange = (e) => {
+		const files = Array.from(e.target.files);
 
-    // Convert to base64 and update form data
-    files.forEach((file) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData((prev) => ({
-          ...prev,
-          images: [...prev.images, reader.result], // base64 string
-        }));
-      };
-      reader.readAsDataURL(file);
-    });
-  };
+		// Create local previews for display
+		const previews = files.map((file) => URL.createObjectURL(file));
+		setImagePreviews((prev) => [...prev, ...previews]);
 
-  // Remove an image
-  const removeImage = (index) => {
-    const newPreviews = imagePreviews.filter((_, i) => i !== index);
-    const newImages = formData.images.filter((_, i) => i !== index);
+		// Convert to base64 and update form data
+		files.forEach((file) => {
+			const reader = new FileReader();
+			reader.onloadend = () => {
+				setFormData((prev) => ({
+					...prev,
+					images: [...prev.images, reader.result], // base64 string
+				}));
+			};
+			reader.readAsDataURL(file);
+		});
+	};
 
-    setImagePreviews(newPreviews);
-    setFormData((prev) => ({
-      ...prev,
-      images: newImages,
-    }));
-  };
+	// Remove an image
+	const removeImage = (index) => {
+		const newPreviews = imagePreviews.filter((_, i) => i !== index);
+		const newImages = formData.images.filter((_, i) => i !== index);
 
-  // Submit form as JSON (images are strings)
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+		setImagePreviews(newPreviews);
+		setFormData((prev) => ({
+			...prev,
+			images: newImages,
+		}));
+	};
 
-    if (formData.name && formData.category && formData.location) {
-      const payload = {
-        name: formData.name,
-        category: formData.category,
-        description: formData.description,
-        quantity: `${formData.quantity} ${formData.unit}`,
-        price: formData.price,
-        discount_percentage: 100,
-        location: formData.location,
-        images: formData.images, // base64 strings
-      };
+	// Submit form as JSON (images are strings)
+	const handleSubmit = async (e) => {
+		e.preventDefault();
 
-      try {
-        const res = await axios.post(
-          endpoints().farmerProducts.create_product,
-          payload,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${Cookies.get('BIGFARMA_ACCESS_TOKEN')}`,
-            },
-          }
-        );
+		if (formData.name && formData.category && formData.location) {
+			setIsLoading(true);
 
-        const data = res.data;
-        console.log('Response:', data);
+			const payload = {
+				name: formData.name,
+				category: formData.category,
+				description: formData.description,
+				quantity: `${formData.quantity} ${formData.unit}`,
+				price: formData.price,
+				discount_percentage: 100,
+				location: formData.location,
+				images: formData.images, // base64 strings
+			};
 
-        if (res.status === 200 || res.status === 201) {
-          toast.success(data.message || 'Product added successfully!');
-          setTimeout(() => window.location.reload(), 1200);
-          resetForm();
-          onClose();
+			try {
+				const res = await axios.post(
+					endpoints().farmerProducts.create_product,
+					payload,
+					{
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: `Bearer ${Cookies.get("BIGFARMA_ACCESS_TOKEN")}`,
+						},
+					}
+				);
 
+				const data = res.data;
+				console.log("Response:", data);
+
+				if (res.status === 200 || res.status === 201) {
+					setIsLoading(false);
+					toast.success(data.message || "Product added successfully!");
+					setTimeout(() => window.location.reload(), 1200);
+					resetForm();
+					onClose();
         } else {
-          toast.error(data.message || 'Network error. Please try again.');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        if (axiosDefault.isAxiosError(error) && error.response) {
-          toast.error(error.response.data?.message || 'Unable to add product');
+          setIsLoading(false);
+					toast.error(data.message || "Network error. Please try again.");
+				}
+			} catch (error) {
+				console.error("Error:", error);
+				if (axiosDefault.isAxiosError(error) && error.response) {
+					toast.error(error.response.data?.message || "Unable to add product");
         } else {
-          toast.error('Unable to connect to the server');
-        }
-      }
-    }
-  };
+          setIsLoading(false);
+					toast.error("Unable to connect to the server");
+				}
+			}
+		}
+	};
 
-  // Reset form fields
-  const resetForm = () => {
-    setFormData({
-      name: '',
-      category: '',
-      quantity: '',
-      min_quantity: '',
-      price: '',
-      location: '',
-      description: '',
-      images: [],
-      unit: 'kg',
-    });
-    setImagePreviews([]);
-  };
+	// Reset form fields
+	const resetForm = () => {
+		setFormData({
+			name: "",
+			category: "",
+			quantity: "",
+			min_quantity: "",
+			price: "",
+			location: "",
+			description: "",
+			images: [],
+			unit: "kg",
+		});
+		setImagePreviews([]);
+	};
 
-  // Close modal
-  const handleClose = () => {
-    resetForm();
-    onClose();
-  };
+	// Close modal
+	const handleClose = () => {
+		resetForm();
+		onClose();
+	};
 
-  if (!isOpen) return null;
+	if (!isOpen) return null;
 
-  return (
+	// Loader Skeleton
+	if (isLoading) {
+		return (
+			<div className="flex justify-center items-center min-h-screen bg-gray-50">
+				<div className="flex flex-col items-center">
+					<div className="w-12 h-12 border-4 border-[#016130] border-t-transparent rounded-full animate-spin"></div>
+					<p className="mt-3 text-green-700 font-medium">
+						<LoadingSkeleton />
+					</p>
+				</div>
+			</div>
+		);
+	}
+
+	return (
 		<div className="fixed inset-0 flex items-center justify-center bg-gray-800/20  z-50">
 			<div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
 				{/* Header */}
