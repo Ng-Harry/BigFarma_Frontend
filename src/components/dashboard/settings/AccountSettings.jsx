@@ -230,7 +230,7 @@ const ResetBioData = () => {
 				</div>
 
 				{/* Form Section */}
-				<div className="rounded-lg shadow-[0_0_8px_rgba(0,0,0,0.15)] bg-white shadow-sm">
+				<div className="rounded-lg shadow-[0_0_8px_rgba(0,0,0,0.15)] bg-white p-6">
 					<h3 className="font-semibold text-lg text-gray-800 mb-4">
 						Change User Information
 					</h3>
