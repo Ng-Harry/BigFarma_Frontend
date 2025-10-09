@@ -183,7 +183,7 @@ const ResetBioData = () => {
 		return (
 			<div className="flex justify-center items-center min-h-screen bg-gray-50">
 				<div className="flex flex-col items-center">
-					<div className="w-12 h-12 border-4 border-green-700 border-t-transparent rounded-full animate-spin"></div>
+					<div className="w-12 h-12 border-4 border-[#016130] border-t-transparent rounded-full animate-spin"></div>
 					<p className="mt-3 text-green-700 font-medium">
 						<LoadingSkeleton />
 					</p>
@@ -197,7 +197,7 @@ const ResetBioData = () => {
 			{/* Main Section */}
 			<div className="w-full md:w-full space-y-3">
 				{/* Upload Section */}
-				<div className="flex items-center justify-between shadow-md rounded-lg p-4 bg-white">
+				<div className="flex items-center justify-between rounded-lg shadow-[0_0_8px_rgba(0,0,0,0.15)] p-4 bg-white">
 					<div className="flex items-center gap-4">
 						<img
 							src={
@@ -223,14 +223,14 @@ const ResetBioData = () => {
 					</div>
 					<button
 						type="button"
-						className="border border-green-700 text-green-700 px-4 py-2 rounded-lg hover:bg-green-50 transition cursor-pointer"
+						className="border border-[#016130] text-green-700 px-4 py-2 rounded-lg hover:bg-green-50 transition cursor-pointer"
 						onClick={() => document.getElementById("fileInput").click()}>
 						Update
 					</button>
 				</div>
 
 				{/* Form Section */}
-				<div className="shadow-md rounded-lg p-6 bg-white shadow-sm">
+				<div className="rounded-lg shadow-[0_0_8px_rgba(0,0,0,0.15)] bg-white shadow-sm">
 					<h3 className="font-semibold text-lg text-gray-800 mb-4">
 						Change User Information
 					</h3>
@@ -244,7 +244,7 @@ const ResetBioData = () => {
 								name="firstName"
 								value={formData.firstName}
 								onChange={handleChange}
-								className="mt-1 block w-full border border-green-700 rounded-lg p-2 focus:ring-green-600 focus:outline-none"
+								className="mt-1 block w-full border border-[#016130] rounded-lg p-2 focus:ring-[#003F1F] focus:outline-none"
 							/>
 						</div>
 
@@ -257,7 +257,7 @@ const ResetBioData = () => {
 								name="lastName"
 								value={formData.lastName}
 								onChange={handleChange}
-								className="mt-1 block w-full border border-green-700 rounded-lg p-2 focus:ring-green-600 focus:outline-none"
+								className="mt-1 block w-full border border-[#016130] rounded-lg p-2 focus:ring-[#003F1F] focus:outline-none"
 							/>
 						</div>
 
@@ -270,7 +270,7 @@ const ResetBioData = () => {
 								name="email"
 								value={formData.email}
 								onChange={handleChange}
-								className="w-full border border-green-700 rounded-lg p-2 focus:ring-green-600 focus:outline-none"
+								className="w-full border border-[#016130] rounded-lg p-2 focus:ring-[#003F1F] focus:outline-none"
 							/>
 						</div>
 
@@ -283,7 +283,7 @@ const ResetBioData = () => {
 								name="phone"
 								value={formData.phone}
 								onChange={handleChange}
-								className="w-full border border-green-700 rounded-lg p-2 focus:ring-green-600 focus:outline-none"
+								className="w-full border border-[#016130] rounded-lg p-2 focus:ring-[#003F1F] focus:outline-none"
 							/>
 						</div>
 
@@ -295,7 +295,7 @@ const ResetBioData = () => {
 								name="gender"
 								value={formData.gender}
 								onChange={handleChange}
-								className="mt-1 block w-full border border-green-700 rounded-lg p-2 focus:ring-green-600 focus:outline-none">
+								className="mt-1 block w-full border border-[#016130] rounded-lg p-2 focus:ring-[#003F1F] focus:outline-none">
 								<option value="gender">Select Gender</option>
 								<option>Female</option>
 								<option>Male</option>
@@ -311,19 +311,19 @@ const ResetBioData = () => {
 								rows="3"
 								value={formData.address}
 								onChange={handleChange}
-								className="mt-1 block w-full border border-green-700 rounded-lg p-2 focus:ring-green-600 focus:outline-none"></textarea>
+								className="mt-1 block w-full border border-[#016130] rounded-lg p-2 focus:ring-[#003F1F] focus:outline-none"></textarea>
 						</div>
 
-						<div className="flex justify-end gap-3 md:col-span-2 mt-2">
+						<div className="flex gap-4 md:col-span-2 mt-2">
 							<button
 								type="button"
-								className="border border-green-700 text-green-700 px-4 py-2 rounded-lg hover:bg-green-50 transition cursor-pointer"
+								className="border border-[#016130] text-green-700 px-4 py-2 rounded-lg hover:bg-green-50 transition cursor-pointer block w-full"
 								onClick={handleResetForm}>
 								Discard Changes
 							</button>
 							<button
 								type="submit"
-								className="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800 transition cursor-pointer">
+								className="bg-[#016130] text-white px-4 py-2 rounded-lg hover:bg-[#003F1F] transition cursor-pointer block w-full">
 								Save Changes
 							</button>
 						</div>
