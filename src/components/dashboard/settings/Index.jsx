@@ -1,4 +1,5 @@
 import ResetBioData from "./AccountSettings";
+import ChangePassword from "./ChangePassword";
 
 const sidebar = [
 	{
@@ -46,7 +47,8 @@ const AccountSettings = () => {
 
 			{/* Main Section */}
 			<Main>
-				<ResetBioData />
+                <ResetBioData />
+                {/* <ChangePassword/> */}
 			</Main>
 		</div>
 	);
