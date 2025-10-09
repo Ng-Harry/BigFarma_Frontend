@@ -128,7 +128,9 @@ export default function DashboardHeader({ onMenuClick }) {
 
 								<div className="hidden md:block">
 									<span className="text-sm font-bold text-gray-900 block">
-										{profile?.full_name || profile?.first_name || "Hi User"}
+										{profile?.full_name.split(" ")[0] ||
+											profile?.first_name ||
+											"Hi User"}
 									</span>
 									{role && (
 										<span className="text-xs text-gray-500 capitalize">
