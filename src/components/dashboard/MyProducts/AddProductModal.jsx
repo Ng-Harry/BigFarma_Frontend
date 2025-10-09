@@ -513,12 +513,12 @@ const AddProductModal = ({ isOpen, onClose }) => {
   const [imagePreviews, setImagePreviews] = useState([]);
 
   const categories = [
-    'Crop',
-    'Livestock',
+    'crop',
+    'livestock',
     'vegetables',
-    'Fruit',
-    'Poultry',
-    'Dairy',
+    'fruit',
+    'poultry',
+    'dairy',
   ];
 
   const units = [

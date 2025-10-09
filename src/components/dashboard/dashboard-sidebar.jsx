@@ -98,7 +98,7 @@ export default function DashboardSidebar({ isOpen, onClose }) {
 							const Icon = item.icon;
 							const isActive = isPathActive(item.path);
 							return (
-								<button
+								<button className="cursor-pointer"
 									key={item.name}
 									className={cn(
 										"w-full flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors",
