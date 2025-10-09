@@ -64,7 +64,7 @@ const MyProducts = () => {
     if (window.confirm('Are you sure you want to delete this product?')) {
       deleteMutation.mutate(productId, {
         onSuccess: (data) => {
-          toast.success(data.message)
+          toast.success(`Product Deleted Succcessfully: ${data.message}`)
         },
         onError: (error) => {
           alert(`Failed to delete product: ${error.message}`);
