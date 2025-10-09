@@ -33,8 +33,8 @@ export const endpoints = () => {
 		farmerProducts: {
 			create_product: `marketplace/farmers/products`,
 			get_product: `marketplace/farmers/products`,
-			update_product: `marketplace/farmers/products/{product_id}`,
-			delete_product: `marketplace/farmers/products/{product_id}`,
+			update_product: `marketplace/farmers/products`,
+			delete_product: `marketplace/farmers/products`,
 		},
 	};
 };

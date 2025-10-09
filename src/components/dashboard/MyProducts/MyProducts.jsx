@@ -1,4 +1,3 @@
-// src/pages/FarmerProductsPage.jsx
 import React, { useMemo, useState } from 'react';
 import DataTablePage from '../farmer/components/farmer-table/dataTable';
 import {
