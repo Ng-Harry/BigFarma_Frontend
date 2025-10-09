@@ -212,12 +212,12 @@ const AccountSettings = () => {
 			{/* Sidebar */}
 			<div className="w-full md:w-1/3 space-y-3">
 				{sidebar.map((data) => {
-					<div key={data.Title} className="border rounded-xl p-4 hover:border-green-700 cursor-pointer transition">
+					return (<div key={data.Title} className="border rounded-xl p-4 hover:border-green-700 cursor-pointer transition">
 						<h3 className="font-semibold text-lg text-gray-800">
 							{data.Title}
 						</h3>
 						<p className="text-gray-500 text-sm">{data.Description}</p>
-					</div>;
+					</div>)
 				})}
 
 				{/* <div className="border rounded-xl p-4 hover:border-green-700 cursor-pointer transition">
