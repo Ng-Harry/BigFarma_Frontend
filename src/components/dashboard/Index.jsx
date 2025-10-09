@@ -10,7 +10,8 @@ import ConsumerProfileSetup from "./consumer/consumerProfile/Index.jsx";
 import Cookies from "js-cookie";
 import { endpoints } from "../config/endpoints";
 import { axios } from "../../lib/axios";
-import LoaderSpinner from "../shared/Loader.jsx";
+// import LoaderSpinner from "../shared/Loader.jsx";
+import LoadingSkeleton from "../shared/Loader.jsx";
 
 const Dashboard = () => {
   const role = Cookies.get("BIGFARMA_ROLE");
@@ -64,10 +65,10 @@ const Dashboard = () => {
 
   if(loading) {
     return (
-      <div className="flex items-center justify-center h-[70vh]">
-        <LoaderSpinner />
-      </div>
-    );
+			<div className="flex items-center justify-center h-[70vh]">
+				<LoadingSkeleton />
+			</div>
+		);
   }
 
   return (
