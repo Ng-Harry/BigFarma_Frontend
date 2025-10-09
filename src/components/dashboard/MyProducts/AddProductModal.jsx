@@ -125,8 +125,10 @@ const AddProductModal = ({ isOpen, onClose }) => {
 
         if (res.status === 200 || res.status === 201) {
           toast.success(data.message || 'Product added successfully!');
+          setTimeout(() => window.location.reload(), 1200);
           resetForm();
           onClose();
+
         } else {
           toast.error(data.message || 'Network error. Please try again.');
         }

@@ -65,6 +65,7 @@ const MyProducts = () => {
       deleteMutation.mutate(productId, {
         onSuccess: () => {
           toast.success("Product Deleted Succcessfully")
+          setTimeout(() => window.location.reload(), 1200);
         },
         onError: (error) => {
           alert(`Failed to delete product: ${error.message}`);
@@ -76,7 +77,7 @@ const MyProducts = () => {
 
   const handleRestock = (productId) => {
     const quantity = prompt('Enter new quantity:');
-    if (quantity && !isNaN(quantity)) {
+    if (quantity && (quantity)) {
       restockMutation.mutate(
         { productId, quantity: parseInt(quantity) },
         {
