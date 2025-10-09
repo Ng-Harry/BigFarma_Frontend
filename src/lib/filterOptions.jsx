@@ -8,7 +8,7 @@ export default function FiltersComponent({ setFilterOpen }) {
     const [selectedLocations, setSelectedLocations] = useState([]);
     const [maxPrice, setMaxPrice] = useState('');
 
-    const categories = ['Vegetables', 'Livestock', 'Crops and Grain'];
+    const categories = ['Vegetables', 'Livestock', 'Grains', 'Protein'];
     const productTypes = ['Fresh', 'Processed', 'Organic', 'Conventional'];
     const locations = ['North', 'South', 'East', 'West', 'Central'];
 
