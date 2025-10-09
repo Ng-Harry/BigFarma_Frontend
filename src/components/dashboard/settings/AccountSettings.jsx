@@ -6,9 +6,7 @@ import { toast } from "react-toastify";
 import axiosDefault from "axios";
 import LoadingSkeleton from "../../shared/LoadingSkeleton";
 
-
 const ResetBioData = () => {
-
 	const [formData, setFormData] = useState({
 		firstName: "",
 		lastName: "",
@@ -196,144 +194,140 @@ const ResetBioData = () => {
 
 	return (
 		<>
-			<div className="min-h-screen bg-gray-50 p-6 flex flex-col md:flex-row gap-6">
-				{/* Main Section */}
-				<div className="w-full md:w-2/3 space-y-6">
-					{/* Upload Section */}
-					<div className="flex items-center justify-between border rounded-xl p-4 bg-white">
-						<div className="flex items-center gap-4">
-							<img
-								src={
-									imagePreview ||
-									"https://cdn-icons-png.flaticon.com/512/847/847969.png"
-								}
-								alt="Profile"
-								className="w-16 h-16 rounded-full object-cover border"
+			{/* Main Section */}
+			<div className="w-full md:w-2/3 space-y-6">
+				{/* Upload Section */}
+				<div className="flex items-center justify-between border rounded-xl p-4 bg-white">
+					<div className="flex items-center gap-4">
+						<img
+							src={
+								imagePreview ||
+								"https://cdn-icons-png.flaticon.com/512/847/847969.png"
+							}
+							alt="Profile"
+							className="w-16 h-16 rounded-full object-cover border"
+						/>
+						<div>
+							<p className="font-semibold text-gray-800">Upload A New Photo</p>
+							<p className="text-sm text-gray-500">
+								{profileImage ? "Selected Image" : "Profile.pic.jpg"}
+							</p>
+							<input
+								type="file"
+								id="fileInput"
+								accept="image/*"
+								className="hidden"
+								onChange={handleImageChange}
 							/>
-							<div>
-								<p className="font-semibold text-gray-800">
-									Upload A New Photo
-								</p>
-								<p className="text-sm text-gray-500">
-									{profileImage ? "Selected Image" : "Profile.pic.jpg"}
-								</p>
-								<input
-									type="file"
-									id="fileInput"
-									accept="image/*"
-									className="hidden"
-									onChange={handleImageChange}
-								/>
-							</div>
 						</div>
-						<button
-							type="button"
-							className="border border-green-700 text-green-700 px-4 py-2 rounded-lg hover:bg-green-50 transition cursor-pointer"
-							onClick={() => document.getElementById("fileInput").click()}>
-							Update
-						</button>
 					</div>
+					<button
+						type="button"
+						className="border border-green-700 text-green-700 px-4 py-2 rounded-lg hover:bg-green-50 transition cursor-pointer"
+						onClick={() => document.getElementById("fileInput").click()}>
+						Update
+					</button>
+				</div>
 
-					{/* Form Section */}
-					<div className="border rounded-xl p-6 bg-white shadow-sm">
-						<h3 className="font-semibold text-lg text-gray-800 mb-4">
-							Change User Information
-						</h3>
-						<form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-4">
-							<div>
-								<label className="block text-sm font-medium text-gray-700">
-									First Name <span className="text-red-500">*</span>
-								</label>
-								<input
-									type="text"
-									name="firstName"
-									value={formData.firstName}
-									onChange={handleChange}
-									className="mt-1 block w-full border border-green-700 rounded-lg p-2 focus:ring-green-600 focus:outline-none"
-								/>
-							</div>
+				{/* Form Section */}
+				<div className="border rounded-xl p-6 bg-white shadow-sm">
+					<h3 className="font-semibold text-lg text-gray-800 mb-4">
+						Change User Information
+					</h3>
+					<form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-4">
+						<div>
+							<label className="block text-sm font-medium text-gray-700">
+								First Name <span className="text-red-500">*</span>
+							</label>
+							<input
+								type="text"
+								name="firstName"
+								value={formData.firstName}
+								onChange={handleChange}
+								className="mt-1 block w-full border border-green-700 rounded-lg p-2 focus:ring-green-600 focus:outline-none"
+							/>
+						</div>
 
-							<div>
-								<label className="block text-sm font-medium text-gray-700">
-									Last Name <span className="text-red-500">*</span>
-								</label>
-								<input
-									type="text"
-									name="lastName"
-									value={formData.lastName}
-									onChange={handleChange}
-									className="mt-1 block w-full border border-green-700 rounded-lg p-2 focus:ring-green-600 focus:outline-none"
-								/>
-							</div>
+						<div>
+							<label className="block text-sm font-medium text-gray-700">
+								Last Name <span className="text-red-500">*</span>
+							</label>
+							<input
+								type="text"
+								name="lastName"
+								value={formData.lastName}
+								onChange={handleChange}
+								className="mt-1 block w-full border border-green-700 rounded-lg p-2 focus:ring-green-600 focus:outline-none"
+							/>
+						</div>
 
-							<div>
-								<label className="block text-sm font-medium text-gray-700">
-									Email
-								</label>
-								<input
-									type="email"
-									name="email"
-									value={formData.email}
-									onChange={handleChange}
-									className="w-full border border-green-700 rounded-lg p-2 focus:ring-green-600 focus:outline-none"
-								/>
-							</div>
+						<div>
+							<label className="block text-sm font-medium text-gray-700">
+								Email
+							</label>
+							<input
+								type="email"
+								name="email"
+								value={formData.email}
+								onChange={handleChange}
+								className="w-full border border-green-700 rounded-lg p-2 focus:ring-green-600 focus:outline-none"
+							/>
+						</div>
 
-							<div>
-								<label className="block text-sm font-medium text-gray-700">
-									Phone Number <span className="text-red-500">*</span>
-								</label>
-								<input
-									type="tel"
-									name="phone"
-									value={formData.phone}
-									onChange={handleChange}
-									className="w-full border border-green-700 rounded-lg p-2 focus:ring-green-600 focus:outline-none"
-								/>
-							</div>
+						<div>
+							<label className="block text-sm font-medium text-gray-700">
+								Phone Number <span className="text-red-500">*</span>
+							</label>
+							<input
+								type="tel"
+								name="phone"
+								value={formData.phone}
+								onChange={handleChange}
+								className="w-full border border-green-700 rounded-lg p-2 focus:ring-green-600 focus:outline-none"
+							/>
+						</div>
 
-							<div className="md:col-span-2">
-								<label className="block text-sm font-medium text-gray-700">
-									Gender
-								</label>
-								<select
-									name="gender"
-									value={formData.gender}
-									onChange={handleChange}
-									className="mt-1 block w-full border border-green-700 rounded-lg p-2 focus:ring-green-600 focus:outline-none">
-									<option value="gender">Select Gender</option>
-									<option>Female</option>
-									<option>Male</option>
-								</select>
-							</div>
+						<div className="md:col-span-2">
+							<label className="block text-sm font-medium text-gray-700">
+								Gender
+							</label>
+							<select
+								name="gender"
+								value={formData.gender}
+								onChange={handleChange}
+								className="mt-1 block w-full border border-green-700 rounded-lg p-2 focus:ring-green-600 focus:outline-none">
+								<option value="gender">Select Gender</option>
+								<option>Female</option>
+								<option>Male</option>
+							</select>
+						</div>
 
-							<div className="md:col-span-2">
-								<label className="block text-sm font-medium text-gray-700">
-									Address
-								</label>
-								<textarea
-									name="address"
-									rows="3"
-									value={formData.address}
-									onChange={handleChange}
-									className="mt-1 block w-full border border-green-700 rounded-lg p-2 focus:ring-green-600 focus:outline-none"></textarea>
-							</div>
+						<div className="md:col-span-2">
+							<label className="block text-sm font-medium text-gray-700">
+								Address
+							</label>
+							<textarea
+								name="address"
+								rows="3"
+								value={formData.address}
+								onChange={handleChange}
+								className="mt-1 block w-full border border-green-700 rounded-lg p-2 focus:ring-green-600 focus:outline-none"></textarea>
+						</div>
 
-							<div className="flex justify-end gap-3 md:col-span-2 mt-2">
-								<button
-									type="button"
-									className="border border-green-700 text-green-700 px-4 py-2 rounded-lg hover:bg-green-50 transition cursor-pointer"
-									onClick={handleResetForm}>
-									Discard Changes
-								</button>
-								<button
-									type="submit"
-									className="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800 transition cursor-pointer">
-									Save Changes
-								</button>
-							</div>
-						</form>
-					</div>
+						<div className="flex justify-end gap-3 md:col-span-2 mt-2">
+							<button
+								type="button"
+								className="border border-green-700 text-green-700 px-4 py-2 rounded-lg hover:bg-green-50 transition cursor-pointer"
+								onClick={handleResetForm}>
+								Discard Changes
+							</button>
+							<button
+								type="submit"
+								className="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800 transition cursor-pointer">
+								Save Changes
+							</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</>
