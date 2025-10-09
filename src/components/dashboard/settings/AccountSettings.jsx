@@ -195,7 +195,7 @@ const ResetBioData = () => {
 	return (
 		<>
 			{/* Main Section */}
-			<div className="w-full md:w-2/3 space-y-6">
+			<div className="w-full md:w-2/3 space-y-3">
 				{/* Upload Section */}
 				<div className="flex items-center justify-between border rounded-xl p-4 bg-white">
 					<div className="flex items-center gap-4">
