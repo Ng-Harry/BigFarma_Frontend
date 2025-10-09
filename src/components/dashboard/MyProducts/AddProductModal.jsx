@@ -94,7 +94,6 @@
 //     }));
 //   };
 
-  
 //   const payload = {
 //     name: formData.name,
 //     category: formData.category,
@@ -108,7 +107,7 @@
 
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
-    
+
 //     			try {
 // 						const res = await axios.post(
 // 							endpoints().farmerProducts.create_product,
@@ -128,7 +127,7 @@
 
 // 						if (res.status === 200 || res.status === 201) {
 // 							toast.success(data.message || "Product added successfully!");
-							
+
 // 						} else {
 // 							toast.error(data.message || "Network error. Please try again.");
 // 						}
@@ -142,10 +141,8 @@
 // 							toast.error("Unable to connect to the server");
 // 						}
 // 					}
-    
+
 //   }
-    
-  
 
 //   const resetForm = () => {
 //     setFormData({
@@ -489,56 +486,56 @@
 
 // export default AddProductModal;
 
-
-import React, { useState } from "react";
-import { useCreateFarmerProduct } from "../../../hooks/useFarmerProducts";
-import { axios } from "../../../lib/axios";
-import Cookies from "js-cookie";
-import { endpoints } from "../../config/endpoints";
-import { toast } from "react-toastify";
-import axiosDefault from "axios";
+import React, { useState } from 'react';
+import { useCreateFarmerProduct } from '../../../hooks/useFarmerProducts';
+import { axios } from '../../../lib/axios';
+import Cookies from 'js-cookie';
+import { endpoints } from '../../config/endpoints';
+import { toast } from 'react-toastify';
+import axiosDefault from 'axios';
+import formHeader from '../../../assets/images/addProductHeader.png';
 
 const AddProductModal = ({ isOpen, onClose }) => {
   const createProductMutation = useCreateFarmerProduct();
 
   const [formData, setFormData] = useState({
-    name: "",
-    category: "",
-    quantity: "",
-    min_quantity: "",
-    price: "",
-    location: "",
-    description: "",
+    name: '',
+    category: '',
+    quantity: '',
+    min_quantity: '',
+    price: '',
+    location: '',
+    description: '',
     images: [], // will hold base64 strings
-    unit: "kg",
+    unit: 'kg',
   });
 
   const [imagePreviews, setImagePreviews] = useState([]);
 
   const categories = [
-    "Crop",
-    "Livestock",
-    "vegetables",
-    "Fruit",
-    "Poultry",
-    "Dairy",
+    'Crop',
+    'Livestock',
+    'vegetables',
+    'Fruit',
+    'Poultry',
+    'Dairy',
   ];
 
   const units = [
-    "kg",
-    "g",
-    "lb",
-    "oz",
-    "tonnes",
-    "liters",
-    "ml",
-    "gallons",
-    "crates",
-    "bags",
-    "baskets",
-    "dozens",
-    "packs",
-    "bundles",
+    'kg',
+    'g',
+    'lb',
+    'oz',
+    'tonnes',
+    'liters',
+    'ml',
+    'gallons',
+    'crates',
+    'bags',
+    'baskets',
+    'dozens',
+    'packs',
+    'bundles',
   ];
 
   // Handle text input and dropdown changes
@@ -587,65 +584,63 @@ const AddProductModal = ({ isOpen, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (
-      formData.name && formData.category && formData.location
-    ){
-			const payload = {
-				name: formData.name,
-				category: formData.category,
-				description: formData.description,
-				quantity: `${formData.quantity} ${formData.unit}`,
-				price: formData.price,
-				discount_percentage: 100,
-				location: formData.location,
-				images: formData.images, // base64 strings
-			};
+    if (formData.name && formData.category && formData.location) {
+      const payload = {
+        name: formData.name,
+        category: formData.category,
+        description: formData.description,
+        quantity: `${formData.quantity} ${formData.unit}`,
+        price: formData.price,
+        discount_percentage: 100,
+        location: formData.location,
+        images: formData.images, // base64 strings
+      };
 
-			try {
-				const res = await axios.post(
-					endpoints().farmerProducts.create_product,
-					payload,
-					{
-						headers: {
-							"Content-Type": "application/json",
-							Authorization: `Bearer ${Cookies.get("BIGFARMA_ACCESS_TOKEN")}`,
-						},
-					}
-				);
+      try {
+        const res = await axios.post(
+          endpoints().farmerProducts.create_product,
+          payload,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${Cookies.get('BIGFARMA_ACCESS_TOKEN')}`,
+            },
+          }
+        );
 
-				const data = res.data;
-				console.log("Response:", data);
+        const data = res.data;
+        console.log('Response:', data);
 
-				if (res.status === 200 || res.status === 201) {
-					toast.success(data.message || "Product added successfully!");
-					resetForm();
-					onClose();
-				} else {
-					toast.error(data.message || "Network error. Please try again.");
-				}
-			} catch (error) {
-				console.error("Error:", error);
-				if (axiosDefault.isAxiosError(error) && error.response) {
-					toast.error(error.response.data?.message || "Unable to add product");
-				} else {
-					toast.error("Unable to connect to the server");
-				}
-			}
-		}
+        if (res.status === 200 || res.status === 201) {
+          toast.success(data.message || 'Product added successfully!');
+          resetForm();
+          onClose();
+        } else {
+          toast.error(data.message || 'Network error. Please try again.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        if (axiosDefault.isAxiosError(error) && error.response) {
+          toast.error(error.response.data?.message || 'Unable to add product');
+        } else {
+          toast.error('Unable to connect to the server');
+        }
+      }
+    }
   };
 
   // Reset form fields
   const resetForm = () => {
     setFormData({
-      name: "",
-      category: "",
-      quantity: "",
-      min_quantity: "",
-      price: "",
-      location: "",
-      description: "",
+      name: '',
+      category: '',
+      quantity: '',
+      min_quantity: '',
+      price: '',
+      location: '',
+      description: '',
       images: [],
-      unit: "kg",
+      unit: 'kg',
     });
     setImagePreviews([]);
   };
@@ -659,10 +654,13 @@ const AddProductModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-white/20 backdrop-blur-xs z-50">
       <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4">
+          <div>
+            <img src={formHeader} alt="Add Product Header" />
+          </div>
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-2xl font-bold text-gray-900">
@@ -707,7 +705,7 @@ const AddProductModal = ({ isOpen, onClose }) => {
             <div>
               <label
                 htmlFor="name"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className="block text-sm font-semibold text-gray-800 mb-2"
               >
                 Product Name
               </label>
@@ -718,7 +716,7 @@ const AddProductModal = ({ isOpen, onClose }) => {
                 value={formData.name}
                 onChange={handleInputChange}
                 placeholder="Enter Product Name"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-green-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-green-200"
                 required
               />
             </div>
@@ -727,7 +725,7 @@ const AddProductModal = ({ isOpen, onClose }) => {
             <div>
               <label
                 htmlFor="category"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className="block text-sm font-semibold text-gray-800 mb-2"
               >
                 Category
               </label>
@@ -736,10 +734,12 @@ const AddProductModal = ({ isOpen, onClose }) => {
                 name="category"
                 value={formData.category}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500"
+                className="w-full px-3 py-2 border text-gray-400 border-gray-300 rounded-md focus:ring-2 focus:ring-green-200"
                 required
               >
-                <option value="">Select Category</option>
+                <option value="" className="">
+                  Select Category
+                </option>
                 {categories.map((category) => (
                   <option key={category} value={category}>
                     {category}
@@ -749,56 +749,54 @@ const AddProductModal = ({ isOpen, onClose }) => {
             </div>
 
             {/* Quantity and Unit */}
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label
-                  htmlFor="quantity"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
-                  Quantity
-                </label>
-                <input
-                  type="number"
-                  id="quantity"
-                  name="quantity"
-                  value={formData.quantity}
-                  onChange={handleInputChange}
-                  placeholder="Enter Quantity"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500"
-                  required
-                  min="0"
-                  step="0.01"
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="unit"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
-                  Unit
-                </label>
-                <select
-                  id="unit"
-                  name="unit"
-                  value={formData.unit}
-                  onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500"
-                  required
-                >
-                  {units.map((unit) => (
-                    <option key={unit} value={unit}>
-                      {unit}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            <div>
+              <label
+                htmlFor="quantity"
+                className="block text-sm font-medium text-gray-800 mb-2"
+              >
+                Quantity
+              </label>
+              <input
+                type="number"
+                id="quantity"
+                name="quantity"
+                value={formData.quantity}
+                onChange={handleInputChange}
+                placeholder="Enter Quantity"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500"
+                required
+                min="0"
+                step="0.01"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="unit"
+                className="block text-sm font-semibold text-gray-800 mb-2"
+              >
+                Unit
+              </label>
+              <select
+                id="unit"
+                name="unit"
+                value={formData.unit}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border text-gray-400 text-right  border-gray-300 rounded-md focus:ring-2 focus:ring-green-500"
+                required
+              >
+                {units.map((unit) => (
+                  <option key={unit} value={unit}>
+                    {unit}
+                  </option>
+                ))}
+              </select>
             </div>
 
             {/* Minimum Quantity */}
             <div>
               <label
                 htmlFor="min_quantity"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className="block text-sm font-semibold text-gray-800 mb-2"
               >
                 Minimum Quantity
               </label>
@@ -820,7 +818,7 @@ const AddProductModal = ({ isOpen, onClose }) => {
             <div>
               <label
                 htmlFor="price"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className="block text-sm font-semibold text-gray-800 mb-2"
               >
                 Price (₦)
               </label>
@@ -842,7 +840,7 @@ const AddProductModal = ({ isOpen, onClose }) => {
             <div>
               <label
                 htmlFor="location"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className="block text-sm font-semibold text-gray-800 mb-2"
               >
                 Location
               </label>
@@ -862,7 +860,7 @@ const AddProductModal = ({ isOpen, onClose }) => {
             <div>
               <label
                 htmlFor="description"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className="block text-sm font-semibold text-gray-800 mb-2"
               >
                 Product Description
               </label>
@@ -872,7 +870,7 @@ const AddProductModal = ({ isOpen, onClose }) => {
                 value={formData.description}
                 onChange={handleInputChange}
                 rows={4}
-                placeholder="Describe your product (quality, freshness, etc.)"
+                placeholder="Describe your product (quality, freshness, etc.).  minimum of 20 characters"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 resize-vertical"
                 required
               />
@@ -880,7 +878,7 @@ const AddProductModal = ({ isOpen, onClose }) => {
 
             {/* Add Images */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-gray-800 mb-2">
                 Add Image
               </label>
               <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
@@ -962,11 +960,11 @@ const AddProductModal = ({ isOpen, onClose }) => {
               <button
                 type="submit"
                 disabled={createProductMutation.isLoading}
-                className="px-6 py-2 rounded-md text-sm font-medium text-white bg-green-600 hover:bg-green-700 disabled:opacity-50"
+                className="px-6 py-2 rounded-md text-sm font-medium text-white bg-green-800 hover:bg-green-700 disabled:opacity-50"
               >
                 {createProductMutation.isLoading
-                  ? "Adding Product..."
-                  : "Add Product"}
+                  ? 'Adding Product...'
+                  : 'Add Product'}
               </button>
             </div>
           </form>
