@@ -25,6 +25,7 @@ const categories = [
 
 const Marketplace = () => {
   const [filterOpen, setFilterOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   return (
     <div>
@@ -108,6 +109,7 @@ const Marketplace = () => {
           {categories.map((category) => (
             <div
               key={category.id}
+              onClick={() => setSelectedCategory(category.name)}
               className="py-2 h-22 cursor-pointer w-full lg:w-[1fr] px-5 rounded-lg bg-white shadow"
             >
               <div className="flex gap-10 justify-start items-center">
@@ -137,7 +139,7 @@ const Marketplace = () => {
       </div>
       {/* product list  */}
       <section className=" mt-5 mb-10">
-        <ProductsList />
+        <ProductsList selectedCategory={selectedCategory} onClearCategory={() => setSelectedCategory(null)} />
       </section>
     </div>
   );
