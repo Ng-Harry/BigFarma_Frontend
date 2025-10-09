@@ -47,8 +47,8 @@ const AccountSettings = () => {
 
 			{/* Main Section */}
 			<Main>
-                {/* <ResetBioData /> */}
-                <ChangePassword/>
+                <ResetBioData />
+                {/* <ChangePassword/> */}
 			</Main>
 		</div>
 	);
