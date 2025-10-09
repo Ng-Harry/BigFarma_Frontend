@@ -6,7 +6,7 @@ const PendingVerification = ({ onNext }) => {
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
-		// show pending first, then switch to loading
+		
 		const loaderTimer = setTimeout(() => {
 			setLoading(true);
 		}, 1500);
