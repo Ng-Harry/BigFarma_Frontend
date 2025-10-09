@@ -14,6 +14,15 @@ const AccountSettings = () => {
 	const [profileImage, setProfileImage] = useState(null);
 	const [imagePreview, setImagePreview] = useState(null);
 
+	const [formData, setFormData] = useState({
+		firstName: firstname,
+		lastName: lastname,
+		email: email,
+		phone: phone,
+		gender: "gender",
+		address: address,
+	});
+
 	const token = Cookies.get("BIGFARMA_ACCESS_TOKEN");
 	const role = Cookies.get("BIGFARMA_ROLE");
 
@@ -63,14 +72,14 @@ const AccountSettings = () => {
 		fetchProfileDetails();
 	}, [role, token]);
 
-	const [formData, setFormData] = useState({
-		firstName: firstname,
-		lastName: lastname,
-		email: email,
-		phone: phone,
-		gender: "gender",
-		address: address,
-	});
+	// const [formData, setFormData] = useState({
+	// 	firstName: firstname,
+	// 	lastName: lastname,
+	// 	email: email,
+	// 	phone: phone,
+	// 	gender: "gender",
+	// 	address: address,
+	// });
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -295,6 +304,7 @@ const AccountSettings = () => {
 								value={formData.gender}
 								onChange={handleChange}
 								className="mt-1 block w-full border border-green-700 rounded-lg p-2 focus:ring-green-600 focus:outline-none">
+								<option value="gender">Select Gender</option>
 								<option>Female</option>
 								<option>Male</option>
 							</select>
