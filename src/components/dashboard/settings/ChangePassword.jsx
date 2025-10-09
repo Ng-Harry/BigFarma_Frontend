@@ -211,12 +211,12 @@ const ChangePassword = () => {
 					<button
 						type="button"
 						onClick={handleDiscard}
-						className="border border-green-700 text-green-700 px-8 py-2 rounded-lg hover:bg-green-50 transition">
+						className="border border-green-700 text-green-700 px-4 py-2 rounded-lg hover:bg-green-50 transition">
 						Discard Changes
 					</button>
 					<button
 						type="submit"
-						className="bg-green-700 text-white px-8 py-2 rounded-lg hover:bg-green-800 transition">
+						className="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800 transition">
 						Save Changes
 					</button>
 				</div>
