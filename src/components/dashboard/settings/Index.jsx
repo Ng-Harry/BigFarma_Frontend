@@ -24,18 +24,14 @@ const sidebar = [
 ];
 
 const AccountSettings = () => {
-	const [path, setPath] = useState("edit-profile");
-	const navigate = useNavigate();
-	const location = useLocation();
+    const [path, setPath] = useState("edit-profile");
 
 	const handleNavClick = (item) => {
 		setPath(item.path);
-		// navigate(item.path);
 	};
 
 	const isPathActive = (itemPath) => {
-		return itemPath === itemPath;
-		// return location.pathname.startsWith(itemPath);
+		return itemPath === path;
 	};
 
 	return (
@@ -50,7 +46,7 @@ const AccountSettings = () => {
 							onClick={() => handleNavClick(data)}
 							className={cn(
 								"rounded-lg shadow-[0_0_8px_rgba(0,0,0,0.15)] bg-white p-4 hover:border-[#016130] cursor-pointer transition",
-								isActive ? "border-[#016130]" : "border-none"
+								isActive ? "border border-[#016130]" : "border-none"
 							)}>
 							<h3 className="font-semibold text-lg text-gray-800">
 								{data.Title}
@@ -65,10 +61,6 @@ const AccountSettings = () => {
 			{path === "edit-profile" && <ResetBioData />}
 			{path === "change-password" && <ChangePassword />}
 			{path === "delete-account" && <DeleteAccount />}
-
-			{/* <div>
-                {children}
-            </div> */}
 		</div>
 	);
 };

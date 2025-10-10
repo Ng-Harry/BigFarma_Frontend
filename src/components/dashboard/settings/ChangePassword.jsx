@@ -63,7 +63,7 @@ const ChangePassword = () => {
 	};
 
 	return (
-		<div className="w-full md:w-2/3 space-y-3 bg-white rounded-lg shadow-[0_0_8px_rgba(0,0,0,0.15)]">
+		<div className="w-full md:w-2/3 space-y-3 bg-white rounded-lg shadow-[0_0_8px_rgba(0,0,0,0.15)] p-6">
 			<h2 className="text-lg font-semibold text-gray-800">
 				Change your password
 			</h2>
@@ -207,7 +207,7 @@ const ChangePassword = () => {
 				)}
 
 				{/* Buttons */}
-				<div className="flex justify-end gap-3 mt-4">
+				<div className="flex justify-between gap-3 mt-4">
 					<button
 						type="button"
 						onClick={handleDiscard}

@@ -228,33 +228,6 @@ const App = () => {
 						</DashboardLayout>
 					}
 				/>
-
-				{/* <Route
-					path="/settings/edit-profile"
-					element={
-						<DashboardLayout>
-							<ResetBioDataPage />
-						</DashboardLayout>
-					}
-				/>
-
-				<Route
-					path="/settings/change-password"
-					element={
-						<DashboardLayout>
-							<ChangePasswordPage />
-						</DashboardLayout>
-					}
-				/>
-
-				<Route
-					path="/settings/delete-account"
-					element={
-						<DashboardLayout>
-							<DeleteAccountPage />
-						</DashboardLayout>
-					}
-				/> */}
 			</Routes>
 		</>
 	);
