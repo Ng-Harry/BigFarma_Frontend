@@ -18,6 +18,7 @@ import {
 	Wallet,
 } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
+import LoadingSkeleton from "../shared/LoadingSkeleton"
 
 const role = Cookies.get("BIGFARMA_ROLE");
 
@@ -26,7 +27,7 @@ const navigationItems = [
 
 	role === "farmer"
 		? { name: "My Products", icon: ShoppingCart, path: "/my-products" }
-		: { name: "Marketplace", icon: Store, path: "/marketplace" },
+		: role === "consumer" ? { name: "Marketplace", icon: Store, path: "/marketplace" } : null,
 
 	role === "farmer"
 		? { name: "Orders", icon: ShoppingBag, path: "/farmer-orders" }
@@ -51,7 +52,6 @@ const navigationItems = [
 export default function DashboardSidebar({ isOpen, onClose }) {
 	const navigate = useNavigate();
 	const location = useLocation();
-	const token = Cookies.get("BIGFARMA_ACCESS_TOKEN");
 
 	const handleNavClick = (item) => {
 		if (item.name === "Logout") {
@@ -80,6 +80,19 @@ export default function DashboardSidebar({ isOpen, onClose }) {
 		return location.pathname.startsWith(itemPath);
 	};
 
+	if (role === null) {
+		return (
+			<div className="flex justify-center items-center min-h-screen bg-gray-50">
+				<div className="flex flex-col items-center">
+					<div className="w-12 h-12 border-4 border-[#016130] border-t-transparent rounded-full animate-spin"></div>
+					<p className="mt-3 text-green-700 font-medium">
+						<LoadingSkeleton />
+					</p>
+				</div>
+			</div>
+		);
+	}
+
 	return (
 		<>
 			{/* Desktop sidebar */}
@@ -93,7 +106,7 @@ export default function DashboardSidebar({ isOpen, onClose }) {
 						/>
 					</div>
 
-					{role &&
+					{role !== null  &&
 						<nav className="flex-1 px-4 py-6 space-y-2 mt-6">
 						{navigationItems.map((item) => {
 							const Icon = item.icon;
