@@ -239,7 +239,7 @@ export default function ProductDetail() {
                             <div className="p-4 bg-white shadow rounded-md">
                                 <div className="w-full h-48 rounded-t-md bg-slate-100 flex items-center justify-center">
                                     <img
-                                        src={item.image}
+                                        src={item.images}
                                         alt={item.name}
                                         className="w-fit"
                                     />
