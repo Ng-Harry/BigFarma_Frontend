@@ -93,15 +93,16 @@ export default function DashboardSidebar({ isOpen, onClose }) {
 						/>
 					</div>
 
-					<nav className="flex-1 px-4 py-6 space-y-2 mt-6">
+					{role &&
+						<nav className="flex-1 px-4 py-6 space-y-2 mt-6">
 						{navigationItems.map((item) => {
 							const Icon = item.icon;
 							const isActive = isPathActive(item.path);
 							return (
-								<button className="cursor-pointer"
+								<button
 									key={item.name}
 									className={cn(
-										"w-full flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors",
+										"w-full flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors cursor-pointer",
 										isActive
 											? "bg-green-100 text-green-700 border border-green-200"
 											: "text-neutral-600 hover:bg-gray-50 hover:text-gray-900"
@@ -112,7 +113,7 @@ export default function DashboardSidebar({ isOpen, onClose }) {
 								</button>
 							);
 						})}
-					</nav>
+					</nav>}
 				</div>
 			</div>
 
