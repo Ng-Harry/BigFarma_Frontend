@@ -94,7 +94,7 @@ export default function ProductDetail() {
                 <div className="p-6 lg:w-1/2 bg-white rounded-lg shadow">
                     <div className="mb-4 lg:w-full h-64 lg:h-96 lg:mb-10">
                         <img
-                            src={Array.isArray(data.images) ? data.images[0] : data.images}
+                            src={(Array.isArray(data.images) ? data.images[0] : `${data.images?.[0]},${data.images?.[1]}`) || data.images}
                             alt={data.name}
                             className="h-full bg-slate-50 mb-4  object-cover rounded"
                         />
