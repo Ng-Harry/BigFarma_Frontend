@@ -102,7 +102,7 @@ const MyProducts = () => {
       render: (item) => (
         <div className="flex items-center">
           <img
-            src={item.image}
+            src={item.images}
             alt={item.product}
             className="w-10 h-10 rounded-lg object-cover mr-3"
             onError={(e) => {
