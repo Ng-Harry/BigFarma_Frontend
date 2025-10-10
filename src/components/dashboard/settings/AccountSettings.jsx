@@ -178,7 +178,7 @@ const ResetBioData = () => {
 		}
 	};
 
-	// ✅ Loader Skeleton
+	// Loader Skeleton
 	if (loading) {
 		return (
 			<div className="flex justify-center items-center min-h-screen bg-gray-50">

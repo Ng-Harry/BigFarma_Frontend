@@ -6,6 +6,8 @@ import axiosDefault from "axios";
 
 const BASE_URL = "https://bigfarma-backend.onrender.com/api/v1";
 
+const token = Cookies.get("BIGFARMA_ACCESS_TOKEN");
+
 export const farmerApi = {
 	// Orders (your existing endpoints)
 	getOrders: () => axios.get(`${BASE_URL}/orders/`),
@@ -19,8 +21,7 @@ export const farmerApi = {
 	getProducts: () =>
 		axios.get(endpoints().farmerProducts.get_product, {
 			headers: {
-				
-				Authorization: `Bearer ${Cookies.get("BIGFARMA_ACCESS_TOKEN")}`,
+				Authorization: `Bearer ${token}`,
 			},
 		}),
 
@@ -42,9 +43,10 @@ export const farmerApi = {
 			}
 		});
 
-		return axios.post(`${BASE_URL}/products/create/`, formData, {
+		return axios.post(endpoints().farmerProducts.create_product, formData, {
 			headers: {
-				"Content-Type": "multipart/form-data",
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
 			},
 		});
 	},
@@ -63,18 +65,52 @@ export const farmerApi = {
 			}
 		});
 
-		return axios.patch(`${BASE_URL}/products/${productId}/update/`, formData, {
-			headers: {
-				"Content-Type": "multipart/form-data",
-			},
-		});
+		return axios.put(
+			`${endpoints().farmerProducts.update_product}/${productId}`,
+			formData,
+			{
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+			}
+		);
 	},
-	deleteProduct: (productId) =>
-		axios.delete(`${BASE_URL}/products/${productId}/delete/`),
-	restockProduct: (productId, quantityData) =>
-		axios.patch(`${BASE_URL}/products/${productId}/restock/`, quantityData),
-	updateProductStatus: (productId, statusData) =>
-		axios.patch(`${BASE_URL}/products/${productId}/update-status/`, statusData),
+	deleteProduct: (productId) => {
+		return (
+			axios.delete(`${endpoints().farmerProducts.delete_product}/${productId}`),
+			{
+				Authorization: `Bearer ${token}`,
+			}
+		);
+	},
+
+	restockProduct: (productId, quantityData) => {
+		return (
+			axios.put(
+				`${endpoints().farmerProducts.update_product}/${productId}`,
+				quantityData
+			),
+			{
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			}
+		);
+	},
+
+	updateProductStatus: (productId, statusData) =>{
+		return (
+			axios.put(
+				`${endpoints().farmerProducts.update_product}/${productId}`,
+				statusData
+			),
+			{
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			}
+		);
+	},
+	
 };
 
 export default farmerApi;
