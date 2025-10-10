@@ -31,19 +31,19 @@ const navigationItems = [
 
 	role === "farmer"
 		? { name: "Orders", icon: ShoppingBag, path: "/farmer-orders" }
-		: { name: "Group Buy", icon: Users, path: "/group-buy" },
+		: role === "consumer" ? { name: "Group Buy", icon: Users, path: "/group-buy" } : null,
 
 	role === "farmer"
 		? { name: "Marketplace", icon: TrendingUp, path: "/marketplace" }
-		: { name: "My Orders", icon: ShoppingBag, path: "/orders" },
+		: role === "consumer" ? { name: "My Orders", icon: ShoppingBag, path: "/orders" } : null,
 
 	role === "farmer"
 		? { name: "Wallet", icon: Wallet, path: "/wallet" }
-		: { name: "Investment", icon: TrendingUp, path: "/investment" },
+		: role === "consumer" ? { name: "Investment", icon: TrendingUp, path: "/investment" } : null,
 
 	role === "farmer"
 		? { name: "Investment", icon: Store, path: "/investment" }
-		: { name: "Transaction", icon: ArrowLeftRight, path: "/transactions" },
+		: role === "consumer" ? { name: "Transaction", icon: ArrowLeftRight, path: "/transactions" } : null,
 
 	{ name: "Settings", icon: Settings, path: "/settings" },
 	{ name: "Logout", icon: LogOut, path: "/sign-in" },
