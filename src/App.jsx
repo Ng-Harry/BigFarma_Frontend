@@ -9,7 +9,6 @@ import ForgotPassword from './pages/ForgotPassword';
 import InputOtp from './pages/InputOtp';
 import ResetPassword from './pages/ResetPassword';
 import RoleSelection from './pages/RoleSelection';
-import MainAccountSettings from "./components/dashboard/settings/Index"
 
 import {
   DashboardPage,
@@ -36,9 +35,6 @@ import WalletPage from "./pages/WalletPage";
 import TransactionsPage from "./pages/TransactionsPage";
 import MyProductsPage from "./pages/MyProductsPage";
 import SettingsPage from "./pages/SettingsPage";
-import ResetBioDataPage from "./pages/ResetBioDataPage";
-import ChangePasswordPage from "./pages/ChangePasswordPage";
-import DeleteAccountPage from "./pages/DeleteAccountPage";
 
 
 
