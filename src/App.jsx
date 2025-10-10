@@ -229,32 +229,32 @@ const App = () => {
 					}
 				/>
 
-				<Route
+				{/* <Route
 					path="/settings/edit-profile"
 					element={
-						<MainAccountSettings>
+						<DashboardLayout>
 							<ResetBioDataPage />
-						</MainAccountSettings>
+						</DashboardLayout>
 					}
 				/>
 
 				<Route
 					path="/settings/change-password"
 					element={
-						<MainAccountSettings>
+						<DashboardLayout>
 							<ChangePasswordPage />
-						</MainAccountSettings>
+						</DashboardLayout>
 					}
 				/>
 
 				<Route
 					path="/settings/delete-account"
 					element={
-						<MainAccountSettings>
+						<DashboardLayout>
 							<DeleteAccountPage />
-						</MainAccountSettings>
+						</DashboardLayout>
 					}
-				/>
+				/> */}
 			</Routes>
 		</>
 	);

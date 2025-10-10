@@ -6,4 +6,4 @@ const ResetBioDataPage = () => {
     )
 }
 
-export default ResetBioDataPage;;
+export default ResetBioDataPage;
