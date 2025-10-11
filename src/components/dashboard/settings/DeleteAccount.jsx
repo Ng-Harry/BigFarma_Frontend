@@ -19,12 +19,12 @@ const DeleteAccount = () => {
 			</p>
 
 			<div className="space-y-3">
-				<div className="border rounded-lg p-3 text-gray-700 text-sm">
+				<div className="border p-3 text-gray-700 text-sm">
 					You can restore your BigFarma account if it was accidentally
 					wrongfully deactivated for up to 30 days after deactivation
 				</div>
 
-				<div className="border rounded-lg p-3 text-gray-700 text-sm">
+				<div className="border p-3 text-gray-700 text-sm">
 					If you just want to change your name, you don’t need to deactivate
 					your account, edit it in your{" "}
 					<a href="/settings" className="text-[#016130] font-medium">
