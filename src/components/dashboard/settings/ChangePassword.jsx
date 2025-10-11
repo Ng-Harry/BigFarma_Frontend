@@ -63,7 +63,7 @@ const ChangePassword = () => {
 	};
 
 	return (
-		<div className="w-full md:w-2/3 space-y-3 bg-white rounded-lg shadow-[0_0_8px_rgba(0,0,0,0.15)] p-6">
+		<div className="w-full md:w-full space-y-3 bg-white rounded-lg shadow-[0_0_8px_rgba(0,0,0,0.15)] p-6">
 			<h2 className="text-lg font-semibold text-gray-800">
 				Change your password
 			</h2>
@@ -71,9 +71,9 @@ const ChangePassword = () => {
 				Update password for enhanced account security.
 			</p>
 
-			<form onSubmit={handleSubmit} className="space-y-4">
+			<form onSubmit={handleSubmit} className="grid md:grid-cols-2 space-y-4">
 				{/* Current Password */}
-				<div>
+				<div className="md:col-span-2">
 					<label className="block text-sm font-medium text-gray-700">
 						Current Password <span className="text-red-500">*</span>
 					</label>
@@ -101,7 +101,7 @@ const ChangePassword = () => {
 				</div>
 
 				{/* New Password */}
-				<div>
+				<div className="md:col-span-2">
 					<label className="block text-sm font-medium text-gray-700">
 						New Password <span className="text-red-500">*</span>
 					</label>
@@ -129,7 +129,7 @@ const ChangePassword = () => {
 				</div>
 
 				{/* Confirm Password */}
-				<div>
+				<div className="md:col-span-2">
 					<label className="block text-sm font-medium text-gray-700">
 						Confirm New Password <span className="text-red-500">*</span>
 					</label>
@@ -223,12 +223,12 @@ const ChangePassword = () => {
 					<button
 						type="button"
 						onClick={handleDiscard}
-						className="border border-green-700 text-green-700 px-4 py-2 rounded-lg hover:bg-green-50 transition">
+						className="border border-[#016130] text-[#016130] px-4 py-2 rounded-lg hover:bg-green-50 transition block w-full">
 						Discard Changes
 					</button>
 					<button
 						type="submit"
-						className="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800 transition">
+						className="bg-[#016130] text-white px-4 py-2 rounded-lg hover:bg-[#003F1F] transition block w-full">
 						Save Changes
 					</button>
 				</div>
