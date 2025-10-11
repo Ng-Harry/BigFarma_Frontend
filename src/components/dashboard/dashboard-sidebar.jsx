@@ -26,29 +26,30 @@ import { useEffect } from "react";
 // const role = Cookies.get("BIGFARMA_ROLE");
 
 export default function DashboardSidebar({ isOpen, onClose }) {
-	const [role, setRole] = useState(null);
+	// const [role, setRole] = useState(null);
+	const role = Cookies.get("BIGFARMA_ROLE");
 	const navigate = useNavigate();
 	const location = useLocation();
 	const token = Cookies.get("BIGFARMA_ACCESS_TOKEN");
 	
 
-	useEffect(() => {
-		const fetchRole = async () => {
-			try {
-				const response = await axios.get(endpoints().users.profile, {
-					headers: {
-						Authorization: `Bearer ${token}`,
-					},
-				});
-				const data = await response.data;
-				setRole(data.category);
-			} catch (error) {
-				console.error("Error fetching profile:", error);
-				setRole(null);
-			}
-		};
-		fetchRole();
-	}, [role, token])
+	// useEffect(() => {
+	// 	const fetchRole = async () => {
+	// 		try {
+	// 			const response = await axios.get(endpoints().users.profile, {
+	// 				headers: {
+	// 					Authorization: `Bearer ${token}`,
+	// 				},
+	// 			});
+	// 			const data = await response.data;
+	// 			setRole(data.category);
+	// 		} catch (error) {
+	// 			console.error("Error fetching profile:", error);
+	// 			setRole(null);
+	// 		}
+	// 	};
+	// 	fetchRole();
+	// }, [role, token])
 
 	// const navigationItems = [
 	// 	{ name: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },

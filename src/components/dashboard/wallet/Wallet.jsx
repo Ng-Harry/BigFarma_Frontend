@@ -2,21 +2,41 @@ import React from "react";
 import { Wallet, TrendingUp, Eye, EyeClosed } from "lucide-react";
 import QuickActions from "./QuickActions";
 import History from "./History.jsx";
+import {walletApi} from "../../../lib/walletApi";
+import { useQuery } from "@tanstack/react-query";
 
-const balance = 102500.78;
-const ledgerBalance = 118600.0;
+// const balance = 102500.78;
+// const ledgerBalance = 118600.0;
 
 const WalletDashboard = () => {
+    const {
+    data: walletData,
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery({
+    queryKey: ["walletDashboard"],
+    queryFn: walletApi,
+    refetchOnWindowFocus: false, // disable auto refresh when switching tabs
+  });
+
   const [isVisible, setIsVisible] = React.useState(true);
   // const [wallet , setWallet] = React.useState(null);
   // const [ledger , setLedger] = React.useState(null);
-  const toggleVisibility = () => {
-    setIsVisible(!isVisible);
-  };
+    const toggleVisibility = () => setIsVisible((prev) => !prev);
+
+  if (isLoading) return <p>Loading wallet data...</p>;
+  if (isError) return <p>Failed to load wallet info 😞</p>;
+ if (!walletData) return null;
+
+  // const { wallet, recent_transactions, total_earnings, total_withdrawals } =
+  //   walletData;
+  const { wallet,} =
+    walletData;
   return (
     <>
       <div className="w-full  bg-[#016130] p-5 rounded-lg  text-white">
-        <div className="flex items-center justify-between gap-4 ">
+        <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <Wallet size={35} strokeWidth={1} />
             <p className="text-xl font-semibold">Wallet Balance</p>
@@ -32,7 +52,7 @@ const WalletDashboard = () => {
               <span className="font-light pr-0.5">₦</span>
               {/* ₦{" "} */}
               {isVisible
-                ? balance.toLocaleString("en-US", { minimumFractionDigits: 2 })
+                ? wallet.balance.toLocaleString("en-US", { minimumFractionDigits: 2 })
                 : "*********"}
             </p>
             {isVisible ? (
@@ -54,7 +74,7 @@ const WalletDashboard = () => {
           <div className="flex items-center  gap-1">
             <p>Ledger balance</p>
             <span>
-              {ledgerBalance.toLocaleString("en-US", {
+              {wallet.ledger_balance.toLocaleString("en-US", {
                 minimumFractionDigits: 2,
               })}
             </span>

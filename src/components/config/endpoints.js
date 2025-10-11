@@ -36,5 +36,10 @@ export const endpoints = () => {
 			update_product: `marketplace/farmers/products`,
 			delete_product: `marketplace/farmers/products`,
 		},
+		wallet: {
+			wallet: `/wallet`,
+			dashboard: `/wallet/dashboard`,
+			// withdraw: `/wallet/withdraw`,
+		},
 	};
 };
