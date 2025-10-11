@@ -6,491 +6,500 @@ import { endpoints } from '../../config/endpoints';
 import { toast } from 'react-toastify';
 import axiosDefault from 'axios';
 import formHeader from '../../../assets/images/addProductHeader.png';
-import LoadingSkeleton from "../../shared/LoadingSkeleton";
-
+import LoadingSkeleton from '../../shared/LoadingSkeleton';
 
 const AddProductModal = ({ isOpen, onClose }) => {
-	const createProductMutation = useCreateFarmerProduct();
+  const createProductMutation = useCreateFarmerProduct();
 
-	const [formData, setFormData] = useState({
-		name: "",
-		category: "",
-		quantity: "",
-		min_quantity: "",
-		price: "",
-		location: "",
-		description: "",
-		images: [], // will hold base64 strings
-		unit: "kg",
-	});
+  const [formData, setFormData] = useState({
+    name: '',
+    category: '',
+    quantity: '',
+    min_quantity: '',
+    price: '',
+    location: '',
+    description: '',
+    images: [], // will hold base64 strings
+    unit: 'kg',
+  });
 
-	const [imagePreviews, setImagePreviews] = useState([]);
+  const [imagePreviews, setImagePreviews] = useState([]);
 
-	const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-	const categories = [
-		"crop",
-		"livestock",
-		"vegetables",
-		"fruit",
-		"poultry",
-		"dairy",
-	];
+  const categories = ['crop', 'livestock'];
 
-	const units = [
-		"kg",
-		"g",
-		"lb",
-		"oz",
-		"tonnes",
-		"liters",
-		"ml",
-		"gallons",
-		"crates",
-		"bags",
-		"baskets",
-		"dozens",
-		"packs",
-		"bundles",
-	];
+  const units = [
+    'kg',
+    'g',
+    'lb',
+    'oz',
+    'tonnes',
+    'liters',
+    'ml',
+    'gallons',
+    'crates',
+    'bags',
+    'baskets',
+    'dozens',
+    'packs',
+    'bundles',
+  ];
 
-	// Handle text input and dropdown changes
-	const handleInputChange = (e) => {
-		const { name, value } = e.target;
-		setFormData((prev) => ({
-			...prev,
-			[name]: value,
-		}));
-	};
+  // Handle text input and dropdown changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
-	// Convert selected images to base64 strings
-	const handleImageChange = (e) => {
-		const files = Array.from(e.target.files);
+  // Convert selected images to base64 strings
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
 
-		// Create local previews for display
-		const previews = files.map((file) => URL.createObjectURL(file));
-		setImagePreviews((prev) => [...prev, ...previews]);
+    // Create local previews for display
+    const previews = files.map((file) => URL.createObjectURL(file));
+    setImagePreviews((prev) => [...prev, ...previews]);
 
-		// Convert to base64 and update form data
-		files.forEach((file) => {
-			const reader = new FileReader();
-			reader.onloadend = () => {
-				setFormData((prev) => ({
-					...prev,
-					images: [...prev.images, reader.result], // base64 string
-				}));
-			};
-			reader.readAsDataURL(file);
-		});
-	};
+    // Convert to base64 and update form data
+    files.forEach((file) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData((prev) => ({
+          ...prev,
+          images: [...prev.images, reader.result], // base64 string
+        }));
+      };
+      reader.readAsDataURL(file);
+    });
+  };
 
-	// Remove an image
-	const removeImage = (index) => {
-		const newPreviews = imagePreviews.filter((_, i) => i !== index);
-		const newImages = formData.images.filter((_, i) => i !== index);
+  // Remove an image
+  const removeImage = (index) => {
+    const newPreviews = imagePreviews.filter((_, i) => i !== index);
+    const newImages = formData.images.filter((_, i) => i !== index);
 
-		setImagePreviews(newPreviews);
-		setFormData((prev) => ({
-			...prev,
-			images: newImages,
-		}));
-	};
+    setImagePreviews(newPreviews);
+    setFormData((prev) => ({
+      ...prev,
+      images: newImages,
+    }));
+  };
 
-	// Submit form as JSON (images are strings)
-	const handleSubmit = async (e) => {
-		e.preventDefault();
+  // Submit form as JSON (images are strings)
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-		if (formData.name && formData.category && formData.location) {
-			setIsLoading(true);
+    if (formData.name && formData.category && formData.location) {
+      setIsLoading(true);
 
-			const payload = {
-				name: formData.name,
-				category: formData.category,
-				description: formData.description,
-				quantity: `${formData.quantity} ${formData.unit}`,
-				price: formData.price,
-				discount_percentage: 100,
-				location: formData.location,
-				images: formData.images, // base64 strings
-			};
+      const payload = {
+        name: formData.name,
+        category: formData.category,
+        description: formData.description,
+        quantity: `${formData.quantity} ${formData.unit}`,
+        price: formData.price,
+        discount_percentage: 100,
+        location: formData.location,
+        images: formData.images, // base64 strings
+      };
 
-			try {
-				const res = await axios.post(
-					endpoints().farmerProducts.create_product,
-					payload,
-					{
-						headers: {
-							"Content-Type": "application/json",
-							Authorization: `Bearer ${Cookies.get("BIGFARMA_ACCESS_TOKEN")}`,
-						},
-					}
-				);
+      try {
+        const res = await axios.post(
+          endpoints().farmerProducts.create_product,
+          payload,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${Cookies.get('BIGFARMA_ACCESS_TOKEN')}`,
+            },
+          }
+        );
 
-				const data = res.data;
-				console.log("Response:", data);
+        const data = res.data;
+        console.log('Response:', data);
 
-				if (res.status === 200 || res.status === 201) {
-					setIsLoading(false);
-					toast.success(data.message || "Product added successfully!");
-					setTimeout(() => window.location.reload(), 1200);
-					resetForm();
-					onClose();
+        if (res.status === 200 || res.status === 201) {
+          setIsLoading(false);
+          toast.success(data.message || 'Product added successfully!');
+          setTimeout(() => window.location.reload(), 1200);
+          resetForm();
+          onClose();
         } else {
           setIsLoading(false);
-					toast.error(data.message || "Network error. Please try again.");
-				}
-			} catch (error) {
-				console.error("Error:", error);
-				if (axiosDefault.isAxiosError(error) && error.response) {
-					toast.error(error.response.data?.message || "Unable to add product");
+          toast.error(data.message || 'Network error. Please try again.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        if (axiosDefault.isAxiosError(error) && error.response) {
+          toast.error(error.response.data?.message || 'Unable to add product');
         } else {
           setIsLoading(false);
-					toast.error("Unable to connect to the server");
-				}
-			}
-		}
-	};
+          toast.error('Unable to connect to the server');
+        }
+      }
+    }
+  };
 
-	// Reset form fields
-	const resetForm = () => {
-		setFormData({
-			name: "",
-			category: "",
-			quantity: "",
-			min_quantity: "",
-			price: "",
-			location: "",
-			description: "",
-			images: [],
-			unit: "kg",
-		});
-		setImagePreviews([]);
-	};
+  // Reset form fields
+  const resetForm = () => {
+    setFormData({
+      name: '',
+      category: '',
+      quantity: '',
+      min_quantity: '',
+      price: '',
+      location: '',
+      description: '',
+      images: [],
+      unit: 'kg',
+    });
+    setImagePreviews([]);
+  };
 
-	// Close modal
-	const handleClose = () => {
-		resetForm();
-		onClose();
-	};
+  // Close modal
+  const handleClose = () => {
+    resetForm();
+    onClose();
+  };
 
-	if (!isOpen) return null;
+  if (!isOpen) return null;
 
-	// Loader Skeleton
-	if (isLoading) {
-		return (
-			<div className="flex justify-center items-center min-h-screen bg-gray-50">
-				<div className="flex flex-col items-center">
-					<div className="w-12 h-12 border-4 border-[#016130] border-t-transparent rounded-full animate-spin"></div>
-					<p className="mt-3 text-green-700 font-medium">
-						<LoadingSkeleton />
-					</p>
-				</div>
-			</div>
-		);
-	}
+  // Loader Skeleton
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-gray-50">
+        <div className="flex flex-col items-center">
+          <div className="w-12 h-12 border-4 border-[#016130] border-t-transparent rounded-full animate-spin"></div>
+          <p className="mt-3 text-green-700 font-medium">
+            <LoadingSkeleton />
+          </p>
+        </div>
+      </div>
+    );
+  }
 
-	return (
-		<div className="fixed inset-0 flex items-center justify-center bg-gray-800/20  z-50">
-			<div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-				{/* Header */}
-				<div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4">
-					<div>
-						<img src={formHeader} alt="Add Product Header" />
-					</div>
-					<div className="flex items-center justify-between">
-						<div>
-							<h2 className="text-2xl font-bold text-gray-900">
-								Add Your Produce to the Marketplace
-							</h2>
-							<p className="text-gray-600 mt-1">
-								Showcase your fresh produce to buyers. Add clear details so they
-								know exactly what you're offering.
-							</p>
-						</div>
-						<button
-							onClick={handleClose}
-							className="text-gray-400 hover:text-gray-600 transition-colors">
-							<svg
-								className="w-6 h-6"
-								fill="none"
-								stroke="currentColor"
-								viewBox="0 0 24 24">
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth={2}
-									d="M6 18L18 6M6 6l12 12"
-								/>
-							</svg>
-						</button>
-					</div>
-				</div>
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-800/20  z-50">
+      <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        {/* Header */}
+        <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4">
+          <div>
+            <img src={formHeader} alt="Add Product Header" />
+          </div>
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900">
+                Add Your Produce to the Marketplace
+              </h2>
+              <p className="text-gray-600 mt-1">
+                Showcase your fresh produce to buyers. Add clear details so they
+                know exactly what you're offering.
+              </p>
+            </div>
+            <button
+              onClick={handleClose}
+              className="text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
 
-				{/* Form */}
-				<div className="p-6">
-					<div className="border-b border-gray-200 pb-4 mb-6">
-						<h3 className="text-xl font-semibold text-gray-800">
-							Add Products
-						</h3>
-					</div>
+        {/* Form */}
+        <div className="p-6">
+          <div className="border-b border-gray-200 pb-4 mb-6">
+            <h3 className="text-xl font-semibold text-gray-800">
+              Add Products
+            </h3>
+          </div>
 
-					<form onSubmit={handleSubmit} className="space-y-6">
-						{/* Product Name */}
-						<div>
-							<label
-								htmlFor="name"
-								className="block text-sm font-semibold text-gray-800 mb-2">
-								Product Name
-							</label>
-							<input
-								type="text"
-								id="name"
-								name="name"
-								value={formData.name}
-								onChange={handleInputChange}
-								placeholder="Enter Product Name"
-								className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm  focus:ring-green-700 focus:outline-none focus:ring-1 focus:border-none"
-								required
-							/>
-						</div>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Product Name */}
+            <div>
+              <label
+                htmlFor="name"
+                className="block text-sm font-semibold text-gray-800 mb-2"
+              >
+                Product Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                placeholder="Enter Product Name"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm  focus:ring-green-700 focus:outline-none focus:ring-1 focus:border-none"
+                required
+              />
+            </div>
 
-						{/* Category */}
-						<div>
-							<label
-								htmlFor="category"
-								className="block text-sm font-semibold text-gray-800 mb-2">
-								Category
-							</label>
-							<select
-								id="category"
-								name="category"
-								value={formData.category}
-								onChange={handleInputChange}
-								className="w-full px-3 py-2 border text-gray-400 border-gray-300 rounded-md focus:ring-green-700 focus:outline-none focus:ring-1 focus:border-none"
-								required>
-								<option value="" className="">
-									Select Category
-								</option>
-								{categories.map((category) => (
-									<option key={category} value={category}>
-										{category}
-									</option>
-								))}
-							</select>
-						</div>
+            {/* Category */}
+            <div>
+              <label
+                htmlFor="category"
+                className="block text-sm font-semibold text-gray-800 mb-2"
+              >
+                Category
+              </label>
+              <select
+                id="category"
+                name="category"
+                value={formData.category}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border text-gray-400 border-gray-300 rounded-md focus:ring-green-700 focus:outline-none focus:ring-1 focus:border-none"
+                required
+              >
+                <option value="" className="">
+                  Select Category
+                </option>
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-						{/* Quantity and Unit */}
-						<div>
-							<label
-								htmlFor="quantity"
-								className="block text-sm font-medium text-gray-800 mb-2">
-								Quantity
-							</label>
-							<input
-								type="number"
-								id="quantity"
-								name="quantity"
-								value={formData.quantity}
-								onChange={handleInputChange}
-								placeholder="Enter Quantity"
-								className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-700 focus:outline-none focus:ring-1 focus:border-none"
-								required
-								min="0"
-								step="0.01"
-							/>
-						</div>
-						<div>
-							<label
-								htmlFor="unit"
-								className="block text-sm font-semibold text-gray-800 mb-2">
-								Unit
-							</label>
-							<select
-								id="unit"
-								name="unit"
-								value={formData.unit}
-								onChange={handleInputChange}
-								className="w-full px-3 py-2 border text-gray-400 border-gray-300 rounded-md focus:ring-green-700 focus:outline-none focus:ring-1 focus:border-none"
-								required>
-								{units.map((unit) => (
-									<option key={unit} value={unit}>
-										{unit}
-									</option>
-								))}
-							</select>
-						</div>
+            {/* Quantity and Unit */}
+            <div>
+              <label
+                htmlFor="quantity"
+                className="block text-sm font-medium text-gray-800 mb-2"
+              >
+                Quantity
+              </label>
+              <input
+                type="number"
+                id="quantity"
+                name="quantity"
+                value={formData.quantity}
+                onChange={handleInputChange}
+                placeholder="Enter Quantity"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-700 focus:outline-none focus:ring-1 focus:border-none"
+                required
+                min="0"
+                step="0.01"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="unit"
+                className="block text-sm font-semibold text-gray-800 mb-2"
+              >
+                Unit
+              </label>
+              <select
+                id="unit"
+                name="unit"
+                value={formData.unit}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border text-gray-400 border-gray-300 rounded-md focus:ring-green-700 focus:outline-none focus:ring-1 focus:border-none"
+                required
+              >
+                {units.map((unit) => (
+                  <option key={unit} value={unit}>
+                    {unit}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-						{/* Minimum Quantity */}
-						<div>
-							<label
-								htmlFor="min_quantity"
-								className="block text-sm font-semibold text-gray-800 mb-2">
-								Minimum Quantity
-							</label>
-							<input
-								type="number"
-								id="min_quantity"
-								name="min_quantity"
-								value={formData.min_quantity}
-								onChange={handleInputChange}
-								placeholder="Enter minimum quantity"
-								className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-700 focus:outline-none focus:ring-1 focus:border-none"
-								required
-								min="0"
-								step="0.01"
-							/>
-						</div>
+            {/* Minimum Quantity */}
+            <div>
+              <label
+                htmlFor="min_quantity"
+                className="block text-sm font-semibold text-gray-800 mb-2"
+              >
+                Minimum Quantity
+              </label>
+              <input
+                type="number"
+                id="min_quantity"
+                name="min_quantity"
+                value={formData.min_quantity}
+                onChange={handleInputChange}
+                placeholder="Enter minimum quantity"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-700 focus:outline-none focus:ring-1 focus:border-none"
+                required
+                min="0"
+                step="0.01"
+              />
+            </div>
 
-						{/* Price */}
-						<div>
-							<label
-								htmlFor="price"
-								className="block text-sm font-semibold text-gray-800 mb-2">
-								Price (₦)
-							</label>
-							<input
-								type="number"
-								id="price"
-								name="price"
-								value={formData.price}
-								onChange={handleInputChange}
-								placeholder="Enter Price"
-								className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-700 focus:outline-none focus:ring-1 focus:border-none"
-								required
-								min="0"
-								step="0.01"
-							/>
-						</div>
+            {/* Price */}
+            <div>
+              <label
+                htmlFor="price"
+                className="block text-sm font-semibold text-gray-800 mb-2"
+              >
+                Price (₦)
+              </label>
+              <input
+                type="number"
+                id="price"
+                name="price"
+                value={formData.price}
+                onChange={handleInputChange}
+                placeholder="Enter Price"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-700 focus:outline-none focus:ring-1 focus:border-none"
+                required
+                min="0"
+                step="0.01"
+              />
+            </div>
 
-						{/* Location */}
-						<div>
-							<label
-								htmlFor="location"
-								className="block text-sm font-semibold text-gray-800 mb-2">
-								Location
-							</label>
-							<input
-								type="text"
-								id="location"
-								name="location"
-								value={formData.location}
-								onChange={handleInputChange}
-								placeholder="Farm Location or Pickup Address"
-								className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-700 focus:outline-none focus:ring-1 focus:border-none"
-								required
-							/>
-						</div>
+            {/* Location */}
+            <div>
+              <label
+                htmlFor="location"
+                className="block text-sm font-semibold text-gray-800 mb-2"
+              >
+                Location
+              </label>
+              <input
+                type="text"
+                id="location"
+                name="location"
+                value={formData.location}
+                onChange={handleInputChange}
+                placeholder="Farm Location or Pickup Address"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-700 focus:outline-none focus:ring-1 focus:border-none"
+                required
+              />
+            </div>
 
-						{/* Description */}
-						<div>
-							<label
-								htmlFor="description"
-								className="block text-sm font-semibold text-gray-800 mb-2">
-								Product Description
-							</label>
-							<textarea
-								id="description"
-								name="description"
-								value={formData.description}
-								onChange={handleInputChange}
-								rows={4}
-								placeholder="Describe your product (quality, freshness, etc.).  minimum of 20 characters"
-								className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-700 focus:outline-none focus:ring-1 focus:border-none resize-vertical"
-								required
-							/>
-						</div>
+            {/* Description */}
+            <div>
+              <label
+                htmlFor="description"
+                className="block text-sm font-semibold text-gray-800 mb-2"
+              >
+                Product Description
+              </label>
+              <textarea
+                id="description"
+                name="description"
+                value={formData.description}
+                onChange={handleInputChange}
+                rows={4}
+                placeholder="Describe your product (quality, freshness, etc.).  minimum of 20 characters"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-700 focus:outline-none focus:ring-1 focus:border-none resize-vertical"
+                required
+              />
+            </div>
 
-						{/* Add Images */}
-						<div>
-							<label className="block text-sm font-semibold text-gray-800 mb-2">
-								Add Image
-							</label>
-							<div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
-								<div className="space-y-1 text-center">
-									<svg
-										className="mx-auto h-12 w-12 text-gray-400"
-										stroke="currentColor"
-										fill="none"
-										viewBox="0 0 48 48">
-										<path
-											d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-											strokeWidth={2}
-											strokeLinecap="round"
-											strokeLinejoin="round"
-										/>
-									</svg>
-									<div className="flex text-sm text-gray-600">
-										<label
-											htmlFor="images"
-											className="relative cursor-pointer bg-white rounded-md font-medium text-green-600 hover:text-green-500">
-											<span>Upload images</span>
-											<input
-												id="images"
-												name="images"
-												type="file"
-												multiple
-												accept="image/*"
-												onChange={handleImageChange}
-												className="sr-only"
-											/>
-										</label>
-										<p className="pl-1">or drag and drop</p>
-									</div>
-									<p className="text-xs text-gray-500">
-										PNG, JPG, GIF up to 10MB each
-									</p>
-								</div>
-							</div>
+            {/* Add Images */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-800 mb-2">
+                Add Image
+              </label>
+              <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                <div className="space-y-1 text-center">
+                  <svg
+                    className="mx-auto h-12 w-12 text-gray-400"
+                    stroke="currentColor"
+                    fill="none"
+                    viewBox="0 0 48 48"
+                  >
+                    <path
+                      d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                      strokeWidth={2}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  <div className="flex text-sm text-gray-600">
+                    <label
+                      htmlFor="images"
+                      className="relative cursor-pointer bg-white rounded-md font-medium text-green-600 hover:text-green-500"
+                    >
+                      <span>Upload images</span>
+                      <input
+                        id="images"
+                        name="images"
+                        type="file"
+                        multiple
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        className="sr-only"
+                      />
+                    </label>
+                    <p className="pl-1">or drag and drop</p>
+                  </div>
+                  <p className="text-xs text-gray-500">
+                    PNG, JPG, GIF up to 10MB each
+                  </p>
+                </div>
+              </div>
 
-							{/* Image Previews */}
-							{imagePreviews.length > 0 && (
-								<div className="mt-4">
-									<h4 className="text-sm font-medium text-gray-700 mb-2">
-										Selected Images:
-									</h4>
-									<div className="flex flex-wrap gap-2">
-										{imagePreviews.map((preview, index) => (
-											<div key={index} className="relative">
-												<img
-													src={preview}
-													alt={`Preview ${index + 1}`}
-													className="h-20 w-20 object-cover rounded-md"
-												/>
-												<button
-													type="button"
-													onClick={() => removeImage(index)}
-													className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
-													×
-												</button>
-											</div>
-										))}
-									</div>
-								</div>
-							)}
-						</div>
+              {/* Image Previews */}
+              {imagePreviews.length > 0 && (
+                <div className="mt-4">
+                  <h4 className="text-sm font-medium text-gray-700 mb-2">
+                    Selected Images:
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {imagePreviews.map((preview, index) => (
+                      <div key={index} className="relative">
+                        <img
+                          src={preview}
+                          alt={`Preview ${index + 1}`}
+                          className="h-20 w-20 object-cover rounded-md"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removeImage(index)}
+                          className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
 
-						{/* Submit Buttons */}
-						<div className="flex justify-end space-x-4 pt-6 border-t border-gray-200">
-							<button
-								type="button"
-								onClick={handleClose}
-								className="px-6 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer">
-								Cancel
-							</button>
-							<button
-								type="submit"
-								disabled={createProductMutation.isLoading}
-								className="px-6 py-2 rounded-md text-sm font-medium text-white bg-green-800 hover:bg-green-700 disabled:opacity-50 cursor-pointer">
-								{createProductMutation.isLoading
-									? "Adding Product..."
-									: "Add Product"}
-							</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	);
+            {/* Submit Buttons */}
+            <div className="flex justify-end space-x-4 pt-6 border-t border-gray-200">
+              <button
+                type="button"
+                onClick={handleClose}
+                className="px-6 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={createProductMutation.isLoading}
+                className="px-6 py-2 rounded-md text-sm font-medium text-white bg-green-800 hover:bg-green-700 disabled:opacity-50 cursor-pointer"
+              >
+                {createProductMutation.isLoading
+                  ? 'Adding Product...'
+                  : 'Add Product'}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default AddProductModal;
