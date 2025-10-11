@@ -9,7 +9,7 @@ const DeleteAccount = () => {
 	};
 
 	return (
-		<div className="w-full md:w-2/3 bg-white rounded-lg shadow-[0_0_8px_rgba(0,0,0,0.15)] p-6 space-y-4">
+		<div className="w-full md:w-full bg-white rounded-lg shadow-[0_0_8px_rgba(0,0,0,0.15)] p-6 space-y-4">
 			<h2 className="text-lg font-semibold text-gray-800">
 				Delete Your Account
 			</h2>
