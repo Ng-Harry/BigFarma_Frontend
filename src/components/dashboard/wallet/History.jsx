@@ -111,28 +111,26 @@
 
 // export default History;
 
+
 import React from "react";
-import { ArrowBigDown, ArrowBigUp } from "lucide-react";
+import { ArrowBigDown } from "lucide-react";
 import {
-  getStatusClasses,
-  getStatusText,
-  getIconClasses,
-  getIconColor,
-  getIconBg,
-  getTextColor,
+  // getTextColor,
+  getTypeDetails,
+  getStatusDetails,
 } from "../../../utils/TransactionStatus";
-import { transactions as dummyTransactions } from "../../../lib/Transaction";
 import { walletApi } from "../../../lib/walletApi";
 import { useQuery } from "@tanstack/react-query";
+import { transactions as dummyTransactions } from "../../../lib/Transaction";
 
 const formatTransactionDate = (transaction) => {
   const rawDate =
     transaction.created_at || transaction.date || transaction.initiated_at;
 
-  if (!rawDate) return "—"; // no date at all
+  if (!rawDate) return "—";
 
   const date = new Date(rawDate);
-  if (isNaN(date)) return "—"; // invalid date
+  if (isNaN(date)) return "—";
 
   return date.toLocaleDateString("en-US", {
     year: "numeric",
@@ -140,6 +138,7 @@ const formatTransactionDate = (transaction) => {
     day: "numeric",
   });
 };
+
 const History = () => {
   const {
     data: walletData,
@@ -167,9 +166,8 @@ const History = () => {
     );
   }
 
-    const apiTransactions = walletData?.recent_transactions || [];
+  const apiTransactions = walletData?.recent_transactions || [];
   const allTransactions = [...dummyTransactions, ...apiTransactions];
-
 
   return (
     <div className="w-full h-auto bg-white shadow-[0_0_4px_0_rgba(0,0,0,0.25)] p-4 rounded-lg">
@@ -184,55 +182,56 @@ const History = () => {
         </div>
       ) : (
         allTransactions.map((transaction, index) => {
-          const Icon = getIconClasses(transaction.status);
-          // const iconColor = getIconColor(transaction.status);
-          const iconBg = getIconBg(transaction.status);
-          const statusClass = getStatusClasses(transaction.status);
-          const statusText = getStatusText(transaction.status);
-          const StatusIcon = getIconClasses(transaction.status);
-          const isCredit = transaction.type === "credit";
-const ArrowIcon = isCredit ? ArrowBigUp : ArrowBigDown;
-const arrowColor = isCredit ? "#016130" : "##FFA725";
-const arrowBg = isCredit ? "#C9F4DE" : "##FFA725";
+          const typeInfo = getTypeDetails(transaction.type); // credit or debit
+          const statusInfo = getStatusDetails(transaction.status);
+
+          const ArrowIcon = typeInfo.icon;
+          const StatusIcon = statusInfo.icon;
+
           return (
             <div
               key={index}
-              className="border border-gray-300 shadow-md rounded-lg p-3 flex items-center justify-between mb-5"
+              className="border border-gray-200 shadow-md rounded-lg p-3 flex items-center justify-between mb-5"
             >
+              {/* Left side: Type icon and info */}
               <div className="flex items-center gap-3">
                 <div
-                  className={`p-3 rounded-full flex items-center justify-center`}
-                  style={{ backgroundColor: iconBg }}
+                  className="p-3 rounded-full flex items-center justify-center"
+                  style={{ backgroundColor: typeInfo.bgColor }}
                 >
-                    <ArrowIcon size={25} strokeWidth={1.5} color={arrowColor} />
-                  {/* {Icon && <Icon size={25} strokeWidth={1.5} color={iconColor} />} */}
+                  {ArrowIcon && (
+                    <ArrowIcon
+                      size={25}
+                      strokeWidth={1.5}
+                      color={typeInfo.iconColor}
+                    />
+                  )}
                 </div>
+
                 <div className="flex flex-col items-start justify-center gap-1">
-                  {/* <p>{transaction.description || transaction.category}</p> */}
-                  <p>{ transaction.category}</p>
+                  <p className="font-medium">{transaction.category || transaction.description}</p>
                   <p className="text-sm text-gray-500">
                     {formatTransactionDate(transaction)}
                   </p>
                 </div>
               </div>
-              <div>
+
+              {/* Right side: Amount and status */}
+              <div className="text-right">
                 <p
                   className="font-semibold"
-                  style={{ color: getTextColor(transaction.status) }}
+                  style={{ color: typeInfo.iconColor }}
                 >
-                  ₦{transaction.amount.toLocaleString()}
+                  ₦{transaction.amount?.toLocaleString()}
                 </p>
+
                 <div
-                  className={`text-xs font-medium px-5 py-1 rounded-full flex items-center gap-1 ${statusClass}`}
+                  className={`text-xs font-medium px-5 py-1 rounded-full flex items-center gap-1 ${statusInfo.className}`}
                 >
                   {StatusIcon && (
-                      <StatusIcon
-                        size={14}
-                       strokeWidth={1.5}
-                        className={iconBg}
-                      />
-                   )}
-                  <span>{statusText}</span>
+                    <StatusIcon size={14} strokeWidth={1.5} />
+                  )}
+                  <span>{statusInfo.label}</span>
                 </div>
               </div>
             </div>
