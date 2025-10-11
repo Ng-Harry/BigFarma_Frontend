@@ -1,8 +1,8 @@
-import Wallet from "../components/dashboard/wallet/Wallet"
+import WalletIndex from "../components/dashboard/wallet/index"
 
 const WalletPage = () => {
     return <>
-    <Wallet/>    
+    <WalletIndex/>    
     </>
 }
 

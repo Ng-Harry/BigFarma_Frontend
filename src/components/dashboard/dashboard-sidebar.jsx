@@ -50,38 +50,74 @@ export default function DashboardSidebar({ isOpen, onClose }) {
 		fetchRole();
 	}, [role, token])
 
-	const navigationItems = [
+	// const navigationItems = [
+	// 	{ name: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
+
+	// 	role === "farmer"
+	// 		? { name: "My Products", icon: ShoppingCart, path: "/my-products" }
+	// 		: role === "consumer"
+	// 		? { name: "Marketplace", icon: Store, path: "/marketplace" }
+	// 		: null,
+
+	// 	role === "farmer"
+	// 		? { name: "Orders", icon: ShoppingBag, path: "/farmer-orders" }
+	// 		: role === "consumer"
+	// 		? { name: "Group Buy", icon: Users, path: "/group-buy" }
+	// 		: null,
+
+	// 	role === "farmer"
+	// 		? { name: "Marketplace", icon: TrendingUp, path: "/marketplace" }
+	// 		: role === "consumer"
+	// 		? { name: "My Orders", icon: ShoppingBag, path: "/orders" }
+	// 		: null,
+
+	// 	role === "farmer"
+	// 		? { name: "Wallet", icon: Wallet, path: "/wallet" }
+	// 		: role === "consumer"
+	// 		? { name: "Investment", icon: TrendingUp, path: "/investment" }
+	// 		: null,
+
+	// 	role === "farmer"
+	// 		? { name: "Investment", icon: Store, path: "/investment" }
+	// 		: role === "consumer"
+	// 		? { name: "Transaction", icon: ArrowLeftRight, path: "/transactions" }
+	// 		: null,
+
+	// 	{ name: "Settings", icon: Settings, path: "/settings" },
+	// 	{ name: "Logout", icon: LogOut, path: "/sign-in" },
+	// ];
+
+		const navigationItems = [
 		{ name: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
 
 		role === "farmer"
-			? { name: "My Products", icon: ShoppingCart, path: "/my-products" }
-			: role === "consumer"
-			? { name: "Marketplace", icon: Store, path: "/marketplace" }
-			: null,
+			? { name: "My Products", icon: ShoppingCart, path: "/my-products" }:
+			
+			 { name: "Marketplace", icon: Store, path: "/marketplace" },
 
 		role === "farmer"
 			? { name: "Orders", icon: ShoppingBag, path: "/farmer-orders" }
-			: role === "consumer"
-			? { name: "Group Buy", icon: Users, path: "/group-buy" }
-			: null,
+			: 
+			 { name: "Group Buy", icon: Users, path: "/group-buy" }
+	,
 
 		role === "farmer"
 			? { name: "Marketplace", icon: TrendingUp, path: "/marketplace" }
-			: role === "consumer"
-			? { name: "My Orders", icon: ShoppingBag, path: "/orders" }
-			: null,
+		:
+			{ name: "My Orders", icon: ShoppingBag, path: "/orders" }
+			,
 
 		role === "farmer"
 			? { name: "Wallet", icon: Wallet, path: "/wallet" }
-			: role === "consumer"
-			? { name: "Investment", icon: TrendingUp, path: "/investment" }
-			: null,
+			: 
+		 { name: "Investment", icon: TrendingUp, path: "/investment" }
+			,
 
 		role === "farmer"
 			? { name: "Investment", icon: Store, path: "/investment" }
-			: role === "consumer"
-			? { name: "Transaction", icon: ArrowLeftRight, path: "/transactions" }
-			: null,
+			: 
+			 { name: "Transaction", icon: ArrowLeftRight, path: "/transactions" }
+			,
 
 		{ name: "Settings", icon: Settings, path: "/settings" },
 		{ name: "Logout", icon: LogOut, path: "/sign-in" },
@@ -140,7 +176,7 @@ export default function DashboardSidebar({ isOpen, onClose }) {
 						/>
 					</div>
 
-					{role !== null  &&
+					{/* {role !== null  && */}
 						<nav className="flex-1 px-4 py-6 space-y-2 mt-6">
 						{navigationItems.map((item) => {
 							const Icon = item.icon;
@@ -160,7 +196,8 @@ export default function DashboardSidebar({ isOpen, onClose }) {
 								</button>
 							);
 						})}
-					</nav>}
+					</nav>
+					{/* } */}
 				</div>
 			</div>
 
