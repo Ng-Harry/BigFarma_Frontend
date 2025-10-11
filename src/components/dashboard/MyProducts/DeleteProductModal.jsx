@@ -11,7 +11,7 @@ const DeleteProductModal = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <div className="fixed inset-0 bg-gray-800/20 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-lg max-w-md w-full">
         <div className="p-6">
           {/* Warning Icon */}
@@ -56,7 +56,7 @@ const DeleteProductModal = ({
               <button
                 onClick={onConfirm}
                 disabled={isLoading}
-                className="px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-800 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50"
+                className="px-6 py-2 border border-red-700 rounded-md shadow-sm text-sm font-medium text-white bg-transparent hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50"
               >
                 {isLoading ? 'Deleting...' : 'Delete Product'}
               </button>
