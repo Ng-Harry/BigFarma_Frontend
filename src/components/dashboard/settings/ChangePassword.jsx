@@ -174,9 +174,21 @@ const ChangePassword = () => {
 								}`}></div>
 						</div>
 
-						<p className="text-sm text-gray-600 mt-2">
-							Weak password. Must contain:
+						<p
+							className={`text-sm mt-2 ${
+								Object.values(rules).every(Boolean)
+									? "text-green-600"
+									: Object.values(rules).filter(Boolean).length >= 2
+									? "text-yellow-600"
+									: "text-red-600"
+							}`}>
+							{Object.values(rules).every(Boolean)
+								? "Strong password 💪"
+								: Object.values(rules).filter(Boolean).length >= 2
+								? "Moderate password — improve it for better security"
+								: "Weak password. Must contain:"}
 						</p>
+
 						<ul className="text-sm space-y-1">
 							<li className="flex items-center gap-2">
 								{rules.uppercase ? (
@@ -207,7 +219,7 @@ const ChangePassword = () => {
 				)}
 
 				{/* Buttons */}
-				<div className="flex justify-between gap-3 mt-4">
+				<div className="flex gap-4 md:col-span-2 gap-3 mt-4">
 					<button
 						type="button"
 						onClick={handleDiscard}

@@ -58,9 +58,11 @@ const AccountSettings = () => {
 			</div>
 
 			{/* Main Section */}
-			{path === "edit-profile" && <ResetBioData />}
-			{path === "change-password" && <ChangePassword />}
-			{path === "delete-account" && <DeleteAccount />}
+			<div>
+                {path === "edit-profile" && <ResetBioData />}
+                {path === "change-password" && <ChangePassword />}
+                {path === "delete-account" && <DeleteAccount />}
+            </div>
 		</div>
 	);
 };
