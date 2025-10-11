@@ -112,7 +112,7 @@
 // export default History;
 
 import React from "react";
-import { ArrowBigDown } from "lucide-react";
+import { ArrowBigDown, ArrowBigUp } from "lucide-react";
 import {
   getStatusClasses,
   getStatusText,
@@ -125,6 +125,21 @@ import { transactions as dummyTransactions } from "../../../lib/Transaction";
 import { walletApi } from "../../../lib/walletApi";
 import { useQuery } from "@tanstack/react-query";
 
+const formatTransactionDate = (transaction) => {
+  const rawDate =
+    transaction.created_at || transaction.date || transaction.initiated_at;
+
+  if (!rawDate) return "—"; // no date at all
+
+  const date = new Date(rawDate);
+  if (isNaN(date)) return "—"; // invalid date
+
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+};
 const History = () => {
   const {
     data: walletData,
@@ -170,11 +185,15 @@ const History = () => {
       ) : (
         allTransactions.map((transaction, index) => {
           const Icon = getIconClasses(transaction.status);
-          const iconColor = getIconColor(transaction.status);
+          // const iconColor = getIconColor(transaction.status);
           const iconBg = getIconBg(transaction.status);
           const statusClass = getStatusClasses(transaction.status);
           const statusText = getStatusText(transaction.status);
-
+          const StatusIcon = getIconClasses(transaction.status);
+          const isCredit = transaction.type === "credit";
+const ArrowIcon = isCredit ? ArrowBigUp : ArrowBigDown;
+const arrowColor = isCredit ? "#016130" : "##FFA725";
+const arrowBg = isCredit ? "#C9F4DE" : "##FFA725";
           return (
             <div
               key={index}
@@ -185,12 +204,14 @@ const History = () => {
                   className={`p-3 rounded-full flex items-center justify-center`}
                   style={{ backgroundColor: iconBg }}
                 >
-                  {Icon && <Icon size={25} strokeWidth={1.5} color={iconColor} />}
+                    <ArrowIcon size={25} strokeWidth={1.5} color={arrowColor} />
+                  {/* {Icon && <Icon size={25} strokeWidth={1.5} color={iconColor} />} */}
                 </div>
                 <div className="flex flex-col items-start justify-center gap-1">
-                  <p>{transaction.description || transaction.category}</p>
+                  {/* <p>{transaction.description || transaction.category}</p> */}
+                  <p>{ transaction.category}</p>
                   <p className="text-sm text-gray-500">
-                    {new Date(transaction.created_at).toLocaleDateString()}
+                    {formatTransactionDate(transaction)}
                   </p>
                 </div>
               </div>
@@ -204,6 +225,13 @@ const History = () => {
                 <div
                   className={`text-xs font-medium px-5 py-1 rounded-full flex items-center gap-1 ${statusClass}`}
                 >
+                  {StatusIcon && (
+                      <StatusIcon
+                        size={14}
+                       strokeWidth={1.5}
+                        className={iconBg}
+                      />
+                   )}
                   <span>{statusText}</span>
                 </div>
               </div>
