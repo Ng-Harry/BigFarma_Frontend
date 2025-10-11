@@ -10,7 +10,6 @@ import ConsumerProfileSetup from "./consumer/consumerProfile/Index.jsx";
 import Cookies from "js-cookie";
 import { endpoints } from "../config/endpoints";
 import { axios } from "../../lib/axios";
-// import LoaderSpinner from "../shared/Loader.jsx";
 import LoadingSkeleton from "../shared/Loader.jsx";
 
 const Dashboard = () => {
