@@ -2,18 +2,18 @@ import React from "react";
 import { Wallet, TrendingUp, Eye, EyeClosed } from "lucide-react";
 import QuickActions from "./QuickActions";
 import History from "./History.jsx";
-import {walletApi} from "../../../lib/walletApi";
+import { walletApi } from "../../../lib/walletApi";
 import { useQuery } from "@tanstack/react-query";
 
 // const balance = 102500.78;
 // const ledgerBalance = 118600.0;
 
 const WalletDashboard = () => {
-    const {
+  const {
     data: walletData,
     isLoading,
     isError,
-    refetch,
+    // refetch,
   } = useQuery({
     queryKey: ["walletDashboard"],
     queryFn: walletApi,
@@ -21,18 +21,15 @@ const WalletDashboard = () => {
   });
 
   const [isVisible, setIsVisible] = React.useState(true);
-  // const [wallet , setWallet] = React.useState(null);
-  // const [ledger , setLedger] = React.useState(null);
-    const toggleVisibility = () => setIsVisible((prev) => !prev);
+  const toggleVisibility = () => setIsVisible((prev) => !prev);
 
   if (isLoading) return <p>Loading wallet data...</p>;
   if (isError) return <p>Failed to load wallet info 😞</p>;
- if (!walletData) return null;
+  if (!walletData) return null;
 
   // const { wallet, recent_transactions, total_earnings, total_withdrawals } =
   //   walletData;
-  const { wallet,} =
-    walletData;
+  const { wallet } = walletData;
   return (
     <>
       <div className="w-full  bg-[#016130] p-5 rounded-lg  text-white">
@@ -52,7 +49,9 @@ const WalletDashboard = () => {
               <span className="font-light pr-0.5">₦</span>
               {/* ₦{" "} */}
               {isVisible
-                ? wallet.balance.toLocaleString("en-US", { minimumFractionDigits: 2 })
+                ? wallet.balance.toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
+                  })
                 : "*********"}
             </p>
             {isVisible ? (
