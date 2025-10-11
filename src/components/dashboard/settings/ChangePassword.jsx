@@ -73,8 +73,8 @@ const ChangePassword = () => {
 
 			<form onSubmit={handleSubmit} className="space-y-4">
 				{/* Current Password */}
-				<div className="grid md:grid-cols-2">
-					<div className="md:col-span-2">
+				<div className="grid md:grid-cols-3">
+					<div className="md:col-span-3">
 						<label className="block text-sm font-medium text-gray-700">
 							Current Password <span className="text-red-500">*</span>
 						</label>
@@ -101,7 +101,7 @@ const ChangePassword = () => {
 						</div>
 					</div>
 					{/* New Password */}
-					<div className="md:col-span-2">
+					<div className="md:col-span-3">
 						<label className="block text-sm font-medium text-gray-700">
 							New Password <span className="text-red-500">*</span>
 						</label>
@@ -128,7 +128,7 @@ const ChangePassword = () => {
 						</div>
 					</div>
 					{/* Confirm Password */}
-					<div className="md:col-span-2">
+					<div className="md:col-span-3">
 						<label className="block text-sm font-medium text-gray-700">
 							Confirm New Password <span className="text-red-500">*</span>
 						</label>
@@ -219,8 +219,8 @@ const ChangePassword = () => {
 				)}
 
 				{/* Buttons */}
-				<div className="grid md:grid-cols-2">
-					<div className="flex gap-4 md:col-span-2 gap-3 mt-4">
+				<div className="grid md:grid-cols-3">
+					<div className="flex gap-4 md:col-span-3 mt-4">
 						<button
 							type="button"
 							onClick={handleDiscard}
