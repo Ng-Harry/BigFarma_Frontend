@@ -27,7 +27,7 @@ const DeleteAccount = () => {
 				<div className="border rounded-lg p-3 text-gray-700 text-sm">
 					If you just want to change your name, you don’t need to deactivate
 					your account, edit it in your{" "}
-					<a href="/settings" className="text-green-700 font-medium underline">
+					<a href="/settings" className="text-[#016130] font-medium">
 						settings
 					</a>
 				</div>
@@ -35,7 +35,7 @@ const DeleteAccount = () => {
 
 			<button
 				onClick={handleDelete}
-				className="w-full bg-green-700 text-white py-2 rounded-lg hover:bg-green-800 transition font-medium">
+				className="w-full bg-[#016130] text-white py-2 rounded-lg hover:bg-[#003F1F] transition font-medium">
 				Delete Account
 			</button>
 		</div>
