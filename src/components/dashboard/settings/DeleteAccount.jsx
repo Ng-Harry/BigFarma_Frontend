@@ -9,7 +9,7 @@ const DeleteAccount = () => {
 	};
 
 	return (
-		<div className="w-full md:w-2/3 bg-white rounded-lg shadow-[0_0_8px_rgba(0,0,0,0.15)] p-6 space-y-4">
+		<div className="w-full md:w-[600px] bg-white rounded-lg shadow-[0_0_8px_rgba(0,0,0,0.15)] p-4 space-y-4">
 			<h2 className="text-lg font-semibold text-gray-800">
 				Delete Your Account
 			</h2>
@@ -35,7 +35,7 @@ const DeleteAccount = () => {
 
 			<button
 				onClick={handleDelete}
-				className="w-full bg-[#016130] text-white py-2 rounded-lg hover:bg-[#003F1F] transition font-medium">
+				className="w-full bg-[#016130] text-white py-2 rounded-lg hover:bg-[#003F1F] transition font-medium cursor-pointer">
 				Delete Account
 			</button>
 		</div>

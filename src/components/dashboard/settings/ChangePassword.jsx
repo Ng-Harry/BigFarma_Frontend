@@ -63,7 +63,7 @@ const ChangePassword = () => {
 	};
 
 	return (
-		<div className="w-full md:w-full space-y-3 bg-white rounded-lg shadow-[0_0_8px_rgba(0,0,0,0.15)] p-6">
+		<div className="w-full p-4 md:w-[600px] space-y-3 bg-white rounded-lg shadow-[0_0_8px_rgba(0,0,0,0.15)] ">
 			<h2 className="text-lg font-semibold text-gray-800">
 				Change your password
 			</h2>
@@ -73,8 +73,8 @@ const ChangePassword = () => {
 
 			<form onSubmit={handleSubmit} className="space-y-4">
 				{/* Current Password */}
-				<div className="grid md:grid-cols-3">
-					<div className="md:col-span-3">
+				<div className="grid md:grid-cols-3 space-y-4">
+					<div className="md:col-span-3 ">
 						<label className="block text-sm font-medium text-gray-700">
 							Current Password <span className="text-red-500">*</span>
 						</label>
@@ -96,7 +96,11 @@ const ChangePassword = () => {
 									}))
 								}
 								className="absolute inset-y-0 right-2 flex items-center text-gray-500">
-								{showPassword.current ? <EyeOff size={18} /> : <Eye size={18} />}
+								{showPassword.current ? (
+									<EyeOff size={18} />
+								) : (
+									<Eye size={18} />
+								)}
 							</button>
 						</div>
 					</div>
@@ -150,7 +154,11 @@ const ChangePassword = () => {
 									}))
 								}
 								className="absolute inset-y-0 right-2 flex items-center text-gray-500">
-								{showPassword.confirm ? <EyeOff size={18} /> : <Eye size={18} />}
+								{showPassword.confirm ? (
+									<EyeOff size={18} />
+								) : (
+									<Eye size={18} />
+								)}
 							</button>
 						</div>
 					</div>
@@ -224,12 +232,12 @@ const ChangePassword = () => {
 						<button
 							type="button"
 							onClick={handleDiscard}
-							className="border border-[#016130] text-[#016130] px-4 py-2 rounded-lg hover:bg-green-50 transition block w-full">
+							className="border border-[#016130] text-[#016130] px-4 py-2 rounded-lg hover:bg-green-50 transition block w-full cursor-pointer">
 							Discard Changes
 						</button>
 						<button
 							type="submit"
-							className="bg-[#016130] text-white px-4 py-2 rounded-lg hover:bg-[#003F1F] transition block w-full">
+							className="bg-[#016130] text-white px-4 py-2 rounded-lg hover:bg-[#003F1F] transition block w-full cursor-pointer">
 							Save Changes
 						</button>
 					</div>
