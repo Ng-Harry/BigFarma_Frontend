@@ -17,7 +17,6 @@ const WalletDashboard = () => {
   } = useQuery({
     queryKey: ["walletDashboard"],
     queryFn: walletApi,
-    refetchOnWindowFocus: false, // disable auto refresh when switching tabs
   });
 
   const [isVisible, setIsVisible] = React.useState(true);
