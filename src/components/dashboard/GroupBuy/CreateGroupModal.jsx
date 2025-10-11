@@ -38,15 +38,6 @@ const CreateGroupModal = () => {
       trimmed.Quantity &&
       trimmed.Description
     ) {
-      // const payload = {
-      //   group_name: trimmed.groupName,
-      //   group_description: trimmed.Description,
-      //   group_location: trimmed.groupLocation,
-      //   product_id: Number(trimmed.items),
-      //   target_quantity: trimmed.Quantity,
-      //   quantity_unit: "kg",
-      //     "target_quantity_numeric": 1,
-      // };
     const payload = {
   group_name: trimmed.groupName,
   group_description: trimmed.Description,
@@ -69,10 +60,6 @@ const CreateGroupModal = () => {
         });
 
         const data = res.data;
-
-        // if (res.status === 200 || res.status === 201) {
-        // 	toast.success(data.message || "Saved successfully!");
-        // }
         toast.success(data.message || "Saved successfully!");
       } catch (error) {
         console.error("Error:", error);
