@@ -71,88 +71,88 @@ const ChangePassword = () => {
 				Update password for enhanced account security.
 			</p>
 
-			<form onSubmit={handleSubmit} className="grid md:grid-cols-2 space-y-4">
+			<form onSubmit={handleSubmit} className="space-y-4">
 				{/* Current Password */}
-				<div className="md:col-span-2">
-					<label className="block text-sm font-medium text-gray-700">
-						Current Password <span className="text-red-500">*</span>
-					</label>
-					<div className="relative">
-						<input
-							type={showPassword.current ? "text" : "password"}
-							name="currentPassword"
-							value={formData.currentPassword}
-							onChange={handleChange}
-							required
-							className="mt-1 block w-full border border-green-700 rounded-lg p-2 pr-10 focus:ring-green-600 focus:outline-none"
-						/>
-						<button
-							type="button"
-							onClick={() =>
-								setShowPassword((prev) => ({
-									...prev,
-									current: !prev.current,
-								}))
-							}
-							className="absolute inset-y-0 right-2 flex items-center text-gray-500">
-							{showPassword.current ? <EyeOff size={18} /> : <Eye size={18} />}
-						</button>
+				<div className="grid md:grid-cols-2">
+					<div className="md:col-span-2">
+						<label className="block text-sm font-medium text-gray-700">
+							Current Password <span className="text-red-500">*</span>
+						</label>
+						<div className="relative">
+							<input
+								type={showPassword.current ? "text" : "password"}
+								name="currentPassword"
+								value={formData.currentPassword}
+								onChange={handleChange}
+								required
+								className="mt-1 block w-full border border-green-700 rounded-lg p-2 pr-10 focus:ring-green-600 focus:outline-none"
+							/>
+							<button
+								type="button"
+								onClick={() =>
+									setShowPassword((prev) => ({
+										...prev,
+										current: !prev.current,
+									}))
+								}
+								className="absolute inset-y-0 right-2 flex items-center text-gray-500">
+								{showPassword.current ? <EyeOff size={18} /> : <Eye size={18} />}
+							</button>
+						</div>
 					</div>
-				</div>
-
-				{/* New Password */}
-				<div className="md:col-span-2">
-					<label className="block text-sm font-medium text-gray-700">
-						New Password <span className="text-red-500">*</span>
-					</label>
-					<div className="relative">
-						<input
-							type={showPassword.new ? "text" : "password"}
-							name="newPassword"
-							value={formData.newPassword}
-							onChange={handleChange}
-							required
-							className="mt-1 block w-full border border-green-700 rounded-lg p-2 pr-10 focus:ring-green-600 focus:outline-none"
-						/>
-						<button
-							type="button"
-							onClick={() =>
-								setShowPassword((prev) => ({
-									...prev,
-									new: !prev.new,
-								}))
-							}
-							className="absolute inset-y-0 right-2 flex items-center text-gray-500">
-							{showPassword.new ? <EyeOff size={18} /> : <Eye size={18} />}
-						</button>
+					{/* New Password */}
+					<div className="md:col-span-2">
+						<label className="block text-sm font-medium text-gray-700">
+							New Password <span className="text-red-500">*</span>
+						</label>
+						<div className="relative">
+							<input
+								type={showPassword.new ? "text" : "password"}
+								name="newPassword"
+								value={formData.newPassword}
+								onChange={handleChange}
+								required
+								className="mt-1 block w-full border border-green-700 rounded-lg p-2 pr-10 focus:ring-green-600 focus:outline-none"
+							/>
+							<button
+								type="button"
+								onClick={() =>
+									setShowPassword((prev) => ({
+										...prev,
+										new: !prev.new,
+									}))
+								}
+								className="absolute inset-y-0 right-2 flex items-center text-gray-500">
+								{showPassword.new ? <EyeOff size={18} /> : <Eye size={18} />}
+							</button>
+						</div>
 					</div>
-				</div>
-
-				{/* Confirm Password */}
-				<div className="md:col-span-2">
-					<label className="block text-sm font-medium text-gray-700">
-						Confirm New Password <span className="text-red-500">*</span>
-					</label>
-					<div className="relative">
-						<input
-							type={showPassword.confirm ? "text" : "password"}
-							name="confirmPassword"
-							value={formData.confirmPassword}
-							onChange={handleChange}
-							required
-							className="mt-1 block w-full border border-green-700 rounded-lg p-2 pr-10 focus:ring-green-600 focus:outline-none"
-						/>
-						<button
-							type="button"
-							onClick={() =>
-								setShowPassword((prev) => ({
-									...prev,
-									confirm: !prev.confirm,
-								}))
-							}
-							className="absolute inset-y-0 right-2 flex items-center text-gray-500">
-							{showPassword.confirm ? <EyeOff size={18} /> : <Eye size={18} />}
-						</button>
+					{/* Confirm Password */}
+					<div className="md:col-span-2">
+						<label className="block text-sm font-medium text-gray-700">
+							Confirm New Password <span className="text-red-500">*</span>
+						</label>
+						<div className="relative">
+							<input
+								type={showPassword.confirm ? "text" : "password"}
+								name="confirmPassword"
+								value={formData.confirmPassword}
+								onChange={handleChange}
+								required
+								className="mt-1 block w-full border border-green-700 rounded-lg p-2 pr-10 focus:ring-green-600 focus:outline-none"
+							/>
+							<button
+								type="button"
+								onClick={() =>
+									setShowPassword((prev) => ({
+										...prev,
+										confirm: !prev.confirm,
+									}))
+								}
+								className="absolute inset-y-0 right-2 flex items-center text-gray-500">
+								{showPassword.confirm ? <EyeOff size={18} /> : <Eye size={18} />}
+							</button>
+						</div>
 					</div>
 				</div>
 
@@ -219,18 +219,20 @@ const ChangePassword = () => {
 				)}
 
 				{/* Buttons */}
-				<div className="flex gap-4 md:col-span-2 gap-3 mt-4">
-					<button
-						type="button"
-						onClick={handleDiscard}
-						className="border border-[#016130] text-[#016130] px-4 py-2 rounded-lg hover:bg-green-50 transition block w-full">
-						Discard Changes
-					</button>
-					<button
-						type="submit"
-						className="bg-[#016130] text-white px-4 py-2 rounded-lg hover:bg-[#003F1F] transition block w-full">
-						Save Changes
-					</button>
+				<div className="grid md:grid-cols-2">
+					<div className="flex gap-4 md:col-span-2 gap-3 mt-4">
+						<button
+							type="button"
+							onClick={handleDiscard}
+							className="border border-[#016130] text-[#016130] px-4 py-2 rounded-lg hover:bg-green-50 transition block w-full">
+							Discard Changes
+						</button>
+						<button
+							type="submit"
+							className="bg-[#016130] text-white px-4 py-2 rounded-lg hover:bg-[#003F1F] transition block w-full">
+							Save Changes
+						</button>
+					</div>
 				</div>
 			</form>
 		</div>
