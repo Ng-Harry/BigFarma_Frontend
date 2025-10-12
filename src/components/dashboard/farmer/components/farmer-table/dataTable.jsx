@@ -121,8 +121,7 @@ const DataTablePage = ({
                         : 'text-gray-700 hover:bg-gray-100'
                     }`}
                   >
-                    <img src={filterIcon} alt="All" className="w-4 h-4" />
-                    <span>All</span>
+                    <img src={filterIcon} alt="All" className="w-6 h-6" />
                   </button>
 
                   {/* Other Filter Options */}
