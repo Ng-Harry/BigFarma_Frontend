@@ -151,80 +151,77 @@ const MyProducts = () => {
 
   // Column configuration for products
   const productColumns = [
-    {
-      key: 'product',
-      label: 'Product',
-      render: (item) => (
-        <div className="flex items-center">
-          <img
-            src={item.image}
-            alt={item.product}
-            className="w-10 h-10 rounded-lg object-cover mr-3"
-            onError={(e) => {
-              e.target.src = watermelon;
-            }}
-          />
-          <span className="text-sm font-medium text-gray-900">
-            {item.product}
-          </span>
-        </div>
-      ),
-    },
-    {
-      key: 'productID',
-      label: 'Product Code',
-    },
-    {
-      key: 'price',
-      label: 'Price',
-      render: (item) => (
-        <span className="font-medium text-gray-900">{item.price}</span>
-      ),
-    },
-    {
-      key: 'quantity',
-      label: 'Quantity',
-    },
-    {
-      key: 'status',
-      label: 'Status',
-      render: (item) => (
-        <span
-          className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-            item.status === 'active' || item.status === 'Active'
-              ? 'bg-green-100 text-green-800'
-              : item.status === 'draft' || item.status === 'Draft'
-              ? 'bg-gray-100 text-gray-800'
-              : item.status === 'out_of_stock' || item.status === 'Out of stock'
-              ? 'bg-red-100 text-red-800'
-              : 'bg-blue-100 text-blue-800'
-          }`}
-        >
-          {item.status}
-        </span>
-      ),
-    },
-    {
-      key: 'actions',
-      label: 'Action',
-      render: (item) => (
-        <div className="flex space-x-2">
-          <button
-            onClick={() => handleRestockClick(item)}
-            className="text-blue-700 bg-blue-200 hover:text-blue-900 rounded-xl py-1 px-2 font-medium text-sm"
-          >
-            Restock
-          </button>
-          <button
-            onClick={() => handleDeleteClick(item)}
-            className="text-red-700 bg-red-200 hover:text-red-900 rounded-xl py-1 px-2 font-medium text-sm"
-          >
-            Delete
-          </button>
-        </div>
-      ),
-    },
-  ];
+		{
+			key: "product",
+			label: "Product",
+			render: (item) => (
+				<div className="flex items-center">
+					<img
+						src={item.image}
+						alt={item.product}
+						className="w-10 h-10 rounded-lg object-cover mr-3"
+						onError={(e) => {
+							e.target.src = watermelon;
+						}}
+					/>
+					<span className="text-sm font-medium text-gray-900">
+						{item.product}
+					</span>
+				</div>
+			),
+		},
+		{
+			key: "productID",
+			label: "Product Code",
+		},
+		{
+			key: "price",
+			label: "Price",
+			render: (item) => (
+				<span className="font-medium text-gray-900">{item.price}</span>
+			),
+		},
+		{
+			key: "quantity",
+			label: "Quantity",
+		},
+		{
+			key: "status",
+			label: "Status",
+			render: (item) => (
+				<span
+					className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+						item.status === "active" || item.status === "Active"
+							? "bg-green-100 text-green-800"
+							: item.status === "draft" || item.status === "Draft"
+							? "bg-gray-100 text-gray-800"
+							: item.status === "out_of_stock" || item.status === "Out of stock"
+							? "bg-red-100 text-red-800"
+							: "bg-blue-100 text-blue-800"
+					}`}>
+					{item.status}
+				</span>
+			),
+		},
+		{
+			key: "actions",
+			label: "Action",
+			render: (item) => (
+				<div className="flex space-x-2">
+					<button
+						onClick={() => handleRestockClick(item)}
+						className="text-blue-700 bg-blue-200 hover:text-blue-900 rounded-xl py-1 px-2 font-medium text-sm cursor-pointer">
+						Restock
+					</button>
+					<button
+						onClick={() => handleDeleteClick(item)}
+						className="text-red-700 bg-red-200 hover:text-red-900 rounded-xl py-1 px-2 font-medium text-sm cursor-pointer">
+						Delete
+					</button>
+				</div>
+			),
+		},
+	];
 
   // Filter options for products
   const productFilterOptions = [
