@@ -13,7 +13,7 @@ const WalletDashboard = () => {
     data: walletData,
     isLoading,
     isError,
-    // refetch,
+    refetch,
   } = useQuery({
     queryKey: ["walletDashboard"],
     queryFn: walletApi,
