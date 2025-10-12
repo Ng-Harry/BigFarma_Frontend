@@ -356,7 +356,7 @@ const MyProducts = () => {
             {transformedProducts.length > 0 && (
               <button
                 onClick={() => setIsAddProductModalOpen(true)}
-                className="flex items-center space-x-2 bg-green-800 hover:bg-green-700 text-white text-base px-5 py-2 rounded-xl shadow-lg transition-all duration-200 hover:scale-105"
+                className="flex items-center space-x-2 bg-green-800 hover:bg-green-700 text-white text-base px-5 py-2 rounded-xl shadow-lg transition-all duration-200 hover:scale-105 cursor-pointer"
               >
                 <span>Add Product</span>
                 <svg

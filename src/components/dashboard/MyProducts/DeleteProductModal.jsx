@@ -1,4 +1,3 @@
-// src/components/DeleteProductModal.jsx
 import React from 'react';
 
 const DeleteProductModal = ({
