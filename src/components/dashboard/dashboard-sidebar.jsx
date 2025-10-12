@@ -114,11 +114,11 @@ export default function DashboardSidebar({ isOpen, onClose }) {
 		 { name: "Investment", icon: TrendingUp, path: "/investment" }
 			,
 
-		role === "farmer"
-			? { name: "Investment", icon: Store, path: "/investment" }
-			: 
-			 { name: "Transaction", icon: ArrowLeftRight, path: "/transactions" }
-			,
+		// role === "farmer"
+		// 	? { name: "Investment", icon: Store, path: "/investment" }
+		// 	: 
+		// 	 { name: "Transaction", icon: ArrowLeftRight, path: "/transactions" }
+		// 	,
 
 		{ name: "Settings", icon: Settings, path: "/settings" },
 		{ name: "Logout", icon: LogOut, path: "/sign-in" },

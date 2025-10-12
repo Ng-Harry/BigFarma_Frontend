@@ -1,6 +1,7 @@
 import flowerIcon from "../../assets/icons/flower.svg";
 import cartIcon from "../../assets/icons/cart.svg";
 import mobileIcon from "../../assets/icons/mobile.svg";
+import { Link } from "react-router-dom";
 
 function FeatureCard({
 	title,
@@ -84,9 +85,11 @@ export default function WhyChooseSection() {
 				</div>
 
 				<div className="text-center">
-					<button className="bg-[#016130] hover:bg-primary-dark text-white px-4 py-3 text-lg rounded-lg inline-flex items-center justify-center cursor-pointer">
-						Create an account
-					</button>
+					<Link to="/role">
+						<button className="bg-[#016130] hover:bg-primary-dark text-white px-4 py-3 text-lg rounded-lg inline-flex items-center justify-center cursor-pointer">
+							Create an account
+						</button>
+					</Link>
 				</div>
 			</div>
 		</section>
