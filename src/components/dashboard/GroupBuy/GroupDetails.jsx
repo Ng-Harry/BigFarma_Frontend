@@ -1,20 +1,14 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-// import { GroupData } from "@/lib/GroupBuy";
 import { Shield } from "lucide-react";
 import { getStatusText, getStatusClasses } from "@/utils/GroupBuyStatus";
 import { Link } from "react-router-dom";
 import { groupDetails } from "../../../lib/groupBuyApi";
 import { useQuery } from "@tanstack/react-query";
-// import { useEffect, useState } from "react";
 
 
 const GroupDetails = () => {
   const { groupId } = useParams();
-  console.log(groupId);
-  
-    // const [group, setGroup] = useState(null);
-
      const {
         data: group,
         isLoading,
@@ -42,36 +36,9 @@ const GroupDetails = () => {
           </div>
         );
       }
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState("");
-
-//  useEffect(() => {
-//   const fetchGroup = async () => {
-//     try {
-//       const data = await groupDetails(Number(groupId)); // ensure it's a number
-//       setGroup(data);
-//     } catch (err) {
-//       console.error("⚠️ Fetch error:", err);
-//       setError(err.message || "Failed to fetch group details.");
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-//   fetchGroup();
-// }, [groupId]);
-
-//   if (loading) return <p>Loading...</p>;
-//   if (error) return <p className="text-red-500">{error}</p>;
-//   if (!group) return <p>No group data found.</p>;
 
   const progress = group.progress_percentage || 0;
   const Escrow = group.group_wallet_balance || 0;
-  
-  // const group = GroupData[parseInt(id)]
-  // const group = GroupData.find((item) => String(item.id) === groupId);
-  // if (!group) return <p>Group Not Found</p>;
-  // const progress = Math.round((group.slotTaken / group.slot) * 100);
-  // const Escrow = 16000;
   return (
     <div className="grid grid-cols-2 gap-4">
       <div className="w-full col-span-2 p-2 px-5 space-y-3 rounded-md shadow-[0_0_4px_0_rgba(0,0,0,0.25)] ">
@@ -98,14 +65,13 @@ const GroupDetails = () => {
                 {getStatusText(group.status)}!
               </p>
             </div>
-                        {/* If backend has product image, display it */}
-            {/* {group.product?.image && (
+            {group.product?.image && (
               <img
                 src={group.product.image}
                 alt={group.group_name}
                 className="w-45 h-45 object-contain"
               />
-            )} */}
+            )}
           </div>
           <div className="pt-3">
             <div className="space-y-3">
