@@ -9,6 +9,7 @@ import AddProductModal from './AddProductModal';
 import DeleteProductModal from './DeleteProductModal';
 import RestockProductModal from './RestockProductModal';
 import { toast } from 'react-toastify';
+import filterIcon from '../../../assets/icons/filter.svg';
 
 // Fallback images
 import eggs from '../../../assets/ProductImages/categories/Egg image.png';
@@ -40,6 +41,9 @@ const MyProducts = () => {
   const [isRestockModalOpen, setIsRestockModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
+  const [filter, setFilter] = useState('all');
+  const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState(false);
+
   console.log('API Products Data:', apiProducts);
 
   // Transform API data for the table
@@ -68,10 +72,32 @@ const MyProducts = () => {
         ? `₦${parseFloat(product.price).toLocaleString()}`
         : '₦0',
       quantity: `${product.quantity || '0'} ${product.unit || ''}`.trim(),
-      status: product.status || 'Draft',
+      status: product.status || 'Active',
       originalData: product,
     }));
   }, [apiProducts]);
+
+  // Filter data based on selection
+  const filteredProducts = useMemo(() => {
+    return transformedProducts.filter((item) => {
+      if (filter === 'all') return true;
+      return item.status === filter;
+    });
+  }, [transformedProducts, filter]);
+
+  // Filter handlers
+  const handleFilterSelect = (value) => {
+    setFilter(value);
+    setIsFilterDropdownOpen(false);
+  };
+
+  const getCurrentFilterLabel = () => {
+    if (filter === 'all') return 'All';
+    const selectedOption = productFilterOptions.find(
+      (option) => option.value === filter
+    );
+    return selectedOption ? selectedOption.label : 'All';
+  };
 
   const handleDeleteClick = (product) => {
     setSelectedProduct(product);
@@ -260,12 +286,73 @@ const MyProducts = () => {
           {/* Right side - Filter and Add Product Button */}
           <div className="flex items-center space-x-4">
             {/* Filter Section */}
+            {/* Filter Section */}
             <div className="flex items-center space-x-2">
               <label className="text-gray-600 font-medium">Filter:</label>
-              {/* You'll need to pass the filter functionality to DataTablePage or handle it here */}
+              <div className="relative">
+                <button
+                  onClick={() => setIsFilterDropdownOpen(!isFilterDropdownOpen)}
+                  className="flex items-center space-x-2 border border-green-700 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-green-200 min-w-[120px]"
+                >
+                  <img src={filterIcon} alt="Filter" className="w-4 h-4" />
+                  <span>{getCurrentFilterLabel()}</span>
+                  <svg
+                    className={`w-4 h-4 transition-transform ${
+                      isFilterDropdownOpen ? 'rotate-180' : ''
+                    }`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+
+                {/* Dropdown Menu */}
+                {isFilterDropdownOpen && (
+                  <div className="absolute right-0 mt-1 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-50">
+                    <div className="py-1">
+                      {/* All Option with Icon */}
+                      <button
+                        onClick={() => handleFilterSelect('all')}
+                        className={`flex items-center space-x-2 w-full px-4 py-2 text-sm ${
+                          filter === 'all'
+                            ? 'bg-green-50 text-green-700'
+                            : 'text-gray-700 hover:bg-gray-100'
+                        }`}
+                      >
+                        <img src={filterIcon} alt="All" className="w-4 h-4" />
+                        <span>All</span>
+                      </button>
+
+                      {/* Other Filter Options */}
+                      {productFilterOptions
+                        .filter((option) => option.value !== 'all') // Exclude "All" since we already have it
+                        .map((option) => (
+                          <button
+                            key={option.value}
+                            onClick={() => handleFilterSelect(option.value)}
+                            className={`flex items-center space-x-2 w-full px-4 py-2 text-sm ${
+                              filter === option.value
+                                ? 'bg-green-50 text-green-700'
+                                : 'text-gray-700 hover:bg-gray-100'
+                            }`}
+                          >
+                            <span>{option.label}</span>
+                          </button>
+                        ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
 
-            {/* Add Product Button - Now inline */}
+            {/* Add Product Button*/}
             {transformedProducts.length > 0 && (
               <button
                 onClick={() => setIsAddProductModalOpen(true)}
@@ -303,6 +390,8 @@ const MyProducts = () => {
         emptyState={emptyProductsState}
         type="products"
         hideHeader={true}
+        currentFilter={filter}
+        onFilterChange={setFilter}
       />
 
       {/* Add Product Modal */}
