@@ -89,7 +89,7 @@ const MyProducts = () => {
         toast.success('Product Deleted Successfully');
         setIsDeleteModalOpen(false);
         setSelectedProduct(null);
-        refetch(); // Refresh the list instead of reloading the page
+        refetch();
       },
       onError: (error) => {
         toast.error(`Failed to delete product: ${error.message}`);
@@ -245,43 +245,65 @@ const MyProducts = () => {
 
   return (
     <>
-      <div className="flex flex-col md:flex-row justify-between">
-        {/* Add Product Button - Floating Action Button */}
-        {transformedProducts.length > 0 && (
-          <button
-            onClick={() => setIsAddProductModalOpen(true)}
-            className="fixed top-[-5rem] right-6 bg-green-800 hover:bg-green-700 text-white text-base px-5 py-2  rounded-xl shadow-lg transition-all duration-200 hover:scale-110 z-50"
-          >
-            Add Product{' '}
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 4v16m8-8H4"
-              />
-            </svg>
-          </button>
-        )}
+      {/* Custom Header Section */}
+      <div className="p-6">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+          {/* Left side - Title and Count */}
+          <div className="flex items-center space-x-4">
+            <h1 className="text-2xl font-bold">My Products</h1>
+            <span className="bg-green-100 text-green-700 text-sm font-semibold px-3 py-1 rounded-lg">
+              {transformedProducts.length}{' '}
+              {transformedProducts.length === 1 ? 'Product' : 'Products'}
+            </span>
+          </div>
 
-        {/* Products Table */}
-        <DataTablePage
-          title="My Products"
-          data={transformedProducts}
-          isLoading={isLoading}
-          error={error}
-          refetch={refetch}
-          filterOptions={productFilterOptions}
-          columns={productColumns}
-          emptyState={emptyProductsState}
-          type="products"
-        />
+          {/* Right side - Filter and Add Product Button */}
+          <div className="flex items-center space-x-4">
+            {/* Filter Section */}
+            <div className="flex items-center space-x-2">
+              <label className="text-gray-600 font-medium">Filter:</label>
+              {/* You'll need to pass the filter functionality to DataTablePage or handle it here */}
+            </div>
+
+            {/* Add Product Button - Now inline */}
+            {transformedProducts.length > 0 && (
+              <button
+                onClick={() => setIsAddProductModalOpen(true)}
+                className="flex items-center space-x-2 bg-green-800 hover:bg-green-700 text-white text-base px-5 py-2 rounded-xl shadow-lg transition-all duration-200 hover:scale-105"
+              >
+                <span>Add Product</span>
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 4v16m8-8H4"
+                  />
+                </svg>
+              </button>
+            )}
+          </div>
+        </div>
       </div>
+
+      {/* Products Table */}
+      <DataTablePage
+        title=""
+        data={transformedProducts}
+        isLoading={isLoading}
+        error={error}
+        refetch={refetch}
+        filterOptions={productFilterOptions}
+        columns={productColumns}
+        emptyState={emptyProductsState}
+        type="products"
+        hideHeader={true}
+      />
 
       {/* Add Product Modal */}
       <AddProductModal
