@@ -6,36 +6,36 @@ import { Link } from "react-router-dom";
 import { groupDetails } from "../../../lib/groupBuyApi";
 import { useQuery } from "@tanstack/react-query";
 
-
 const GroupDetails = () => {
   const { groupId } = useParams();
-     const {
-        data: group,
-        isLoading,
-        isError,
-        error,
-      } = useQuery({
-        queryKey: ["groupDetails", groupId],
-    queryFn: () => groupDetails(Number(groupId)), 
+  
+  const {
+    data: group,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["groupDetails", groupId],
+    queryFn: () => groupDetails(Number(groupId)),
     refetchOnWindowFocus: false,
-      });
-    
-      if (isLoading) {
-        return (
-          <div className="flex flex-col items-center justify-center h-32 text-gray-500">
-            <p>Loading group...</p>
-          </div>
-        );
-      }
-    
-      if (isError || !group) {
-        return (
-          <div className="flex flex-col items-center justify-center h-32 text-gray-500">
-                    <p>Failed to load group details.</p>
+  });
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-32 text-gray-500">
+        <p>Loading group...</p>
+      </div>
+    );
+  }
+
+  if (isError || !group) {
+    return (
+      <div className="flex flex-col items-center justify-center h-32 text-gray-500">
+        <p>Failed to load group details.</p>
         {error && <small>{error.message}</small>}
-          </div>
-        );
-      }
+      </div>
+    );
+  }
 
   const progress = group.progress_percentage || 0;
   const Escrow = group.group_wallet_balance || 0;
@@ -48,7 +48,10 @@ const GroupDetails = () => {
           </span>
           <div className="flex flex-col gap-1">
             <p className="font-medium text-xl">Escrow Protection:</p>
-            <p>₦{Escrow.toLocaleString()} held in escrow until group is complete or expired</p>
+            <p>
+              ₦{Escrow.toLocaleString()} held in escrow until group is complete
+              or expired
+            </p>
           </div>
         </div>
       </div>
@@ -96,7 +99,13 @@ const GroupDetails = () => {
                   style={{ width: `${progress}%` }}
                 ></div>
               </div>
-              <p>{group.slot - group.slotTaken} slots remaining</p>
+              <p>
+                {Math.max(
+                  (Number(group?.slot) || 0) - (Number(group?.slotTaken) || 0),
+                  0
+                )}{" "}
+                slots remaining
+              </p>
               <Link to={`/group-buy/${group.id}`}>
                 <button className="w-full bg-[#016130] hover:bg-[#003F1F] text-white inline-flex items-center justify-center rounded-lg mt-3 py-2 font-medium transition-colors focus:outline-none">
                   View Details & Join
@@ -113,11 +122,10 @@ const GroupDetails = () => {
           <div>
             {/* <p>Group ID: BGRP - {String(Number(group.id)).padStart(3, "0")} | Total Slots: {group.slot} | Escrow Amount: ₦{Number(Escrow).toLocaleString()}</p> */}
             <p>
-            Group ID: BGRP - {String(Number(group.id)).padStart(3, "0")} |
-            Total Slots: {group.target_quantity_numeric} | Escrow Amount: ₦
-            {Number(Escrow).toLocaleString()}
-          </p>
-          
+              Group ID: BGRP - {String(Number(group.id)).padStart(3, "0")} |
+              Total Slots: {group.target_quantity_numeric} | Escrow Amount: ₦
+              {Number(Escrow).toLocaleString()}
+            </p>
           </div>
         </div>
       </div>
