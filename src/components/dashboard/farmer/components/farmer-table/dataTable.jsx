@@ -15,6 +15,7 @@ const DataTablePage = ({
   type = 'products', // 'products' or 'orders'
 }) => {
   const [filter, setFilter] = useState('all');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   // Filter data based on selection
   const filteredData = useMemo(() => {
@@ -23,6 +24,19 @@ const DataTablePage = ({
       return item.status === filter;
     });
   }, [data, filter]);
+
+  const handleFilterSelect = (value) => {
+    setFilter(value);
+    setIsDropdownOpen(false);
+  };
+
+  const getCurrentFilterLabel = () => {
+    if (filter === 'all') return 'All';
+    const selectedOption = filterOptions.find(
+      (option) => option.value === filter
+    );
+    return selectedOption ? selectedOption.label : 'All';
+  };
 
   // Loading state
   if (isLoading) {
@@ -62,29 +76,73 @@ const DataTablePage = ({
         <div className="flex items-center space-x-4">
           <h1 className="text-2xl font-bold">{title}</h1>
           <span className="bg-green-100 text-green-700 text-sm font-semibold px-3 py-1 rounded-lg">
-            {filteredData.length === 1 ? title.slice(0, -1) : title}
             {filteredData.length}{' '}
+            {filteredData.length === 1 ? title.slice(0, -1) : title}
           </span>
         </div>
+
+        {/* Custom Dropdown */}
         <div className="flex items-center space-x-4">
-          <label htmlFor="filter" className="text-gray-600 font-medium">
-            Filter:
-          </label>
-          <select
-            id="filter"
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-            className="border border-green-700 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-green-200 min-w-[100px]"
-          >
-            <option value="all">
-              <img src={filterIcon} alt="All" />
-            </option>
-            {filterOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
+          <label className="text-gray-600 font-medium">Filter:</label>
+          <div className="relative">
+            <button
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="flex items-center space-x-2 border border-green-700 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-green-200 min-w-[120px]"
+            >
+              <img src={filterIcon} alt="Filter" className="w-4 h-4" />
+              <span>{getCurrentFilterLabel()}</span>
+              <svg
+                className={`w-4 h-4 transition-transform ${
+                  isDropdownOpen ? 'rotate-180' : ''
+                }`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+
+            {/* Dropdown Menu */}
+            {isDropdownOpen && (
+              <div className="absolute right-0 mt-1 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-50">
+                <div className="py-1">
+                  {/* All Option with Icon */}
+                  <button
+                    onClick={() => handleFilterSelect('all')}
+                    className={`flex items-center space-x-2 w-full px-4 py-2 text-sm ${
+                      filter === 'all'
+                        ? 'bg-green-50 text-green-700'
+                        : 'text-gray-700 hover:bg-gray-100'
+                    }`}
+                  >
+                    <img src={filterIcon} alt="All" className="w-4 h-4" />
+                    <span>All</span>
+                  </button>
+
+                  {/* Other Filter Options */}
+                  {filterOptions.map((option) => (
+                    <button
+                      key={option.value}
+                      onClick={() => handleFilterSelect(option.value)}
+                      className={`flex items-center space-x-2 w-full px-4 py-2 text-sm ${
+                        filter === option.value
+                          ? 'bg-green-50 text-green-700'
+                          : 'text-gray-700 hover:bg-gray-100'
+                      }`}
+                    >
+                      <span>{option.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

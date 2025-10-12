@@ -249,7 +249,7 @@ const MyProducts = () => {
       {transformedProducts.length > 0 && (
         <button
           onClick={() => setIsAddProductModalOpen(true)}
-          className="fixed bottom-6 right-6 bg-green-600 hover:bg-green-700 text-white p-4 rounded-xl shadow-lg transition-all duration-200 hover:scale-110 z-50"
+          className="fixed top-10 right-6 bg-green-800 hover:bg-green-700 text-white text-base p-2 rounded-xl shadow-lg transition-all duration-200 hover:scale-110 z-50"
         >
           Add Product
           <svg
@@ -280,28 +280,6 @@ const MyProducts = () => {
         emptyState={emptyProductsState}
         type="products"
       />
-
-      {/* Add Product Button - Floating Action Button */}
-      {transformedProducts.length > 0 && (
-        <button
-          onClick={() => setIsAddProductModalOpen(true)}
-          className="fixed bottom-6 right-6 bg-green-600 hover:bg-green-700 text-white p-4 rounded-full shadow-lg transition-all duration-200 hover:scale-110 z-50"
-        >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 4v16m8-8H4"
-            />
-          </svg>
-        </button>
-      )}
 
       {/* Add Product Modal */}
       <AddProductModal
