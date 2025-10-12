@@ -12,7 +12,8 @@ const DataTablePage = ({
   filterOptions = [],
   columns = [],
   emptyState,
-  type = 'products', // 'products' or 'orders'
+  type = 'products',
+  hideHeader = false, // 'products' or 'orders'
 }) => {
   const [filter, setFilter] = useState('all');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -72,78 +73,80 @@ const DataTablePage = ({
   return (
     <div className="p-6">
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
-        <div className="flex items-center space-x-4">
-          <h1 className="text-2xl font-bold">{title}</h1>
-          <span className="bg-green-100 text-green-700 text-sm font-semibold px-3 py-1 rounded-lg">
-            {filteredData.length}{' '}
-            {filteredData.length === 1 ? title.slice(0, -1) : title}
-          </span>
-        </div>
+      {!hideHeader && (
+        <div className="flex justify-between items-center mb-6">
+          <div className="flex items-center space-x-4">
+            <h1 className="text-2xl font-bold">{title}</h1>
+            <span className="bg-green-100 text-green-700 text-sm font-semibold px-3 py-1 rounded-lg">
+              {filteredData.length}{' '}
+              {filteredData.length === 1 ? title.slice(0, -1) : title}
+            </span>
+          </div>
 
-        {/* Custom Dropdown */}
-        <div className="flex items-center space-x-4">
-          <label className="text-gray-600 font-medium">Filter:</label>
-          <div className="relative">
-            <button
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="flex items-center space-x-2 border border-green-700 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-green-200 min-w-[120px]"
-            >
-              <img src={filterIcon} alt="Filter" className="w-4 h-4" />
-              <span>{getCurrentFilterLabel()}</span>
-              <svg
-                className={`w-4 h-4 transition-transform ${
-                  isDropdownOpen ? 'rotate-180' : ''
-                }`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+          {/* Custom Dropdown */}
+          <div className="flex items-center space-x-4">
+            <label className="text-gray-600 font-medium">Filter:</label>
+            <div className="relative">
+              <button
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className="flex items-center space-x-2 border border-green-700 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-green-200 min-w-[120px]"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </button>
+                <img src={filterIcon} alt="Filter" className="w-4 h-4" />
+                <span>{getCurrentFilterLabel()}</span>
+                <svg
+                  className={`w-4 h-4 transition-transform ${
+                    isDropdownOpen ? 'rotate-180' : ''
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </button>
 
-            {/* Dropdown Menu */}
-            {isDropdownOpen && (
-              <div className="absolute right-0 mt-1 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-50">
-                <div className="py-1">
-                  {/* All Option with Icon */}
-                  <button
-                    onClick={() => handleFilterSelect('all')}
-                    className={`flex items-center space-x-2 w-full px-4 py-2 text-sm ${
-                      filter === 'all'
-                        ? 'bg-green-50 text-green-700'
-                        : 'text-gray-700 hover:bg-gray-100'
-                    }`}
-                  >
-                    <img src={filterIcon} alt="All" className="w-6 h-6" />
-                  </button>
-
-                  {/* Other Filter Options */}
-                  {filterOptions.map((option) => (
+              {/* Dropdown Menu */}
+              {isDropdownOpen && (
+                <div className="absolute right-0 mt-1 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-50">
+                  <div className="py-1">
+                    {/* All Option with Icon */}
                     <button
-                      key={option.value}
-                      onClick={() => handleFilterSelect(option.value)}
+                      onClick={() => handleFilterSelect('all')}
                       className={`flex items-center space-x-2 w-full px-4 py-2 text-sm ${
-                        filter === option.value
+                        filter === 'all'
                           ? 'bg-green-50 text-green-700'
                           : 'text-gray-700 hover:bg-gray-100'
                       }`}
                     >
-                      <span>{option.label}</span>
+                      <img src={filterIcon} alt="All" className="w-6 h-6" />
                     </button>
-                  ))}
+
+                    {/* Other Filter Options */}
+                    {filterOptions.map((option) => (
+                      <button
+                        key={option.value}
+                        onClick={() => handleFilterSelect(option.value)}
+                        className={`flex items-center space-x-2 w-full px-4 py-2 text-sm ${
+                          filter === option.value
+                            ? 'bg-green-50 text-green-700'
+                            : 'text-gray-700 hover:bg-gray-100'
+                        }`}
+                      >
+                        <span>{option.label}</span>
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Data Table */}
       <div className="bg-white rounded-lg shadow-md overflow-hidden">
