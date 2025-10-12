@@ -25,7 +25,7 @@ const Hero = () => {
             Transforming Africa&apos;s agro business
           </span>
           <NavLink
-            to="sign-up"
+            to="role"
             className="bg-[var(--color-primary)] text-white w-40 h-12 sm:w-60 sm:h-14 flex justify-center items-center rounded-lg text-sm sm:text-xl font-bold shadow hover:bg-[var(--color-primary-dark)] transition-colors"
           >
             Create an account

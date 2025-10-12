@@ -1,4 +1,5 @@
 import bgImage from "../../assets/svgs/InvestmentBg.svg";
+import { Link } from "react-router-dom";
 
 export default function ThinkInvestment() {
 	return (
@@ -24,11 +25,13 @@ export default function ThinkInvestment() {
 							</p>
 						</div>
 						<div className="pt-2 md:pt-8 flex justify-center">
-							<button
-								className="btn-start-invsting bg-[var(--color-neutral-light)] text-[var(--color-primary)] font-bold
-                            text-[10px] md:text-[16px] rounded-md px-[20px] py-2 md:px-[50px] md:py-4 flex items-center gap-[10px] cursor-pointer hover:bg-[var(--color-primary-dark)] transition-colors">
-								Start investing
-							</button>
+							<Link to={"/sign-in"}>
+								<button
+									className="btn-start-invsting bg-[var(--color-neutral-light)] text-[var(--color-primary)] font-bold
+															text-[10px] md:text-[16px] rounded-md px-[20px] py-2 md:px-[50px] md:py-4 flex items-center gap-[10px] cursor-pointer hover:bg-[var(--color-primary-dark)] transition-colors">
+									Start investing
+								</button>
+							</Link>
 						</div>
 					</div>
 				</div>
