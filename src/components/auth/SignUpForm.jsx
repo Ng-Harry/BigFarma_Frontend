@@ -754,7 +754,7 @@ const SignUpForm = () => {
 								type="checkbox"
 								checked={agree}
 								onChange={(e) => setAgree(e.target.checked)}
-								className="w-4 h-4 accent-[#FFA725] mt-1"
+								className="w-4 h-4 accent-[#FFA725] mt-1 cursor-pointer"
 							/>
 							<label className="text-gray-500 text-sm">
 								By signing up, you agree to our{" "}
