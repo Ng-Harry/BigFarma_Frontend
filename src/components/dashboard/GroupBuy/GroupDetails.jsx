@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { GroupData } from "@/lib/GroupBuy";
+// import { GroupData } from "@/lib/GroupBuy";
 import { Shield } from "lucide-react";
 import { getStatusText, getStatusClasses } from "@/utils/GroupBuyStatus";
 import { Link } from "react-router-dom";
@@ -99,13 +99,13 @@ const GroupDetails = () => {
               </p>
             </div>
                         {/* If backend has product image, display it */}
-            {group.product?.image && (
+            {/* {group.product?.image && (
               <img
                 src={group.product.image}
                 alt={group.group_name}
                 className="w-45 h-45 object-contain"
               />
-            )}
+            )} */}
           </div>
           <div className="pt-3">
             <div className="space-y-3">
