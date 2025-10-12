@@ -33,6 +33,7 @@ const History = () => {
     data: walletData,
     isLoading,
     isError,
+    
   } = useQuery({
     queryKey: ["walletDashboard"],
     queryFn: walletApi,

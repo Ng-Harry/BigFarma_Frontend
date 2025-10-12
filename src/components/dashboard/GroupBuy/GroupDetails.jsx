@@ -4,14 +4,74 @@ import { GroupData } from "@/lib/GroupBuy";
 import { Shield } from "lucide-react";
 import { getStatusText, getStatusClasses } from "@/utils/GroupBuyStatus";
 import { Link } from "react-router-dom";
+import { groupDetails } from "../../../lib/groupBuyApi";
+import { useQuery } from "@tanstack/react-query";
+// import { useEffect, useState } from "react";
+
 
 const GroupDetails = () => {
-  const { id } = useParams();
+  const { groupId } = useParams();
+  console.log(groupId);
+  
+    // const [group, setGroup] = useState(null);
+
+     const {
+        data: group,
+        isLoading,
+        isError,
+        error,
+      } = useQuery({
+        queryKey: ["groupDetails", groupId],
+    queryFn: () => groupDetails(Number(groupId)), 
+    refetchOnWindowFocus: false,
+      });
+    
+      if (isLoading) {
+        return (
+          <div className="flex flex-col items-center justify-center h-32 text-gray-500">
+            <p>Loading group...</p>
+          </div>
+        );
+      }
+    
+      if (isError || !group) {
+        return (
+          <div className="flex flex-col items-center justify-center h-32 text-gray-500">
+                    <p>Failed to load group details.</p>
+        {error && <small>{error.message}</small>}
+          </div>
+        );
+      }
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState("");
+
+//  useEffect(() => {
+//   const fetchGroup = async () => {
+//     try {
+//       const data = await groupDetails(Number(groupId)); // ensure it's a number
+//       setGroup(data);
+//     } catch (err) {
+//       console.error("⚠️ Fetch error:", err);
+//       setError(err.message || "Failed to fetch group details.");
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+//   fetchGroup();
+// }, [groupId]);
+
+//   if (loading) return <p>Loading...</p>;
+//   if (error) return <p className="text-red-500">{error}</p>;
+//   if (!group) return <p>No group data found.</p>;
+
+  const progress = group.progress_percentage || 0;
+  const Escrow = group.group_wallet_balance || 0;
+  
   // const group = GroupData[parseInt(id)]
-  const group = GroupData.find((item) => String(item.id) === id);
-  if (!group) return <p>Group Not Found</p>;
-  const progress = Math.round((group.slotTaken / group.slot) * 100);
-  const Escrow = 16000;
+  // const group = GroupData.find((item) => String(item.id) === groupId);
+  // if (!group) return <p>Group Not Found</p>;
+  // const progress = Math.round((group.slotTaken / group.slot) * 100);
+  // const Escrow = 16000;
   return (
     <div className="grid grid-cols-2 gap-4">
       <div className="w-full col-span-2 p-2 px-5 space-y-3 rounded-md shadow-[0_0_4px_0_rgba(0,0,0,0.25)] ">
@@ -21,7 +81,7 @@ const GroupDetails = () => {
           </span>
           <div className="flex flex-col gap-1">
             <p className="font-medium text-xl">Escrow Protection:</p>
-            <p>₦{Escrow} held in escrow until group is complete or expired</p>
+            <p>₦{Escrow.toLocaleString()} held in escrow until group is complete or expired</p>
           </div>
         </div>
       </div>
@@ -38,25 +98,30 @@ const GroupDetails = () => {
                 {getStatusText(group.status)}!
               </p>
             </div>
-            <img
-              src={group.image}
-              alt={group.name}
-              className="w-45 h-45 object-contain"
-            />
+                        {/* If backend has product image, display it */}
+            {group.product?.image && (
+              <img
+                src={group.product.image}
+                alt={group.group_name}
+                className="w-45 h-45 object-contain"
+              />
+            )}
           </div>
           <div className="pt-3">
             <div className="space-y-3">
-              <p>{group.name}</p>
-              <p>{group.location}</p>
+              <p>{group.group_name}</p>
+              <p>{group.group_location}</p>
               <div className="flex items-center justify-between w-full ">
-                <p>{group.price}</p>
+                {/* <p>{group.price}</p> */}
+                {group.target_quantity_numeric} {group.quantity_unit}
                 <p>per box</p>
               </div>
               <div className="flex items-center justify-between w-full">
                 <p>Progress</p>
-                <p>
+                {/* <p>
                   {group.slotTaken}/{group.slot} slots
-                </p>
+                </p> */}
+                <p>{progress}%</p>
               </div>
 
               <div>
@@ -80,8 +145,13 @@ const GroupDetails = () => {
           <h3>Group Details</h3>
 
           <div>
-            <p>Group ID: BGRP - {String(Number(group.id)).padStart(3, "0")} | Total Slots: {group.slot} | Escrow Amount: ₦{Number(Escrow).toLocaleString()}</p>
-            
+            {/* <p>Group ID: BGRP - {String(Number(group.id)).padStart(3, "0")} | Total Slots: {group.slot} | Escrow Amount: ₦{Number(Escrow).toLocaleString()}</p> */}
+            <p>
+            Group ID: BGRP - {String(Number(group.id)).padStart(3, "0")} |
+            Total Slots: {group.target_quantity_numeric} | Escrow Amount: ₦
+            {Number(Escrow).toLocaleString()}
+          </p>
+          
           </div>
         </div>
       </div>
