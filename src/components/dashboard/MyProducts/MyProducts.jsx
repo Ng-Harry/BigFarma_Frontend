@@ -245,41 +245,43 @@ const MyProducts = () => {
 
   return (
     <>
-      {/* Add Product Button - Floating Action Button */}
-      {transformedProducts.length > 0 && (
-        <button
-          onClick={() => setIsAddProductModalOpen(true)}
-          className="fixed top-10 right-6 bg-green-800 hover:bg-green-700 text-white text-base p-2 rounded-xl shadow-lg transition-all duration-200 hover:scale-110 z-50"
-        >
-          Add Product
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+      <div className="flex flex-col md:flex-row justify-between">
+        {/* Add Product Button - Floating Action Button */}
+        {transformedProducts.length > 0 && (
+          <button
+            onClick={() => setIsAddProductModalOpen(true)}
+            className="fixed top-[-5rem] right-6 bg-green-800 hover:bg-green-700 text-white text-base px-5 py-2  rounded-xl shadow-lg transition-all duration-200 hover:scale-110 z-50"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 4v16m8-8H4"
-            />
-          </svg>
-        </button>
-      )}
+            Add Product{' '}
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 4v16m8-8H4"
+              />
+            </svg>
+          </button>
+        )}
 
-      {/* Products Table */}
-      <DataTablePage
-        title="My Products"
-        data={transformedProducts}
-        isLoading={isLoading}
-        error={error}
-        refetch={refetch}
-        filterOptions={productFilterOptions}
-        columns={productColumns}
-        emptyState={emptyProductsState}
-        type="products"
-      />
+        {/* Products Table */}
+        <DataTablePage
+          title="My Products"
+          data={transformedProducts}
+          isLoading={isLoading}
+          error={error}
+          refetch={refetch}
+          filterOptions={productFilterOptions}
+          columns={productColumns}
+          emptyState={emptyProductsState}
+          type="products"
+        />
+      </div>
 
       {/* Add Product Modal */}
       <AddProductModal
