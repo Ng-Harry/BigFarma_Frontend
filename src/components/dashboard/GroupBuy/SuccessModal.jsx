@@ -1,9 +1,24 @@
 import React from "react";
 import successIcon from "../../../assets/icons/success.svg";
 import { Link } from "react-router-dom";
-
+import { useState } from "react";
 const SuccessModal = ({ onClose }) => {
-    return (
+  const [copy, setCopy] = useState(false);
+  const link = "www.bigfarma.com/group/beans123";
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(link);
+      setCopy(true);
+      setTimeout(() => {
+        setCopy(false);
+      }, 2000);
+    } catch (err) {
+      console.error("Failed to copy: ", err);
+    }
+  };
+
+  return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
       onClick={onClose}
@@ -23,14 +38,19 @@ const SuccessModal = ({ onClose }) => {
           <div className="flex items-center gap-5">
             <Link to={"/"} className="text-[#FFA725]">
               <button type="button" className="text-lg font-normal">
-                www.bigfarma.com/group/beans123
+                {link}
               </button>
             </Link>
             <button
+              onClick={handleCopy}
               type="button"
-              className="text-[#016130] px-2.5 py-1 rounded-lg border border-[#016130] text-sm ml-7"
+              className={`text-sm px-3 py-1 rounded-lg border transition-all ${
+                copy
+                  ? "bg-[#016130] text-white border-[#016130]"
+                  : "text-[#016130] border-[#016130] hover:bg-[#016130]/10"
+              }`}
             >
-              Copy
+              {copy ? "Copied!" : "Copy"}
             </button>
           </div>
         </div>

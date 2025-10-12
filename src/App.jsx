@@ -171,7 +171,7 @@ const App = () => {
 					}
 				/>
 				<Route
-					path="/group-buy/:id"
+					path="/group-buy/:groupId"
 					element={
 						<DashboardLayout>
 							<GroupDetailsPage />
