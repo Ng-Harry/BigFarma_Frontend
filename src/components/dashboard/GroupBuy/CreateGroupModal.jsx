@@ -80,7 +80,7 @@ const CreateGroupModal = () => {
   };
 
   return (
-    <section className="max-w-4xl h-screen rounded-l-lg shadow-xl">
+    <section className="max-w-4xl h-screen rounded-l-lg shadow-xl ">
       <div className=" max-w-4xl h-auto p-5">
         <div className="flex  flex-col items-center justify-between ">
           <h2 className="font-semibold text-2xl p-4 text-center">

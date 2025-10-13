@@ -16,7 +16,7 @@ const GroupDetails = () => {
     error,
   } = useQuery({
     queryKey: ["groupDetails", groupId],
-    queryFn: () => groupDetails(Number(groupId)),
+    queryFn: () => groupDetails(Number(groupId)), 
     refetchOnWindowFocus: false,
   });
 
@@ -108,7 +108,7 @@ const GroupDetails = () => {
               </p>
               <Link to={`/group-buy/${group.id}`}>
                 <button className="w-full bg-[#016130] hover:bg-[#003F1F] text-white inline-flex items-center justify-center rounded-lg mt-3 py-2 font-medium transition-colors focus:outline-none">
-                  View Details & Join
+                  Join Group
                 </button>
               </Link>
             </div>
