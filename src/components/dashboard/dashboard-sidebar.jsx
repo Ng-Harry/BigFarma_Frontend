@@ -26,103 +26,103 @@ import { useEffect } from "react";
 // const role = Cookies.get("BIGFARMA_ROLE");
 
 export default function DashboardSidebar({ isOpen, onClose }) {
-	// const [role, setRole] = useState(null);
-	const role = Cookies.get("BIGFARMA_ROLE");
+	const [role, setRole] = useState(null);
+	// const role = Cookies.get("BIGFARMA_ROLE");
 	const navigate = useNavigate();
 	const location = useLocation();
 	const token = Cookies.get("BIGFARMA_ACCESS_TOKEN");
 	
 
-	// useEffect(() => {
-	// 	const fetchRole = async () => {
-	// 		try {
-	// 			const response = await axios.get(endpoints().users.profile, {
-	// 				headers: {
-	// 					Authorization: `Bearer ${token}`,
-	// 				},
-	// 			});
-	// 			const data = await response.data;
-	// 			setRole(data.category);
-	// 		} catch (error) {
-	// 			console.error("Error fetching profile:", error);
-	// 			setRole(null);
-	// 		}
-	// 	};
-	// 	fetchRole();
-	// }, [role, token])
+	useEffect(() => {
+		const fetchRole = async () => {
+			try {
+				const response = await axios.get(endpoints().users.profile, {
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				});
+				const data = await response.data;
+				setRole(data.category);
+			} catch (error) {
+				console.error("Error fetching profile:", error);
+				setRole(null);
+			}
+		};
+		fetchRole();
+	}, [role, token])
 
-	// const navigationItems = [
-	// 	{ name: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
-
-	// 	role === "farmer"
-	// 		? { name: "My Products", icon: ShoppingCart, path: "/my-products" }
-	// 		: role === "consumer"
-	// 		? { name: "Marketplace", icon: Store, path: "/marketplace" }
-	// 		: null,
-
-	// 	role === "farmer"
-	// 		? { name: "Orders", icon: ShoppingBag, path: "/farmer-orders" }
-	// 		: role === "consumer"
-	// 		? { name: "Group Buy", icon: Users, path: "/group-buy" }
-	// 		: null,
-
-	// 	role === "farmer"
-	// 		? { name: "Marketplace", icon: TrendingUp, path: "/marketplace" }
-	// 		: role === "consumer"
-	// 		? { name: "My Orders", icon: ShoppingBag, path: "/orders" }
-	// 		: null,
-
-	// 	role === "farmer"
-	// 		? { name: "Wallet", icon: Wallet, path: "/wallet" }
-	// 		: role === "consumer"
-	// 		? { name: "Investment", icon: TrendingUp, path: "/investment" }
-	// 		: null,
-
-	// 	role === "farmer"
-	// 		? { name: "Investment", icon: Store, path: "/investment" }
-	// 		: role === "consumer"
-	// 		? { name: "Transaction", icon: ArrowLeftRight, path: "/transactions" }
-	// 		: null,
-
-	// 	{ name: "Settings", icon: Settings, path: "/settings" },
-	// 	{ name: "Logout", icon: LogOut, path: "/sign-in" },
-	// ];
-
-		const navigationItems = [
+	const navigationItems = [
 		{ name: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
 
 		role === "farmer"
-			? { name: "My Products", icon: ShoppingCart, path: "/my-products" }:
-			
-			 { name: "Marketplace", icon: Store, path: "/marketplace" },
+			? { name: "My Products", icon: ShoppingCart, path: "/my-products" }
+			: role === "consumer"
+			? { name: "Marketplace", icon: Store, path: "/marketplace" }
+			: null,
 
 		role === "farmer"
 			? { name: "Orders", icon: ShoppingBag, path: "/farmer-orders" }
-			: 
-			 { name: "Group Buy", icon: Users, path: "/group-buy" }
-	,
+			: role === "consumer"
+			? { name: "Group Buy", icon: Users, path: "/group-buy" }
+			: null,
 
 		role === "farmer"
 			? { name: "Marketplace", icon: TrendingUp, path: "/marketplace" }
-		:
-			{ name: "My Orders", icon: ShoppingBag, path: "/orders" }
-			,
+			: role === "consumer"
+			? { name: "My Orders", icon: ShoppingBag, path: "/orders" }
+			: null,
 
 		role === "farmer"
 			? { name: "Wallet", icon: Wallet, path: "/wallet" }
-			: 
-		 { name: "Investment", icon: TrendingUp, path: "/investment" }
-			,
+			: role === "consumer"
+			? { name: "Investment", icon: TrendingUp, path: "/investment" }
+			: null,
 
 		// role === "farmer"
 		// 	? { name: "Investment", icon: Store, path: "/investment" }
-		// 	: 
-		// 	 { name: "Transaction", icon: ArrowLeftRight, path: "/transactions" }
-		// 	,
+		// 	: role === "consumer"
+		// 	? { name: "Transaction", icon: ArrowLeftRight, path: "/transactions" }
+		// 	: null,
 
 		{ name: "Settings", icon: Settings, path: "/settings" },
 		{ name: "Logout", icon: LogOut, path: "/sign-in" },
 	];
+
+	// 	const navigationItems = [
+	// 	{ name: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
+
+	// 	role === "farmer"
+	// 		? { name: "My Products", icon: ShoppingCart, path: "/my-products" }:
+			
+	// 		 { name: "Marketplace", icon: Store, path: "/marketplace" },
+
+	// 	role === "farmer"
+	// 		? { name: "Orders", icon: ShoppingBag, path: "/farmer-orders" }
+	// 		: 
+	// 		 { name: "Group Buy", icon: Users, path: "/group-buy" }
+	// ,
+
+	// 	role === "farmer"
+	// 		? { name: "Marketplace", icon: TrendingUp, path: "/marketplace" }
+	// 	:
+	// 		{ name: "My Orders", icon: ShoppingBag, path: "/orders" }
+	// 		,
+
+	// 	role === "farmer"
+	// 		? { name: "Wallet", icon: Wallet, path: "/wallet" }
+	// 		: 
+	// 	 { name: "Investment", icon: TrendingUp, path: "/investment" }
+	// 		,
+
+	// 	// role === "farmer"
+	// 	// 	? { name: "Investment", icon: Store, path: "/investment" }
+	// 	// 	: 
+	// 	// 	 { name: "Transaction", icon: ArrowLeftRight, path: "/transactions" }
+	// 	// 	,
+
+	// 	{ name: "Settings", icon: Settings, path: "/settings" },
+	// 	{ name: "Logout", icon: LogOut, path: "/sign-in" },
+	// ];
 
 	const handleNavClick = (item) => {
 		if (item.name === "Logout") {
