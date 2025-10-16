@@ -273,10 +273,10 @@ const MyProducts = () => {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
           {/* Left side - Title and Count */}
           <div className="flex items-center space-x-4">
-            <h1 className="text-2xl font-bold">My Orders</h1>
+            <h1 className="text-2xl font-bold">My Products</h1>
             <span className="bg-green-100 text-green-700 text-sm font-semibold px-3 py-1 rounded-lg">
               {transformedProducts.length}{' '}
-              {transformedProducts.length === 1 ? 'Order' : 'Orders'}
+              {transformedProducts.length === 1 ? 'Product' : 'Products'}
             </span>
           </div>
 
