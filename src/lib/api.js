@@ -8,7 +8,7 @@ export async function fetchProducts() {
     // });
 
     const res = await fetch(
-        "https://bigfarma-backend.onrender.com/api/v1/marketplace/products?skip=0&limit=100"
+        "https://jellyfish-app-2-i2mfu.ondigitalocean.app/api/v1/marketplace/products?skip=0&limit=100"
     );
     if (!res.ok) throw new Error("Failed to fetch products");
     const data = await res.json();
@@ -18,7 +18,7 @@ export async function fetchProducts() {
 export async function fetchProductById(id) {
 
     const res = await fetch(
-        `https://bigfarma-backend.onrender.com/api/v1/marketplace/products/${id}`
+        `https://jellyfish-app-2-i2mfu.ondigitalocean.app/api/v1/marketplace/products/${id}`
     );
 
     if (!res.ok) {
